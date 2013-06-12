@@ -1,0 +1,264 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="intelliScraper">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="settings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:boolean" name="useProxy"/>
+              <xs:element type="xs:string" name="proxyFile"/>
+              <xs:element type="xs:string" name="useAlsoLocalIp"/>
+              <xs:element type="xs:int" name="waitEachRequestMilliseconds"/>
+              <xs:element type="xs:int" name="waitAfterError"/>
+              <xs:element name="onError">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="action"/>
+                    <xs:element type="xs:string" name="times"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="imageFolderDownload"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="storeInfo" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="type"/>
+              <xs:element type="xs:string" name="connection" minOccurs="0"/>
+              <xs:element name="tables" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="table">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="name"/>
+                          <xs:element type="xs:string" name="col" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="header" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="scrapeRules">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="step" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="id"/>
+                    <xs:element type="xs:string" name="inputId" minOccurs="0"/>
+                    <xs:element type="xs:string" name="type"/>
+                    <xs:element type="xs:string" name="url"/>
+                    <xs:element type="xs:string" name="dataType"/>
+                    <xs:element type="xs:string" name="xpath" minOccurs="0"/>
+                    <xs:element name="loop" minOccurs="0">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="loopstep">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="getvalue" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="name"/>
+                                      <xs:element type="xs:string" name="xpath"/>
+                                      <xs:element type="xs:string" name="type"/>
+                                      <xs:element type="xs:string" name="attributeName"/>
+                                      <xs:element type="xs:boolean" name="trim"/>
+                                      <xs:element type="xs:string" name="substring"/>
+                                      <xs:element type="xs:string" name="findText" minOccurs="0"/>
+                                      <xs:element type="xs:string" name="replaceText"/>
+                                      <xs:element type="xs:string" name="mapTitle"/>
+                                      <xs:element type="xs:string" name="mapPosition"/>
+                                      <xs:element name="ifStartWith" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element type="xs:string" name="value"/>
+                                            <xs:element type="xs:string" name="substring"/>
+                                            <xs:element type="xs:string" name="attachBefore"/>
+                                            <xs:element type="xs:string" name="attachAfter"/>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="ifEndWith" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element type="xs:string" name="value"/>
+                                            <xs:element type="xs:string" name="substring" nillable="true"/>
+                                            <xs:element type="xs:string" name="attachBefore"/>
+                                            <xs:element type="xs:string" name="attachAfter"/>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>                                     
+                                      <xs:element name="step" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element type="xs:float" name="id"/>
+                                            <xs:element type="xs:string" name="inputId"/>
+                                            <xs:element type="xs:string" name="type"/>
+                                            <xs:element type="xs:string" name="url" minOccurs="0"/>
+                                            <xs:element type="xs:string" name="urlInput" minOccurs="0"/>
+                                            <xs:element type="xs:string" name="xpath" minOccurs="0"/>
+                                            <xs:element name="loop" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="loopstep">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="getvalue">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element type="xs:string" name="name"/>
+                                                              <xs:element type="xs:string" name="xpath"/>
+                                                              <xs:element type="xs:string" name="type"/>
+                                                              <xs:element type="xs:string" name="attributeName"/>
+                                                              <xs:element type="xs:boolean" name="trim"/>
+                                                              <xs:element type="xs:string" name="mapTitle"/>
+                                                              <xs:element type="xs:string" name="mapPosition"/>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                        <xs:element name="image">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="getvalue">
+                                                                <xs:complexType>
+                                                                  <xs:sequence>
+                                                                    <xs:element type="xs:string" name="name"/>
+                                                                    <xs:element type="xs:string" name="xpath"/>
+                                                                    <xs:element type="xs:string" name="type"/>
+                                                                    <xs:element type="xs:string" name="attributeName"/>
+                                                                    <xs:element type="xs:boolean" name="trim"/>
+                                                                    <xs:element name="ifStartWith">
+                                                                      <xs:complexType>
+                                                                        <xs:sequence>
+                                                                          <xs:element type="xs:string" name="value"/>
+                                                                          <xs:element type="xs:string" name="substring"/>
+                                                                          <xs:element type="xs:string" name="attachBefore"/>
+                                                                          <xs:element type="xs:string" name="attachAfter"/>
+                                                                        </xs:sequence>
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                  </xs:sequence>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                              <xs:element name="download">
+                                                                <xs:complexType>
+                                                                  <xs:sequence>
+                                                                    <xs:element type="xs:string" name="name"/>
+                                                                    <xs:element name="folderInfo">
+                                                                      <xs:complexType>
+                                                                        <xs:sequence>
+                                                                          <xs:element type="xs:string" name="startFolder"/>
+                                                                          <xs:element type="xs:string" name="generateSubFolder"/>
+                                                                          <xs:element type="xs:string" name="subfolderNameType"/>
+                                                                          <xs:element type="xs:string" name="subfolderValueName"/>
+                                                                        </xs:sequence>
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                    <xs:element name="convert">
+                                                                      <xs:complexType>
+                                                                        <xs:sequence>
+                                                                          <xs:element type="xs:string" name="convertToFormat"/>
+                                                                          <xs:element type="xs:string" name="toFormat"/>
+                                                                          <xs:element name="thumbs">
+                                                                            <xs:complexType>
+                                                                              <xs:sequence>
+                                                                                <xs:element name="thumb">
+                                                                                  <xs:complexType>
+                                                                                    <xs:sequence>
+                                                                                      <xs:element type="xs:string" name="preserveAspectRatio"/>
+                                                                                      <xs:element type="xs:string" name="with"/>
+                                                                                      <xs:element type="xs:string" name="height"/>
+                                                                                    </xs:sequence>
+                                                                                  </xs:complexType>
+                                                                                </xs:element>
+                                                                              </xs:sequence>
+                                                                            </xs:complexType>
+                                                                          </xs:element>
+                                                                        </xs:sequence>
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                  </xs:sequence>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                            <xs:element type="xs:string" name="storeto" minOccurs="0"/>
+                                            <xs:element name="mapping" minOccurs="0">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="table" maxOccurs="unbounded" minOccurs="0">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element type="xs:string" name="name"/>
+                                                        <xs:element type="xs:string" name="checkExist" minOccurs="0"/>
+                                                        <xs:element type="xs:string" name="checkExistAttributes" minOccurs="0"/>
+                                                        <xs:element type="xs:string" name="IfExist" minOccurs="0"/>
+                                                        <xs:element type="xs:string" name="onError" minOccurs="0"/>
+                                                        <xs:element name="col" maxOccurs="unbounded" minOccurs="0">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element type="xs:string" name="name"/>
+                                                              <xs:element type="xs:string" name="resultName"/>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                        <xs:element name="loop" minOccurs="0">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element type="xs:string" name="resultName"/>
+                                                              <xs:element name="col">
+                                                                <xs:complexType>
+                                                                  <xs:sequence>
+                                                                    <xs:element type="xs:string" name="name"/>
+                                                                    <xs:element type="xs:string" name="resultName"/>
+                                                                  </xs:sequence>
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

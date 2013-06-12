@@ -1,0 +1,3 @@
+﻿Use xsd.exe
+
+xsd "xsd/data.xsd" /classes /namespace:IntelliScraper.Data /out:outDirectory

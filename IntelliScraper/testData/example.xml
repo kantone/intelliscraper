@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<intelliScraper>
+
+	<settings>
+		<useProxy>true</useProxy>
+		<proxyFile>F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\testData\proxies.txt</proxyFile>
+		<useAlsoLocalIp>true</useAlsoLocalIp>
+		<waitEachRequestMilliseconds>10</waitEachRequestMilliseconds>
+		<waitAfterError>1000</waitAfterError>
+		<onError>
+			<action>log</action>
+			<times></times>
+		</onError> 
+		<imageFolderDownload></imageFolderDownload>
+	</settings>
+		
+
+	<storeInfo>
+		<name>Mysql1</name>
+		<type>myslq</type>
+		<connection></connection>
+		<tables>
+			<table>
+				<name>GitHubTrendingRepos</name>
+				<col>Repository</col>
+				<col>Likes</col>
+				<col>Description</col>
+				<col>Fork</col>
+			</table>
+		</tables>
+	</storeInfo>
+	
+	<storeInfo>
+		<name>Csv1</name>
+		<type>csv</type>
+		<header>Repository,Likes,Description,Fork</header>
+	</storeInfo>
+	
+
+	<scrapeRules>
+		<step>
+			<id>1</id>
+			<inputId></inputId>
+			<type>httpGet</type>
+      <dataType>string</dataType>
+			<url>https://github.com/explore</url>		
+		</step>
+		
+		
+		<step>
+			<id>2</id>
+      <inputId>1</inputId>
+			<type>xpath-single</type>
+			<url></url>
+      <dataType>nodes</dataType>
+			<xpath>/html/body/div/div[2]/div/div[2]/div/div/div/ol</xpath>
+		</step>
+		
+	
+		<step>
+			<id>3</id>
+			<inputId>2</inputId>
+			<type>xpath-loop</type>
+			<url></url>
+      <dataType>list</dataType>
+			<xpath>li</xpath>
+			<loop>
+				
+				<loopstep>
+				
+					<getvalue>
+							<name>fetchRepository</name>
+							<xpath>h3</xpath>
+							<type>text</type> 
+							<attributeName></attributeName>
+							<trim>true</trim>
+							<substring></substring>
+							<findText></findText>
+							<replaceText></replaceText>
+							<mapTitle>Repository</mapTitle>
+							<mapPosition></mapPosition> 
+					</getvalue>
+					
+					<getvalue>
+							<name>fetchLikes</name>
+							<xpath>ul/li[1]/a/span</xpath>
+             <type>text</type>
+             <attributeName></attributeName>
+							<trim>true</trim>
+							<substring></substring>
+							<replaceText></replaceText>
+							<mapTitle>Likes</mapTitle>
+							<mapPosition></mapPosition> 
+					</getvalue>
+					
+					<getvalue>
+							<name>fetchFork</name>
+							<xpath>ul/li[2]/a/span</xpath>
+							<type>text</type> 
+							<attributeName></attributeName>
+							<trim>true</trim>
+							<substring></substring>
+							<replaceText></replaceText>
+							<mapTitle>Fork</mapTitle>
+							<mapPosition></mapPosition> 
+					</getvalue>
+					
+					<getvalue>
+							<name>Description</name>
+							<xpath>p</xpath>
+							<type>text</type> 
+							<attributeName></attributeName>
+							<trim>true</trim>
+							<substring></substring>
+							<replaceText></replaceText>
+							<mapTitle>Description</mapTitle>
+							<mapPosition></mapPosition> 
+					</getvalue>
+					
+					<getvalue>
+							<name>LinkRepo</name>
+							<xpath>h3/a[2]</xpath>
+							<type>attribute</type> 
+							<attributeName>href</attributeName>
+							<trim>true</trim>
+							<substring></substring>
+							<replaceText></replaceText>
+							<mapTitle></mapTitle>
+							<mapPosition></mapPosition> 							
+						
+							<ifStartWith>	
+								<value>/</value>
+								<substring>1</substring>
+							</ifStartWith>
+							<ifEndWith>	
+								<value>/</value>
+								<substring>1,end</substring>
+							</ifEndWith>
+														
+							<step>
+								<id>3.1</id>
+								<inputId>lastvalue</inputId>
+								<type>httpGet</type>
+								<url></url>
+								<urlInput>LinkRepo</urlInput>
+							</step>
+							
+							<step>
+								<id>3.2</id>
+								<inputId>3.2</inputId>
+								<type>loop</type>
+								<url></url>
+								<xpath>/html/body/div/div[2]/div/div[2]/div/div[2]/div/div/table/tbody/tr</xpath>
+								<loop>
+									<loopstep>									
+										<getvalue>
+												<name>FileName</name>
+												<xpath>td[1]</xpath>
+												<type>text</type> 
+												<attributeName></attributeName>
+												<trim>true</trim>
+												<mapTitle></mapTitle> 
+												<mapPosition></mapPosition> 
+										</getvalue>		
+
+										<image>
+											<getvalue>
+												<name>imgLink</name>
+												<xpath>/img</xpath>
+												<type>attribute</type> 
+												<attributeName>src</attributeName>
+												<trim>true</trim>
+												<ifStartWith>	
+													<value>/</value>
+													<attachBefore>https://github.com/img/</attachBefore>
+												</ifStartWith>
+											</getvalue>
+											
+											<download>
+												<name>ImgRef</name>
+												<folderInfo>
+													<startFolder>default</startFolder>
+													<generateSubFolder>true</generateSubFolder>
+													<subfolderNameType>value</subfolderNameType>
+													<subfolderValueName>fetchRepository</subfolderValueName>
+												</folderInfo>
+												<convert>
+													<convertToFormat>false</convertToFormat>
+													<toFormat>jpeg</toFormat>
+													<thumbs>
+														<thumb>
+															<preserveAspectRatio>true</preserveAspectRatio>
+															<with>25</with>
+															<height>25</height>
+														</thumb>													
+													</thumbs>
+												</convert>
+											</download>
+											
+										</image>
+										
+									</loopstep>
+								</loop>
+							</step>
+							
+							
+							
+							<step>
+								<id>3.3</id>
+								<inputId>3.2</inputId>
+								<type>storeData</type>
+								<storeto>Mysql1</storeto>
+								<mapping>			
+									<table>
+										<name>GitHubTrendingRepos</name>
+										<checkExist>true</checkExist>
+										<checkExistAttributes>Repository,Description</checkExistAttributes>
+										<IfExist>update</IfExist>
+										<onError>log</onError>
+										<col>
+											<name>Id</name>
+											<resultName></resultName>
+										</col>
+										<col>
+											<name>Repository</name>
+											<resultName>fetchRepository</resultName>
+										</col>
+										<col>
+											<name>Likes</name>
+											<resultName>fetchLikes</resultName>
+										</col>
+										<col>
+											<name>Description</name>
+											<resultName>fetchDescription</resultName>
+										</col>
+									</table>
+									
+									
+									<table>
+										<name>GitHubRepoFiles</name>
+										<loop>
+											<resultName>LinkRepo</resultName>
+											<col>
+												<name>_lastTableId</name>
+												<resultName>FileName</resultName>
+											</col>
+										</loop>
+									</table>
+								</mapping>
+							</step>
+					</getvalue>
+					
+				</loopstep>
+			</loop>
+		</step>
+		
+		
+		
+	</scrapeRules>
+	
+</intelliScraper>
