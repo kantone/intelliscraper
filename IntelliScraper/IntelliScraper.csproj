@@ -55,14 +55,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scrape\ProxyManager.cs" />
-    <Compile Include="Scrape\ScrapeData.cs" />
     <Compile Include="Scrape\Scraper.cs" />
     <Compile Include="Scrape\ScraperAction.cs" />
-    <Compile Include="Scrape\ScrapeRuleDef.cs" />
+    <Compile Include="Scrape\UserAgentManager.cs" />
     <Compile Include="Utils\Utils.cs" />
-    <Compile Include="Xml\data.cs">
-      <DependentUpon>data.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Xml\data.Generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -74,17 +70,23 @@
     <None Include="App.config" />
     <None Include="Xml\data.xsd">
       <SubType>Designer</SubType>
-      <Generator>XsdToClasses</Generator>
       <LastGenOutput>data.Generated.cs</LastGenOutput>
+      <Generator>XsdToClasses</Generator>
+      <CustomToolNamespace>IntelliScraper.Data</CustomToolNamespace>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="testData\input2.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TO-DO.txt" />
+    <Content Include="testData\input1.xml" />
     <Content Include="testData\example.xml" />
     <Content Include="testData\intelliScraper.xml" />
-    <Content Include="xsdClassGenerator.txt" />
     <Content Include="Xml\data.Generated.xml">
       <DependentUpon>data.xsd</DependentUpon>
     </Content>
+    <Content Include="xsdClassGenerator.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="log\" />

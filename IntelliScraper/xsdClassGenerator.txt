@@ -1,3 +1,3 @@
 ﻿Use xsd.exe
 
-xsd "xsd/data.xsd" /classes /namespace:IntelliScraper.Data /out:outDirectory
+xsd "xsd/data.xsd" /classes /enableLinqDataSet /namespace:IntelliScraper.Data /out:outDirectory

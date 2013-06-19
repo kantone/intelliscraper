@@ -12,7 +12,7 @@ namespace IntelliScraper
     {
         static void Main(string[] args)
         {
-            string fname = @"F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\testData\example.xml";
+            string fname = @"F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\testData\input2.xml";
             Factory.Instance.Run(fname);
         }
 

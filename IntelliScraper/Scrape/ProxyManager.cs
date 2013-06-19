@@ -11,13 +11,15 @@ namespace IntelliScraper.Scrape
         public string Port { get; set; }
         public string Username{get;set;}
         public string Password {get;set;}
+        public string Domain { get; set; }
         public ProxyModel(){}
-        public ProxyModel(string Ip, string Port, string Username, string Password)
+        public ProxyModel(string Ip, string Port, string Username, string Password,string Domain)
         {
             this.Ip = Ip;
             this.Username = Username;
             this.Password = Password;
             this.Port = Port;
+            this.Domain = Domain;
         }
     }
 
@@ -63,9 +65,10 @@ namespace IntelliScraper.Scrape
                 if (!string.IsNullOrEmpty(row))
                 {
                     List<string> vals = new List<string>(row.Split(';'));
-                    p.Add(new ProxyModel(vals[0], vals[1], vals[2], vals[3]));
+                    p.Add(new ProxyModel(vals[0], vals[1], vals[2], vals[3],vals[4]));
                 }
             }
+          
 
             return p;
         }
