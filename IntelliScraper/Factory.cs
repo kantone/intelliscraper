@@ -27,23 +27,22 @@ namespace IntelliScraper
 
 
         public ILog log { get; set; }
-        public string  appDirectory { get; set; }
-        public WebClient client { get; set; }
-        public  IntelliScraper.Data.intelliScraper i { get; set; }
+        public string  appDirectory { get; set; }       
+        public  IntelliScraper.Db.intelliScraper i { get; set; }
         public IntelliScraper.Scrape.ProxyManager proxyManager { get; set; }
         public IntelliScraper.Scrape.UserAgentManager userAgentManager { get; set; }
         private System.IO.StreamWriter csvWriter { get; set; }
+        public Plugin.PluginManager pluginManager { get; set; }
+        public CookieAwareWebClient lastClient { get; set; }
+            
         //Add custom logger info
         private static readonly log4net.Core.Level notifyLevel = new log4net.Core.Level(50000, "I-INFO");
-       
-       
 
         /// <summary>
         /// Inizialize Intelliscraper
         /// </summary>
         private Factory()
-        {
-            
+        {            
             //get app directory
             this.appDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
@@ -52,10 +51,13 @@ namespace IntelliScraper
             XmlConfigurator.Configure();
             this.log = LogManager.GetLogger("IntelliScraper");
 
-            //Inizializate
-            this.client = new WebClient();
+            //Inizializate            
             this.i = null;
 
+            //Load plugins
+            iInfo("Loading plugins");
+            pluginManager = new Plugin.PluginManager();
+            iInfo(string.Format("Loaded {0} plugins",pluginManager.plugins.Count.ToString()));
             
         }
 
@@ -64,7 +66,7 @@ namespace IntelliScraper
         {
             if (this.i != null)
             {
-                if (this.i.settings.logIscraperInfo)
+                if (this.i.Project.ProjectInfo.logIscraperInfo)
                 {
                     log.Logger.Log(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, notifyLevel, message, null);                 
                 }
@@ -75,28 +77,28 @@ namespace IntelliScraper
         /// <summary>
         /// Csv Writer
         /// </summary>
-        public System.IO.StreamWriter openCsvFileWriter()
+        public System.IO.StreamWriter openCsvFileWriter(Db.intelliScraperProjectStoreInfo s)
         {
 
             bool append = true;
-            if (this.i.storeInfo.csvFileClear)
+            if (s.CsvExcelSetting.csvFileClear)
                 append = false;
-            this.csvWriter = new System.IO.StreamWriter(this.i.storeInfo.csvFileSaveTo, append);
+            this.csvWriter = new System.IO.StreamWriter(s.CsvExcelSetting.csvFileSaveTo, append);
             return this.csvWriter;
         }
 
         /// <summary>
         /// Add Line to csv
         /// </summary>
-        public bool appendCsvLine(string[] data)
+        public bool appendCsvLine(string[] data, Db.intelliScraperProjectStoreInfo ss)
         {
             try
             {
-                System.IO.StreamWriter rw = openCsvFileWriter();
+                System.IO.StreamWriter rw = openCsvFileWriter(ss);
                 string line = string.Empty;
                 foreach (string s in data)
                 {
-                    line += string.Format("{0}{1}", s,this.i.storeInfo.csvSeparator);
+                    line += string.Format("{0}{1}", s, ss.CsvExcelSetting.csvSeparator);
                 }
                 rw.WriteLine(line);
                 rw.Close();
@@ -108,8 +110,7 @@ namespace IntelliScraper
                 return false;
             }
         }
-
-
+        
         /// <summary>
         /// Load some data and Run scraping
         /// </summary>
@@ -117,33 +118,52 @@ namespace IntelliScraper
         {
             try
             {
-               // this.log.Info(string.Format("Load scraping rules from {0}", xmlInput));
+                this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
                 this.i = Xml.Serialization.Serialize(xmlInput);
 
-                if (i.settings.showInitialMessage)
+                if (i.Project.ProjectInfo.showInitialMessage)
                 {
-                    Console.WriteLine(i.settings.initialMessage);
+                    Console.WriteLine(i.Project.ProjectInfo.initialMessage);
                     Console.WriteLine(string.Empty);
                 }
 
                 //load proxy
-                if (i.settings.useProxy)
+                if (i.Project.ProxyInfo.useProxy)
                 {
-                    this.log.Info(string.Format("Proxy support enabled, load proxy list from {0}", i.settings.proxyFile));
-                    List<Scrape.ProxyModel> proxies =  IntelliScraper.Scrape.ProxyManager.GetProxyList(i.settings.proxyFile);
-                    this.proxyManager = new IntelliScraper.Scrape.ProxyManager(proxies);
+                    if (i.Project.ProxyInfo.type == Db.intelliScraperProjectProxyInfoType.file)
+                    {
+                        this.log.Info(string.Format("Proxy support enabled, load proxy list from {0}", i.Project.ProxyInfo.proxyFile));
+                        List<Scrape.ProxyModel> proxies = IntelliScraper.Scrape.ProxyManager.GetProxyList(i.Project.ProxyInfo.proxyFile);
+                        this.proxyManager = new IntelliScraper.Scrape.ProxyManager(proxies);
+                    }
+                    else
+                    {
+                         this.log.Info(string.Format("Proxy support enabled, load {0} custom proxies", i.Project.ProxyInfo.proxies.Count.ToString()));
+                        List<Scrape.ProxyModel> proxies = new List<Scrape.ProxyModel>();
+                        foreach(Db.intelliScraperProjectProxyInfoProxies proxy in i.Project.ProxyInfo.proxies)
+                        {
+                           proxies.Add(new Scrape.ProxyModel(proxy.ip,proxy.port.ToString(),proxy.userName,proxy.password,proxy.domain));
+                        }
+                        this.proxyManager = new IntelliScraper.Scrape.ProxyManager(proxies);
+                    }
+                }
+                
+                //Load user agent
+                foreach(Db.HttpHeadersInfo header in i.Project.ScrapingSetting.GlobalHttpHeadersInfo)
+                {
+                     this.userAgentManager.UserAgents.Add(header.value);
                 }
 
-                //Load user agents
-                if (i.settings.useCustomUserAgentFileList)
+                //Load user agents from file              
+                if (i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile)
                 {
-                    this.log.Info(string.Format("Loading user agent rotator from file {0}", i.settings.customUserAgentFile));
-                    List<string> agents =  IntelliScraper.Scrape.UserAgentManager.GetUserAgentList(i.settings.customUserAgentFile);
+                    this.log.Info(string.Format("Loading user agent rotator from file {0}", i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile));
+                    List<string> agents =  IntelliScraper.Scrape.UserAgentManager.GetUserAgentList(i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile);
                     this.userAgentManager = new Scrape.UserAgentManager(agents);
                 }
 
-                Scraper s = new Scraper();
-                s.RunScraping(i);
+                Scrape.Scraper s = new  Scrape.Scraper();
+                s.Run(i);
 
             }
             catch (Exception ex)
@@ -151,61 +171,78 @@ namespace IntelliScraper
                 this.log.Error(ex);
             }
         }
-
+        
         /// <summary>
         /// Set next proxy
         /// </summary>
-        public void setWebClientNext()
+        public CookieAwareWebClient getWebClientNext(string customUserAgent,Db.HttpHeadersInfoCollection httpHeaders)
         {
+            CookieAwareWebClient client = new CookieAwareWebClient();
+
             //User Agent
-            if (i.settings.useCustomUserAgentFileList == false)
+            if (!string.IsNullOrEmpty(customUserAgent))
             {
-                if (string.IsNullOrEmpty(i.settings.userAgent))
-                    this.client.Headers.Add("user-agent", i.settings.userAgent);
+                client.Headers.Add("user-agent", customUserAgent);
             }
-            else  this.client.Headers.Add("user-agent", this.userAgentManager.getNext());
-            
-            //Custom httpHeader
-            if (i.settings.globalHttpHeader.Count > 0)
+            else
             {
-                foreach (Data.httpHeaders h in i.settings.globalHttpHeader)
-                    addHttpHeaderToClient(h);
+                if(this.userAgentManager != null)
+                    client.Headers.Add("user-agent", this.userAgentManager.getNext());
             }
 
+            //Global httpHeader
+            foreach (Db.HttpHeadersInfo h in i.Project.ScrapingSetting.GlobalHttpHeadersInfo)
+                client = addHttpHeaderToClient(client, h);
+
+            //Custom httpHeader
+            foreach (Db.HttpHeadersInfo h in httpHeaders)
+                client = addHttpHeaderToClient(client, h);
+            
+
             //Proxy
-            if (i.settings.useProxy)
+            if (i.Project.ProxyInfo.useProxy)
             {
                 //Disable certificate validation
                 System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
                 Scrape.ProxyModel proxy = proxyManager.getNext();
                 WebProxy p = new WebProxy(proxy.Ip, Int32.Parse(proxy.Port));
-                
+
                 if (!string.IsNullOrEmpty(proxy.Username) && !string.IsNullOrEmpty(proxy.Password))
                 {
                     if (!string.IsNullOrEmpty(proxy.Domain))
                     {
-                        p.Credentials = new NetworkCredential(proxy.Username, proxy.Password, proxy.Domain);
-                        Factory.Instance.client.Credentials = new NetworkCredential(proxy.Username, proxy.Password, proxy.Domain);
+                        if (!string.IsNullOrEmpty(proxy.Username) &&   !string.IsNullOrEmpty(proxy.Password))
+                        {
+                            p.Credentials = new NetworkCredential(proxy.Username, proxy.Password, proxy.Domain);
+                            client.Credentials = new NetworkCredential(proxy.Username, proxy.Password, proxy.Domain);
+                        }
                     }
                     else
                     {
-                        p.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
-                        Factory.Instance.client.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
+                        if (!string.IsNullOrEmpty(proxy.Username) && !string.IsNullOrEmpty(proxy.Password))
+                        {
+                            p.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
+                            client.Credentials = new NetworkCredential(proxy.Username, proxy.Password);
+                        }
                     }
 
                 }
-                Factory.Instance.client.Proxy = p;
+                
+                client.Proxy = p;
             }
+            lastClient = client;
+            return client;
         }
-
+        
         /// <summary>
         /// Add custom httpHeader to client
         /// </summary>
-        public void addHttpHeaderToClient(Data.httpHeaders h)
+        public CookieAwareWebClient addHttpHeaderToClient(CookieAwareWebClient client, Db.HttpHeadersInfo h)
         {
-            if(!string.IsNullOrEmpty(h.name) && !string.IsNullOrEmpty(h.value))
-                this.client.Headers.Add(h.name, h.value);
+            if (!string.IsNullOrEmpty(h.name) && !string.IsNullOrEmpty(h.value))
+                client.Headers.Add(h.name, h.value);
+            return client;
         }
     }
 }

@@ -1,0 +1,783 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="iSchema" targetNamespace="http://tempuri.org/iSchema.xsd" elementFormDefault="qualified" xmlns="http://tempuri.org/iSchema.xsd" xmlns:mstns="http://tempuri.org/iSchema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="intelliScraper">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="Project">
+          <xs:complexType>
+            <xs:sequence>
+
+              <xs:element name="ProjectInfo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="projectName"/>
+                    <xs:element type="xs:boolean" name="showInitialMessage"/>
+                    <xs:element type="xs:string" name="initialMessage"/>
+                    <xs:element type="xs:boolean" name="logIscraperInfo"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="ProxyInfo">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:boolean" name="useProxy"/>
+                    <xs:element type="xs:string" name="proxyFile"/>
+                    <xs:element  name="type">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="file" />
+                          <xs:enumeration value="custom" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="proxies" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:boolean" name="autenticate"/>
+                          <xs:element type="xs:string" name="userName"/>
+                          <xs:element type="xs:string" name="password"/>
+                          <xs:element type="xs:string" name="domain"/>
+                          <xs:element type="xs:string" name="ip"/>
+                          <xs:element type="xs:string" name="port"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="ScrapingSetting">
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <xs:element type="xs:int" name="waitEachRequestMilliseconds"/>
+                    <xs:element type="xs:int" name="waitAfterError"/>
+                    <xs:element type="xs:string" name="imageFolderDownload"/>
+
+                    <xs:element name="GlobalHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
+                    
+                    <xs:element name="GlobalUserAgentsInfo" >
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:boolean" name="loadAgentsFromFile"/>
+                          <xs:element type="xs:string" name="customUserAgentFile"/>                         
+                          <xs:element name="agentValue" maxOccurs="unbounded" minOccurs="0" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="credential" >
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:boolean" name="useNetworkCredential"/>
+                          <xs:element type="xs:string" name="username"/>
+                          <xs:element type="xs:string" name="password"/>
+                          <xs:element type="xs:string" name="domain"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element  name="FtpSetting" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:boolean" name="authenticate" />
+                    <xs:element type="xs:string" name="ftpServerString" />
+                    <xs:element type="xs:string" name="user" />
+                    <xs:element type="xs:string" name="pass" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+              <xs:element name="StoreInfo" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="Id"/>
+                    <xs:element  name="type">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="sqlServer" />
+                          <xs:enumeration value="sqlServerCE" />
+                          <xs:enumeration value="MySql" />
+                          <xs:enumeration value="PostgreSQL" />
+                          <xs:enumeration value="Oracle" />
+                          <xs:enumeration value="csv" />
+                          <xs:enumeration value="excel" />
+                          <xs:enumeration value="json" />
+                          <xs:enumeration value="xml" />
+                          <xs:enumeration value="none" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="CsvExcelSetting">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="csvHeader"/>
+                          <xs:element type="xs:string" name="csvFileSaveTo" />
+                          <xs:element type="xs:boolean" name="csvFileClear" />
+                          <xs:element type="xs:string" name="csvSeparator" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="DatabaseSetting">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="connection"/>
+                          <xs:element type="xs:string" name="providerName"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="XmlSetting">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="xmlFileSaveTo" />
+                          <xs:element type="xs:boolean" name="xmlFileClear" />
+                          <xs:element type="xs:string" name="xmlParentTag" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                    <xs:element name="JsonSetting">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="jsonFileSaveTo" />
+                          <xs:element type="xs:boolean" name="jsonFileClear" />
+                          <xs:element type="xs:string" name="jsonParentTag" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      <xs:element name="actions">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element type="xs:string" name="id" />
+                  <xs:element type="xs:string" name="ruleId" />
+                  <xs:element name="type">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="loadHtmlFromFile" />
+                        <xs:enumeration value="httpGet" />
+                        <xs:enumeration value="httpPost" />
+                        <xs:enumeration value="xpathSingle" />
+                        <xs:enumeration value="xpathCollection" />
+                        <xs:enumeration value="loop_link" />
+                        <xs:enumeration value="download" />
+                        <xs:enumeration value="upload" />
+                        <xs:enumeration value="imageConvert" />
+                        <xs:enumeration value="ftpPut" />
+                        <xs:enumeration value="zip" />
+                        <xs:enumeration value="save" />
+                        <xs:enumeration value="screenShot" />
+                        <xs:enumeration value="plugin" />
+                        <xs:enumeration value="none" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="input" >
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="type">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="custom" />
+                              <xs:enumeration value="fromAction" />
+                              <xs:enumeration value="none" />
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:element>
+                        <xs:element type="xs:string" name="actionId" />
+                        <xs:element type="xs:string" name="customInputValue" />
+                      </xs:sequence>
+                    </xs:complexType>
+                        
+                  </xs:element>                  
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+
+      <xs:element name="rules">
+          <xs:complexType>
+            <xs:sequence>
+              
+              
+              <xs:element name="httpGet" type="httpGet" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="httpPost" type="httpPost" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="xpathSingle" type="xpathSingle" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="xpathCollection" type="xpathCollection" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="loop_link" type="loop_link" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="download" type="download" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="actionZip" type="actionZip" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="ftpPut" type="ftpPut" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="save" type="save" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="imageConvert" type="imageConvert" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+
+      <xs:element name="postProcess">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="startEndWith" type="startEndWith" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="substring" type="substring" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="replace" type="replace" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="trim" type="trim" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="append" type="append" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="regularExpression" type="regularExpression" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="htmlEncodeDecode" type="htmlEncodeDecode" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+            
+      
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<!-- RULES DEFINITIONS -->
+<xs:complexType name="httpGet">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : getHtml
+      Input "URL" : custom or from rule id.value ( by type of InputRule )
+      Return      : String html
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string"  name="id" />
+    <xs:element type="xs:string"  name="customUrl" />
+    <xs:element name="urlType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="custom" />
+          <xs:enumeration value="fromInput" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element  name="customUserAgent" type="xs:string" />
+    <xs:element name="customHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="httpPost">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : perfomr http Post
+      Input "URL" : custom or from action id.value ( by type of InputRule )
+      PostData    : custom or from action id.value ( type of List(keyValuePair(string,object)) )
+      Return      : String html and client with saved session
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string"  name="id" />
+    <xs:element type="xs:string"  name="customUrl" />
+    <xs:element name="inputUrlAttributeKey" type="xs:string" />
+    <xs:element name="urlType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="custom" />
+          <xs:enumeration value="fromInput" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element name="postData" minOccurs="0" maxOccurs="unbounded">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="key" type="xs:string" />
+          <xs:element name="inputAttributeKey" type="xs:string" />
+          <xs:element name="customValue" type="xs:string" />
+          <xs:element name="type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="fromInput" />
+                <xs:enumeration value="custom" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element  name="customUserAgent" type="xs:string" />
+    <xs:element name="customHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="xpathSingle">
+    <xs:annotation>
+      <xs:documentation>
+        Info        : fetch xpath values from html or node
+        Input "URL" : Html or Single Node      
+        Return      : List xpathSingle (name,value)
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element type="xs:string"  name="id" />
+      <xs:element name="attributes" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:string"  name="id" />            
+            <xs:element type="xs:string" name="xpath"/>
+            <xs:element type="xs:string" name="attributeName"/>
+            <xs:element name="getType">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="attribute" />
+                  <xs:enumeration value="text" />
+                  <xs:enumeration value="html" />
+                  <xs:enumeration value="singleNode" />
+                  <xs:enumeration value="nodeCollection" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="postProcessTrigger" type="postProcess" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="postProcessGroupId" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="postProcessTriggerGroup" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element type="xs:string"  name="id" />
+            <xs:element name="postProcessTrigger" type="postProcess" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+
+      </xs:element>
+       
+ 
+      
+    </xs:sequence>
+  </xs:complexType>
+
+<xs:complexType name="xpathCollection">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : perform xpath and fetch nodes. Foreach node perform xpath single
+      Input "URL" : Html or Single Node
+      Return      : List of List xpathSingle (name,value)
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string"  name="id" />
+    <xs:element type="xs:string" name="xpath"/>
+    <xs:element type="xpathSingle" name="xpathSingle" minOccurs="0" maxOccurs="unbounded"/>   
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loop_link">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : loop trought link (custom,from rule,from csv,from db) and execute triggers
+      Input       : List of attributes list(keyvaluePair(string,object)
+      Return      : List object 
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string"  name="id" />
+    <xs:element type="xpathSingle" name="xpathSingle" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="inputAttributeKey" type="xs:string" />
+    <xs:element name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="fromInputAttributes" />
+          <xs:enumeration value="customUrl" />
+          <xs:enumeration value="fromCsv" />
+          <xs:enumeration value="fromDatabase" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element  name="StartEndData">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:string" name="url"/>
+          <xs:element type="xs:boolean" name="getEndPageNumberFromRule"/>
+          <xs:element type="xs:boolean" name="getStartPageNumberFromRule"/>
+          <xs:element type="xs:string" name="actionAttributeId_getEndPage"/>
+          <xs:element type="xs:string" name="actionAttributeId_getStartPage"/>
+          <xs:element type="xs:int" name="start"/>
+          <xs:element type="xs:int" name="end"/>
+          <xs:element type="xs:string" name="appendBeforePageNumber"/>
+          <xs:element type="xs:string" name="appendAfterPageNumber"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element name="multiThreadOption">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:boolean" name="enableMultithread" />
+          <xs:element type="xs:boolean" name="setThreadMaxNumbers" />
+          <xs:element type="xs:int" name="ThreadNumbers" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element name="multiXpathThreadOption">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:boolean" name="enableMultithread" />
+          <xs:element type="xs:boolean" name="setThreadMaxNumbers" />
+          <xs:element type="xs:int" name="ThreadNumbers" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element  name="csvInputDefinition">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:string"  name="storeId" />
+          <xs:element type="xs:string"  name="columnName" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element  name="databaseInputDefinition">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="readAllTableColumn" />
+                <xs:enumeration value="query" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element type="xs:string"  name="storeId" />
+          <xs:element type="xs:string"  name="tableName" />
+          <xs:element type="xs:string"  name="columnName" />
+          <xs:element type="xs:string"  name="query" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    
+  </xs:sequence>
+</xs:complexType>
+  
+<xs:complexType  name="download">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : download file/files or image
+      Input "URL" : link or list of file to download
+      Return      : file path saved
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:boolean" name="autoRename"/>
+    <xs:element name="DirSaveToFileInfo">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:string" name="startFolder"/>
+          <xs:element type="xs:boolean" name="generateSubFolder"/>
+          <xs:element type="xs:string" name="SubFolderCustomName"/>
+          <xs:element name="subfolderNameType">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="yy_mm_dd" />
+                <xs:enumeration value="yy_mm" />
+                <xs:enumeration value="yy" />
+                <xs:enumeration value="mm" />
+                <xs:enumeration value="dd" />
+                <xs:enumeration value="mm_dd" />
+                <xs:enumeration value="custom" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element name="MultiThreadOption">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:boolean" name="enableMultithread" />
+          <xs:element type="xs:boolean" name="setThreadMaxNumbers" />
+          <xs:element type="xs:int" name="ThreadNumbers" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element  name="customUserAgent" type="xs:string" />
+    <xs:element name="customHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="actionZip">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : zip file/files or image
+      Input "URL" : list of files to zip
+      Return      : file path saved
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:boolean" name="deleteZippedFiles" default="true" />
+    <xs:element type="xs:boolean" name="autoNameZip"/>
+    <xs:element type="xs:string" name="folder"/>
+    <xs:element type="xs:string" name="fileName" />
+    <xs:element name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="zipAllDownloadedFiles" />
+          <xs:enumeration value="zipCustomFilesByRulesId" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ftpPut">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : upload file to server
+      Input "URL" : list of file/files to put
+      Return      : status
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="ftpServerRuleId"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="save">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : save current data
+      Input "URL" : formatted rows
+      Return      : status
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="id" />
+    <xs:element type="xs:string" name="storeId" />
+    <xs:element type="xs:string" name="tableName" />
+    <xs:element  name="mapping" >
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element  name="map"  minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element type="xs:string" name="mapColName" />
+                <xs:element type="xs:string" name="refId" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+
+    <xs:element type="xs:boolean" name="checkExistBeforeSave"/>
+    <xs:element type="xs:string" name="checkExistAttributes"/>
+    <xs:element  name="ifExist">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="update" />
+          <xs:enumeration value="delete" />
+          <xs:enumeration value="stopAll" />
+          <xs:enumeration value="none" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+
+
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name="imageConvert">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : convert image and create thumbs
+      Input       : image or list of image file to convert
+      Return      : status
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:boolean" name="convertToFormat"/>
+    <xs:element name="convertType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="jpg" />
+          <xs:enumeration value="png" />
+          <xs:enumeration value="tiff" />
+          <xs:enumeration value="bmp" />
+          <xs:enumeration value="ico" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+
+    <xs:element type="xs:boolean" name="changeSize"/>
+    <xs:element type="xs:int" name="toSizew"/>
+    <xs:element type="xs:int" name="toSizeH"/>
+    <xs:element type="xs:boolean" name="createThumbs"/>
+    <xs:element type="xs:boolean" name="createThumbFolder"/>
+    <xs:element name="Thumbs" minOccurs="0" maxOccurs="unbounded">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:string" name="name"/>
+          <xs:element type="xs:int" name="toSizeH"/>
+          <xs:element type="xs:int" name="toSizeW"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+
+  </xs:sequence>
+</xs:complexType>
+ 
+<!-- BROWSER TYPES -->
+<xs:complexType name="HttpHeadersInfo">
+  <xs:sequence>
+    <xs:element  name="name" type="xs:string" />
+    <xs:element  name="value" type="xs:string" />
+  </xs:sequence>
+</xs:complexType>
+
+<!-- POST PROCESS DATA TYPES -->
+<xs:complexType name="startEndWith">
+<xs:sequence>
+  <xs:element type="xs:string" name="id"/>
+  <xs:element type="xs:boolean" name="startEndWithEnabled"/>
+  <xs:element type="xs:string" name="starEndtWithVal"/>
+  <xs:element type="xs:string" name="startEndWithAddVal"/>
+  <xs:element  name="type">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="startWith" />
+        <xs:enumeration value="endWith" />
+        <xs:enumeration value="both" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element  name="attachType">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="before" />
+        <xs:enumeration value="after" />
+        <xs:enumeration value="both" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType  name="substring">
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element  name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="simple" />
+          <xs:enumeration value="fromTo" />
+          <xs:enumeration value="search" />
+          <xs:enumeration value="searchTo" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element type="xs:int" name="substring"/>
+    <xs:element type="xs:int" name="substringFrom"/>
+    <xs:element type="xs:int" name="substringTo"/>
+    <xs:element type="xs:string" name="substringSearch"/>
+  </xs:sequence>
+</xs:complexType>
+  
+<xs:complexType name="replace">
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:string" name="findText" />
+    <xs:element type="xs:string" name="replaceText"/>
+  </xs:sequence>
+</xs:complexType>
+  
+<xs:complexType  name="trim">
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element  name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="trimStart" />
+          <xs:enumeration value="trimEnd" />
+          <xs:enumeration value="both" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element type="xs:string" name="trimValue" default=" "/>
+  </xs:sequence>
+</xs:complexType>
+ 
+<xs:complexType name="append">
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:string" name="appendValue"/>
+    <xs:element name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="before" />
+          <xs:enumeration value="after" />
+          <xs:enumeration value="both" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="regularExpression">
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:string" name="regularExpressionValue"  minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="htmlEncodeDecode">
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:boolean" name="HtmlDecode"/>
+    <xs:element type="xs:boolean" name="HtmlEncode"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="postProcess">
+  <xs:sequence>
+    <xs:element name="id" type="xs:string" />
+    <xs:element name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="startEndWith" />
+          <xs:enumeration value="substring" />
+          <xs:enumeration value="replace" />
+          <xs:enumeration value="trim" />
+          <xs:enumeration value="append" />
+          <xs:enumeration value="regex" />
+          <xs:enumeration value="htmlEncodeDecode" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+
+
+</xs:schema>
+
+
+
+    

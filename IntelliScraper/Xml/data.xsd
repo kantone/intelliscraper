@@ -35,6 +35,8 @@
         </xs:restriction>        
       </xs:simpleType>
     </xs:element>
+
+    <xs:element type="xs:boolean" name="HtmlDecode"/>
   
 
     <xs:element type="xs:boolean" name="makeSubstring"/>
@@ -58,21 +60,37 @@
     <xs:element type="xs:string" name="findText" />
     <xs:element type="xs:string" name="replaceText"/>
 
+    <xs:element type="xs:boolean" name="useRegularExpression"/>
+    <xs:element type="xs:string" name="regularExpression"/>
+
   </xs:sequence>
 </xs:complexType>
 
 <!-- Define ConvertAction Entity -->
 <xs:complexType  name="ConvertActionEntity">
   <xs:sequence>
-    <xs:element type="xs:boolean" name="convertToFormat"/>
-    <xs:element type="xs:string" name="toFormat"/>
+    <xs:element type="xs:boolean" name="convertToFormat"/>   
+    <xs:element name="convertImageType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="jpg" />
+          <xs:enumeration value="png" />
+          <xs:enumeration value="tiff" />
+          <xs:enumeration value="bmp" />
+          <xs:enumeration value="ico" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    
     <xs:element type="xs:boolean" name="changeSize"/>
     <xs:element type="xs:int" name="toSizew"/>
     <xs:element type="xs:int" name="toSizeH"/>
     <xs:element type="xs:boolean" name="createThumbs"/>
-    <xs:element name="Thumbs">
+    <xs:element type="xs:boolean" name="createThumbFolder"/>
+    <xs:element name="Thumbs" minOccurs="0" maxOccurs="unbounded">
       <xs:complexType>
         <xs:sequence>
+          <xs:element type="xs:string" name="name"/>
           <xs:element type="xs:int" name="toSizeH"/>
           <xs:element type="xs:int" name="toSizeW"/>
         </xs:sequence>
@@ -134,11 +152,12 @@
            
         <xs:element type="xs:string" name="id"/>    
         <xs:element type="xs:anyType" name="fetchedData" />
-        <xs:element type="xs:string" name="url"/>     
-        <xs:element type="xs:string" name="pluginNsName"/>
+        <xs:element type="xs:string" name="url"/>
+        <xs:element type="xs:boolean" name="usePlugin"/>
+        <xs:element type="xs:boolean" name="download"/>
+        <xs:element type="xs:string" name="pluginName"/>
         <xs:element type="xs:string" name="htmlFileName"/>
         <xs:element type="httpHeaders" name="customHttpHeader" maxOccurs="unbounded" minOccurs="0" />
-      
         <xs:element name="type">
           <xs:simpleType>
             <xs:restriction base="xs:string">
@@ -146,8 +165,9 @@
               <xs:enumeration value="httpPost" />
               <xs:enumeration value="plugin" />
               <xs:enumeration value="xpath" />
-              <xs:enumeration value="download" />
               <xs:enumeration value="loadHtmlFromfile" />
+              <xs:enumeration value="ftpPut" />
+              <xs:enumeration value="ftpGet" />
             </xs:restriction>                
           </xs:simpleType>
         </xs:element>
@@ -177,19 +197,24 @@
         <xs:element name="DownloadAction">              
           <xs:complexType>
             <xs:sequence>
-              <xs:element type="ConvertActionEntity" name="ConvertAction" minOccurs="0"/>
-              <xs:element name="DirSaveToFileInfo">
+              <xs:element type="ConvertActionEntity" name="ImgConvertAction" minOccurs="0"/>
+              <xs:element type="xs:boolean" name="autoRenameImage"/>
+              <xs:element type="xs:string" name="inputRuleId-xPathId"/>
+              <xs:element name="DirSaveToFileInfo">              
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element type="xs:string" name="startFolder"/>
-                    <xs:element type="xs:string" name="generateSubFolder"/>
+                    <xs:element type="xs:boolean" name="generateSubFolder"/>
                     <xs:element type="xs:string" name="SubFolderCustomName"/>
                     <xs:element name="subfolderNameType">
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
-                          <xs:enumeration value="yymmdd" />
-                          <xs:enumeration value="yy/mmdd" />
-                          <xs:enumeration value="yy/mm/dd" />
+                          <xs:enumeration value="yy_mm_dd" />
+                          <xs:enumeration value="yy_mm" />
+                          <xs:enumeration value="yy" />
+                          <xs:enumeration value="mm" />
+                          <xs:enumeration value="dd" />
+                          <xs:enumeration value="mm_dd" />
                           <xs:enumeration value="custom" />
                         </xs:restriction>                            
                       </xs:simpleType>
@@ -211,6 +236,7 @@
     <xs:element type="xs:boolean" name="enableSave" />
     
     <!--Wich kind of mapping and save will be made?-->
+    <!-- 
     <xs:element  name="inputType">
       <xs:simpleType>
         <xs:restriction base="xs:string">
@@ -220,7 +246,7 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:element>
-
+-->
     <!--Table mapping-->
     <xs:element type="xs:string" name="tableName" />
     <xs:element  name="mapping" >
@@ -267,7 +293,6 @@
   </xs:sequence>
 </xs:complexType>
 
-  
 
 <!--INTELLISCRAPER-->
 <xs:element name="intelliScraper">
@@ -278,6 +303,7 @@
         <xs:element name="settings">
           <xs:complexType>
             <xs:sequence>
+              <xs:element type="xs:string" name="projectName"/>
               <xs:element type="xs:boolean" name="showInitialMessage"/>
               <xs:element type="xs:string" name="initialMessage"/>
               <xs:element type="xs:boolean" name="logIscraperInfo"/>
@@ -307,10 +333,32 @@
               </xs:element>
               <xs:element type="xs:string" name="imageFolderDownload"/>
 
+              <xs:element  name="ftpSetting">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:boolean" name="authenticate" />
+                    <xs:element type="xs:string" name="ftpServerString" />
+                    <xs:element type="xs:string" name="user" />
+                    <xs:element type="xs:string" name="pass" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+                
               <xs:element type="xs:boolean" name="usePageLoop"/>
               <xs:element  name="pageLoopInfo">
                 <xs:complexType>
                   <xs:sequence>
+                    <xs:element name="MultiThreadOption">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:boolean" name="enableMultithread" />
+                          <xs:element type="xs:boolean" name="setThreadMaxNumbers" />
+                          <xs:element type="xs:int" name="ThreadNumbers" />
+                        </xs:sequence>                        
+                      </xs:complexType>                      
+                    </xs:element>
+                    
+                    
                     <xs:element type="xs:string" name="urlFormat"/>
                     <xs:element type="xs:string" name="fetchHtml"/>
                     <xs:element type="xs:string" name="urlSearcher"/>
@@ -345,14 +393,18 @@
               <xs:element  name="type">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:enumeration value="myslq" />
-                    <xs:enumeration value="mssql" />
+                    <xs:enumeration value="sqlServer" />
+                    <xs:enumeration value="sqlServerCE" />
+                    <xs:enumeration value="MySql" />
+                    <xs:enumeration value="PostgreSQL" />
+                    <xs:enumeration value="Oracle" />
                     <xs:enumeration value="csv" />
                     <xs:enumeration value="none" />
                   </xs:restriction>                  
                 </xs:simpleType>
               </xs:element>
               <xs:element type="xs:string" name="connection"/>
+              <xs:element type="xs:string" name="providerName"/>
               <xs:element type="xs:string" name="csvHeader"/>
               <xs:element type="xs:string" name="csvFileSaveTo" />
               <xs:element type="xs:boolean" name="csvFileClear" />

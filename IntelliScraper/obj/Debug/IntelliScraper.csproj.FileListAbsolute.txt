@@ -5,3 +5,11 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\Int
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\IntelliScraper\bin\Debug\BlueToque.Serializable.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\IntelliScraper\bin\Debug\BlueToque.Serializable.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\IntelliScraper\obj\Debug\IntelliScraper.exe
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.exe.config
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.exe
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.pdb
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\HtmlAgilityPack.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\log4net.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.exe
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.pdb
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.csprojResolveAssemblyReference.cache
