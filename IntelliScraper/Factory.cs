@@ -195,8 +195,11 @@ namespace IntelliScraper
                 client = addHttpHeaderToClient(client, h);
 
             //Custom httpHeader
-            foreach (Db.HttpHeadersInfo h in httpHeaders)
-                client = addHttpHeaderToClient(client, h);
+            if (httpHeaders != null)
+            {
+                foreach (Db.HttpHeadersInfo h in httpHeaders)
+                    client = addHttpHeaderToClient(client, h);
+            }
             
 
             //Proxy

@@ -8,5 +8,6 @@ namespace IntelliScraper.Scrape
     public interface IScrapeAction
     {
         object Run(object input);
+        string getName();
     }
 }

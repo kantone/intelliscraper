@@ -63,7 +63,7 @@
                         <xs:sequence>
                           <xs:element type="xs:boolean" name="loadAgentsFromFile"/>
                           <xs:element type="xs:string" name="customUserAgentFile"/>                         
-                          <xs:element name="agentValue" maxOccurs="unbounded" minOccurs="0" />
+                          <xs:element  type="xs:string" name="agentValue" maxOccurs="unbounded" minOccurs="0" />
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>
@@ -87,10 +87,12 @@
               <xs:element  name="FtpSetting" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
+                    <xs:element type="xs:string" name="id" />
                     <xs:element type="xs:boolean" name="authenticate" />
                     <xs:element type="xs:string" name="ftpServerString" />
                     <xs:element type="xs:string" name="user" />
                     <xs:element type="xs:string" name="pass" />
+                    <xs:element type="xs:string" name="domain" />
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -185,7 +187,9 @@
                         <xs:enumeration value="loop_link" />
                         <xs:enumeration value="download" />
                         <xs:enumeration value="upload" />
+                        <!-- 
                         <xs:enumeration value="imageConvert" />
+                        -->
                         <xs:enumeration value="ftpPut" />
                         <xs:enumeration value="zip" />
                         <xs:enumeration value="save" />
@@ -220,7 +224,6 @@
         </xs:complexType>
       </xs:element>
 
-
       <xs:element name="rules">
           <xs:complexType>
             <xs:sequence>
@@ -235,11 +238,13 @@
               <xs:element name="actionZip" type="actionZip" minOccurs="0" maxOccurs="unbounded" />
               <xs:element name="ftpPut" type="ftpPut" minOccurs="0" maxOccurs="unbounded" />
               <xs:element name="save" type="save" minOccurs="0" maxOccurs="unbounded" />
-              <xs:element name="imageConvert" type="imageConvert" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="screenShot" type="screenShot" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="plugin" type="plugin" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="upload" type="upload" minOccurs="0" maxOccurs="unbounded" />
+
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-
 
       <xs:element name="postProcess">
         <xs:complexType>
@@ -385,7 +390,7 @@
   </xs:annotation>
   <xs:sequence>
     <xs:element type="xs:string"  name="id" />
-    <xs:element type="xs:string" name="xpath"/>
+    <xs:element type="xs:string" name="xpath" minOccurs="0" maxOccurs="unbounded"/>
     <xs:element type="xpathSingle" name="xpathSingle" minOccurs="0" maxOccurs="unbounded"/>   
   </xs:sequence>
 </xs:complexType>
@@ -395,13 +400,22 @@
     <xs:documentation>
       Info        : loop trought link (custom,from rule,from csv,from db) and execute triggers
       Input       : List of attributes list(keyvaluePair(string,object)
-      Return      : List object 
+      Return      : List object (html, list(keyvaluePair(string,object))
     </xs:documentation>
   </xs:annotation>
   <xs:sequence>
     <xs:element type="xs:string"  name="id" />
+    <xs:element type="xs:string" name="preXpath"/>
     <xs:element type="xpathSingle" name="xpathSingle" minOccurs="0" maxOccurs="unbounded"/>
     <xs:element name="inputAttributeKey" type="xs:string" />
+    <xs:element name="xpathType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="single" />
+          <xs:enumeration value="collection" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
     <xs:element name="type">
       <xs:simpleType>
         <xs:restriction base="xs:string">
@@ -422,6 +436,8 @@
           <xs:element type="xs:string" name="actionAttributeId_getStartPage"/>
           <xs:element type="xs:int" name="start"/>
           <xs:element type="xs:int" name="end"/>
+          <xs:element type="xs:int" name="appendStartVal" default="0"/>
+          <xs:element type="xs:int" name="appendEndVal" default="0"/>          
           <xs:element type="xs:string" name="appendBeforePageNumber"/>
           <xs:element type="xs:string" name="appendAfterPageNumber"/>
         </xs:sequence>
@@ -435,16 +451,7 @@
           <xs:element type="xs:int" name="ThreadNumbers" />
         </xs:sequence>
       </xs:complexType>
-    </xs:element>
-    <xs:element name="multiXpathThreadOption">
-      <xs:complexType>
-        <xs:sequence>
-          <xs:element type="xs:boolean" name="enableMultithread" />
-          <xs:element type="xs:boolean" name="setThreadMaxNumbers" />
-          <xs:element type="xs:int" name="ThreadNumbers" />
-        </xs:sequence>
-      </xs:complexType>
-    </xs:element>
+    </xs:element>    
     <xs:element  name="csvInputDefinition">
       <xs:complexType>
         <xs:sequence>
@@ -484,7 +491,11 @@
     </xs:documentation>
   </xs:annotation>
   <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
     <xs:element type="xs:boolean" name="autoRename"/>
+    <xs:element type="xs:string" name="inputAttributeKey"/>
+    <xs:element type="xs:boolean" name="setFileExtension"/>
+    <xs:element type="xs:string" name="fileExtension"/>
     <xs:element name="DirSaveToFileInfo">
       <xs:complexType>
         <xs:sequence>
@@ -518,6 +529,7 @@
     </xs:element>
     <xs:element  name="customUserAgent" type="xs:string" />
     <xs:element name="customHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
+    <xs:element type="imageConvert" name="ImgConvertAction" />
   </xs:sequence>
 </xs:complexType>
 
@@ -531,18 +543,81 @@
   </xs:annotation>
   <xs:sequence>
     <xs:element type="xs:string" name="id"/>
-    <xs:element type="xs:boolean" name="deleteZippedFiles" default="true" />
-    <xs:element type="xs:boolean" name="autoNameZip"/>
-    <xs:element type="xs:string" name="folder"/>
-    <xs:element type="xs:string" name="fileName" />
-    <xs:element name="type">
+    <xs:element type="xs:boolean" name="deleteZippedFiles" default="false" />
+    <xs:element type="xs:string" name="folderToSave"/>
+    <xs:element type="xs:string" name="zipFileName" />
+    <xs:element type="xs:string" name="inputAttributeKey" />    
+    <xs:element type="xs:string" name="file" minOccurs="0" maxOccurs="unbounded" />
+    <xs:element name="inputType">
       <xs:simpleType>
         <xs:restriction base="xs:string">
-          <xs:enumeration value="zipAllDownloadedFiles" />
-          <xs:enumeration value="zipCustomFilesByRulesId" />
+          <xs:enumeration value="fromInput" />
+          <xs:enumeration value="custom" />
         </xs:restriction>
       </xs:simpleType>
     </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="screenShot">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : screenShotPage
+      Input "URL" : page to show
+      Return      : file saved
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:int" name="width"/>
+    <xs:element type="xs:int" name="height" />
+    <xs:element type="xs:string" name="inputAttributeKey" />
+    <xs:element type="xs:string" name="customUrl" />
+    <xs:element type="xs:string" name="saveTo" />
+    <xs:element name="inputType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="fromInput" />
+          <xs:enumeration value="custom" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element type="imageConvert" name="ImgConvertAction" />
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="upload">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : upload
+      Input "URL" : page to show
+      Return      : file saved
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:string" name="inputAttributeKey" />
+    <xs:element type="xs:string" name="uploadUrl" />
+    <xs:element type="xs:string" name="customFileToUpload" />
+    <xs:element name="method">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="GET" />
+          <xs:enumeration value="POST" />
+          <xs:enumeration value="PUT" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element name="inputType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="fromInput" />
+          <xs:enumeration value="custom" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element  name="customUserAgent" type="xs:string" />
+    <xs:element name="customHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
   </xs:sequence>
 </xs:complexType>
 
@@ -555,7 +630,43 @@
     </xs:documentation>
   </xs:annotation>
   <xs:sequence>
-    <xs:element type="xs:string" name="ftpServerRuleId"/>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:string" name="ftpId"/>
+    <xs:element name="inputAttributeKey" type="xs:string" />
+    <xs:element type="xs:string" name="file" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="inputType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="fromInput" />
+          <xs:enumeration value="customFiles" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="plugin">
+  <xs:annotation>
+    <xs:documentation>
+      Info        : run plugin by name
+      Input       : page to show
+      Return      : file saved
+    </xs:documentation>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element type="xs:string" name="id"/>
+    <xs:element type="xs:string" name="pluginName"/>
+    <xs:element type="xs:string" name="inputAttributeKey" />
+    <xs:element type="xs:string" name="customInput" />
+    <xs:element name="inputType">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="fromInput" />
+          <xs:enumeration value="custom" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+    <xs:element type="imageConvert" name="ImgConvertAction" />
   </xs:sequence>
 </xs:complexType>
 

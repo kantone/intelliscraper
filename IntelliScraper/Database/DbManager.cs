@@ -7,7 +7,7 @@ namespace IntelliScraper.Database
 {
     public class DbManager
     {
-        PetaPoco.Database db { get; set; }
+        public PetaPoco.Database db { get; set; }
         QueryBuilder qb = new QueryBuilder();
         public DbManager(string connectionString,string providerName)
         {

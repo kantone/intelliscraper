@@ -19,7 +19,7 @@ namespace IntelliScraper.Scrape
         /// <param name="ruleId">rule id</param>
         /// <param name="data">Fethed data by rule</param>
         /// <returns></returns>
-        public static List<string[]> mapCsvToRows(Data.SaveEntityMapCollection mappings, Data.xpathEntityCollection xpathCollection, string[] cols, string ruleId, List<KeyValuePair<string, object>> data)
+     /*   public static List<string[]> mapCsvToRows(Data.SaveEntityMapCollection mappings, Data.xpathEntityCollection xpathCollection, string[] cols, string ruleId, List<KeyValuePair<string, object>> data)
         {
             List<string[]> res = new List<string[]>();
                                     
@@ -55,7 +55,7 @@ namespace IntelliScraper.Scrape
             return res;
         }
 
-
+*/
         /// <summary>
         /// Create rows to be stored into Sql Database
         /// </summary>
@@ -65,7 +65,7 @@ namespace IntelliScraper.Scrape
         /// <param name="ruleId">rule id</param>
         /// <param name="data">Fethed data by rule</param>
         /// <returns></returns>
-        public static List<List<KeyValuePair<string, object>>> mapTable(Data.SaveEntityMapCollection mappings, Data.xpathEntityCollection xpathCollection, string[] cols, string ruleId, List<KeyValuePair<string, object>> data)
+    /*    public static List<List<KeyValuePair<string, object>>> mapTable(Data.SaveEntityMapCollection mappings, Data.xpathEntityCollection xpathCollection, string[] cols, string ruleId, List<KeyValuePair<string, object>> data)
         {
             List<List<KeyValuePair<string, object>>> res = new List<List<KeyValuePair<string, object>>>();
 
@@ -101,5 +101,7 @@ namespace IntelliScraper.Scrape
             }
             return res;
         }
+    
+    */
     }
 }

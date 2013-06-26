@@ -15,47 +15,55 @@ namespace IntelliScraper
         string pass { get; set; }
         bool authenticate { get; set; }
         string ftpServerString { get; set; }
-        public FtpManager(string ftpServerString,bool authenticate,string user,string pass)
+        string domain { get; set; }
+        public FtpManager(string ftpServerString,bool authenticate,string user,string pass,string domain)
         {
             this.authenticate = authenticate;
             this.user = user;
             this.pass = pass;
             this.ftpServerString = ftpServerString;
-            
-           
+            this.domain = domain;
         }
 
-        public void upload(string file)
+        public string upload(string file)
         {
             if (System.IO.File.Exists(file))
             {
                 System.IO.FileInfo finfo = new FileInfo(file);
-                if(!ftpServerString.EndsWith("/"))
+                if (!ftpServerString.EndsWith("/"))
                     ftpServerString += "/";
                 ftpServerString += finfo.Name;
                 request = (FtpWebRequest)WebRequest.Create(ftpServerString);
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
-                if (authenticate)                
-                    request.Credentials = new NetworkCredential(user, pass);
-                
-                    // Copy the contents of the file to the request stream.
-                    StreamReader sourceStream = new StreamReader(file);
-                    byte[] fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
-                    sourceStream.Close();
-                    request.ContentLength = fileContents.Length;
-
-                    Stream requestStream = request.GetRequestStream();
-                    requestStream.Write(fileContents, 0, fileContents.Length);
-                    requestStream.Close();
-
-                    FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-                    Factory.Instance.iInfo(string.Format("Upload File Complete, status {0}", response.StatusDescription));
-            }
-                else
+                if (authenticate)
                 {
-                    Factory.Instance.log.Error(string.Format("Ftp file {0} not exist", file));
+                    if(string.IsNullOrEmpty(this.domain))
+                        request.Credentials = new NetworkCredential(user, pass);
+                    else request.Credentials = new NetworkCredential(user, pass, domain);
                 }
+
+                // Copy the contents of the file to the request stream.
+                StreamReader sourceStream = new StreamReader(file);
+                byte[] fileContents = Encoding.UTF8.GetBytes(sourceStream.ReadToEnd());
+                sourceStream.Close();
+                request.ContentLength = fileContents.Length;
+
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(fileContents, 0, fileContents.Length);
+                requestStream.Close();
+
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                Factory.Instance.iInfo(string.Format("Upload File Complete, status {0}", response.StatusDescription));
+
+                return response.ExitMessage;
+            }
+            else
+            {
+                string msg = string.Format("Ftp file {0} not exist", file);
+                Factory.Instance.log.Error(msg);
+                return msg;
+            }
         
         }
     

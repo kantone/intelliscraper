@@ -10,7 +10,7 @@ namespace IntelliScraper.Scrape.Action
     /// </summary>
     public class HtmlFromFile : IScrapeAction
     {
-
+        
         public object Run(object input)
         {
             if (input != null)
@@ -22,6 +22,13 @@ namespace IntelliScraper.Scrape.Action
                 }
             }
             return null;
+        }
+
+       
+
+        public string getName()
+        {
+            return "HtmlFromFile";
         }
 
         

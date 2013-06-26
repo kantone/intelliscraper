@@ -13,7 +13,7 @@ namespace IntelliScraper.Plugin
         public string pluginDirectory{get;set;}
         private string[] dllFileNames{get;set;}
         private ICollection<Assembly> assemblies { get; set; }
-        public List<KeyValuePair<string, IScraperPlugin>> plugins { get; set; }
+        public List<KeyValuePair<string, Scrape.IScrapeAction>> plugins { get; set; }
         public PluginManager()
         {
             string pluginDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -39,7 +39,7 @@ namespace IntelliScraper.Plugin
             }
 
             //Find valid Plugins
-            Type pluginType = typeof(IScraperPlugin);
+            Type pluginType = typeof(Scrape.IScrapeAction);
             ICollection<Type> pluginTypes = new List<Type>();
             foreach (Assembly assembly in assemblies)
             {
@@ -64,7 +64,7 @@ namespace IntelliScraper.Plugin
             }
 
             //Load internal Plugins
-            var _type = typeof(IScraperPlugin);
+            var _type = typeof(Scrape.IScrapeAction);
             var _types = AppDomain.CurrentDomain.GetAssemblies().ToList()
                 .SelectMany(s => s.GetTypes())
                 .Where(p => _type.IsAssignableFrom(p));
@@ -75,12 +75,15 @@ namespace IntelliScraper.Plugin
             }
 
             //create instances from our found types using Reflections.
-            this.plugins = new List<KeyValuePair<string, IScraperPlugin>>();
+            this.plugins = new List<KeyValuePair<string, Scrape.IScrapeAction>>();
             foreach (Type type in pluginTypes)
             {
-                IScraperPlugin plugin = (IScraperPlugin)Activator.CreateInstance(type);
-                KeyValuePair<string, IScraperPlugin> pluginInfo = new KeyValuePair<string,IScraperPlugin>(plugin.Name.ToLower(),plugin);
-                plugins.Add(pluginInfo);
+                if (!type.Namespace.Contains("IntelliScraper.Scrape.Action"))
+                {
+                    Scrape.IScrapeAction plugin = (Scrape.IScrapeAction)Activator.CreateInstance(type);
+                    KeyValuePair<string, Scrape.IScrapeAction> pluginInfo = new KeyValuePair<string, Scrape.IScrapeAction>(plugin.getName().ToLower(), plugin);
+                    plugins.Add(pluginInfo);
+                }
             }
 
           
@@ -89,10 +92,10 @@ namespace IntelliScraper.Plugin
         /// <summary>
         /// get Plugin By Name
         /// </summary>
-        public IScraperPlugin getPluginByName(string name)
+        public Scrape.IScrapeAction getPluginByName(string name)
         {
             name = name.ToLower();
-            foreach (KeyValuePair<string, IScraperPlugin> p in plugins)
+            foreach (KeyValuePair<string, Scrape.IScrapeAction> p in plugins)
             {
                 if (p.Key == name)
                 {
@@ -103,10 +106,10 @@ namespace IntelliScraper.Plugin
         }
 
         //Run Plugin
-        public void runPlugin(string name, Data.intelliScraperAction actionInfo, object inputData)
+        public void runPlugin(string name, object inputData)
         {
-            IScraperPlugin p = getPluginByName(name);
-            p.Run(actionInfo,inputData);
+            Scrape.IScrapeAction p = getPluginByName(name);
+            p.Run(inputData);
         }
     }
 }

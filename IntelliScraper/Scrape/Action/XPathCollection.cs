@@ -12,12 +12,20 @@ namespace IntelliScraper.Scrape.Action
     /// </summary>
     public class XPathCollection : IScrapeAction
     {
+        public string Name = "XPathCollection";
         Db.xpathCollection rule { get; set; }
         public XPathCollection(Db.xpathCollection rule)
         {
             this.rule = rule;
         }
+
        
+
+        public string getName()
+        {
+            return "XPathCollection";
+        }
+
         /// <summary>
         /// Run xpath from html or node
         /// </summary>
@@ -40,7 +48,23 @@ namespace IntelliScraper.Scrape.Action
 
             //run multiple xpathSingle passing finded node
             List<List<KeyValuePair<string, object>>> res = new List<List<KeyValuePair<string, object>>>();
-            HtmlNodeCollection nodes = node.SelectNodes(rule.xpath);
+            
+            //Load nodes
+            HtmlNodeCollection nodes = new HtmlNodeCollection(node);
+            if (rule.xpath != null)
+            {
+                foreach (string xpath in rule.xpath)
+                {
+                    HtmlNodeCollection n2 = node.SelectNodes(xpath);
+                    if (n2 != null)
+                    {
+                        foreach (HtmlNode n in n2)
+                            nodes.Add(n);
+                    }
+                }
+            }
+
+            //run
             if (nodes != null)
             {
                 foreach (HtmlNode n in nodes)

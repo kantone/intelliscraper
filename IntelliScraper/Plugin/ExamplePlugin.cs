@@ -5,21 +5,26 @@ using System.Text;
 
 namespace IntelliScraper.Plugin
 {
-    public class ExamplePlugin : IScraperPlugin
-    {
-        public string Name
-        {
-            get { return "test1"; }
-        }
+    public class ExamplePlugin : Scrape.IScrapeAction
+    {    
 
-        public System.Net.WebClient setClient()
+        public object Run(object input)
         {
+            try
+            {
+                System.IO.File.WriteAllText("c:\\test.txt", "test");
+            }
+            catch (Exception ex)
+            {
+                Factory.Instance.log.Error(ex);
+            }
             return null;
         }
 
-        object IScraperPlugin.Run(Data.intelliScraperAction actionInfo, object inputData)
-        {            
-            return null;
+        
+        public string getName()
+        {
+            return "example";
         }
     }
 }

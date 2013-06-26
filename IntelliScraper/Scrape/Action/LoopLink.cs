@@ -11,6 +11,7 @@ namespace IntelliScraper.Scrape.Action
     /// </summary>
     public class LoopLink : IScrapeAction
     {
+        
         Db.loop_link rule { get; set; }
         List<Model.ActionResult> actionResult { get; set; }      
         public LoopLink(Db.loop_link rule,List<Model.ActionResult> actionResult)
@@ -18,7 +19,11 @@ namespace IntelliScraper.Scrape.Action
             this.rule = rule;
             this.actionResult = actionResult;
         }
-       
+
+        public string getName()
+        {
+            return "LoopLink";
+        }
 
         public object Run(object input)
         {
@@ -48,21 +53,21 @@ namespace IntelliScraper.Scrape.Action
             if (rule.multiThreadOption != null)
             {
                 if (rule.multiThreadOption.enableMultithread)
-                    runLinkMultiThreaded(links);
-
-                else runLinks(links);
+                   return runLinkMultiThreaded(links);
+                else return runLinks(links);
             }
-            else runLinks(links);
-            
-            return null;
+            else return runLinks(links);
+
         }
 
 
         /// <summary>
         /// Iterate page multithreaded 
         /// </summary>
-        private void runLinkMultiThreaded(List<string> links)
+        private List<Model.LoopLinkResult> runLinkMultiThreaded(List<string> links)
         {
+            List<Model.LoopLinkResult> res = new List<Model.LoopLinkResult>();
+
             ParallelOptions options = new ParallelOptions();
             if (rule.multiThreadOption.setThreadMaxNumbers)
                 options.MaxDegreeOfParallelism = rule.multiThreadOption.ThreadNumbers;
@@ -70,61 +75,68 @@ namespace IntelliScraper.Scrape.Action
             //Run links multithread
             System.Threading.Tasks.Parallel.For(0, links.Count, options, ii =>
             {
-                //run also xpath MultiThread
-                if (rule.multiXpathThreadOption != null)
-                {
-                    if (rule.multiXpathThreadOption.enableMultithread)
-                    {                        
-                        ParallelOptions options2 = new ParallelOptions();
-                        if (rule.multiXpathThreadOption.setThreadMaxNumbers)
-                            options.MaxDegreeOfParallelism = rule.multiXpathThreadOption.ThreadNumbers;
+                string html = HttpUtils.getHtml(links[ii], "", null, true);
+                if (rule.xpathSingle != null)
+                    res.Add(runXpath(html, links[ii]));
 
-                        System.Threading.Tasks.Parallel.For(0, rule.xpathSingle.Count, options, xx =>
-                        {
-                            string html = HttpUtils.getHtml(links[ii], "", null, false);
-                            XPathSingle x = new XPathSingle(rule.xpathSingle[xx]);
-                            x.Run(html);
-                        });
-                    }
-                    //no definition run only links threaded
-                    else
+            });
+
+            return res;
+        }
+
+
+        /// <summary>
+        /// Run xpath Single or Collection
+        /// </summary>
+        private Model.LoopLinkResult runXpath(string html,string link)
+        {
+           
+            if (!string.IsNullOrEmpty(html))
+            {
+                //run single
+                if (rule.xpathSingle.Count > 0 && rule.xpathType == Db.loop_linkXpathType.single)
+                {
+                    XPathSingle x = new XPathSingle(rule.xpathSingle[0]);
+                    List<KeyValuePair<string, object>> res = ( List<KeyValuePair<string, object>>)x.Run(html);
+                    return new Model.LoopLinkResult(link,html,res,null);
+                }
+                //run collection
+                if (rule.xpathType == Db.loop_linkXpathType.collection)
+                {
+                    HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+                    doc.LoadHtml(html);
+                    HtmlAgilityPack.HtmlNode node = doc.DocumentNode.SelectSingleNode(rule.preXpath);
+                    if (node != null)
                     {
                         foreach (Db.xpathSingle s in rule.xpathSingle)
                         {
-                            string html = HttpUtils.getHtml(links[ii], "", null, false);
                             XPathSingle x = new XPathSingle(s);
-                            x.Run(html);
+                            List<List<KeyValuePair<string, object>>>  res = ( List<List<KeyValuePair<string, object>>> ) x.Run(node);
+                            return new Model.LoopLinkResult(link, html, null, res);
                         }
                     }
                 }
-                //run only links threaded
-                else
-                {
-                    foreach (Db.xpathSingle s in rule.xpathSingle)
-                    {
-                        string html = HttpUtils.getHtml(links[ii], "", null, false);
-                        XPathSingle x = new XPathSingle(s);
-                        x.Run(html);
-                    }
-                }
-            });
+            }
+            else 
+            { 
+                Factory.Instance.log.Error(string.Format("Html null or empty for rule {0} and link {1}", rule.id, link));
+                return null;
+            }
+            return null;
         }
 
         /// <summary>
         /// Iterate pages 
         /// </summary>
-        private void runLinks(List<string> links)
+        private List<Model.LoopLinkResult> runLinks(List<string> links)
         {
+            List<Model.LoopLinkResult> res = new List<Model.LoopLinkResult>();
             foreach (string link in links)
             {
-                if (rule.xpathSingle != null)
-                {
-                    foreach (Db.xpathSingle s in rule.xpathSingle)
-                    {
-                       
-                    }
-                }
+                string html = HttpUtils.getHtml(link, "", null, false);
+                res.Add(runXpath(html, link));
             }
+            return res;
         }
 
         /// <summary>
@@ -133,7 +145,7 @@ namespace IntelliScraper.Scrape.Action
         private List<string> getUrlFromDatabase()
         {
             List<string> links = new List<string>();
-            Db.intelliScraperProjectStoreInfo storeDb = (from x in Factory.Instance.i.Project.StoreInfo where x.Id == rule.csvInputDefinition.storeId select x).FirstOrDefault();
+            Db.intelliScraperProjectStoreInfo storeDb = (from x in Factory.Instance.i.Project.StoreInfo where x.Id == rule.databaseInputDefinition.storeId select x).FirstOrDefault();
 
             if (storeDb != null)
             {
@@ -144,18 +156,28 @@ namespace IntelliScraper.Scrape.Action
                 }
                 if (rule.databaseInputDefinition.type == Db.loop_linkDatabaseInputDefinitionType.readAllTableColumn)
                 {
-                    query = string.Format("select {0} from {1}", rule.databaseInputDefinition.columnName, rule.databaseInputDefinition.tableName);
+                    query = string.Format("select * from {1}", rule.databaseInputDefinition.columnName, rule.databaseInputDefinition.tableName);
                 }
 
                 if (!string.IsNullOrEmpty(query))
                 {
                     Database.DbManager db = new Database.DbManager(storeDb.DatabaseSetting.connection, storeDb.DatabaseSetting.providerName);
-                    ICollection<KeyValuePair<string, object>> res = db.query(query);
-                    foreach (KeyValuePair<string, object> r in res)
+                    //ICollection<KeyValuePair<string, object>> res = db.query(query);
+                    IEnumerable<object> obj =    db.db.Query<object>(query, null);
+                    foreach (object o in obj)
                     {
-                        if (r.Key == rule.csvInputDefinition.columnName)
-                            links.Add((string)r.Value);
+                         IDictionary<string, object> rows = ( IDictionary<string, object> )o;
+                         foreach (KeyValuePair<string,object> row in rows)
+                         {
+                             if (row.Key == rule.databaseInputDefinition.columnName)
+                             {
+                                 links.Add((string)row.Value);
+                             }
+                         }
+                       
+                       
                     }
+                  
                 }
             }
             return links;
@@ -204,7 +226,10 @@ namespace IntelliScraper.Scrape.Action
                 foreach (KeyValuePair<string, object> d in data)
                 {
                     if (d.Key == rule.inputAttributeKey)
+                    {
                         links.Add((string)d.Value);
+                        break;
+                    }
                 }
             }
             if (input.GetType() == typeof(List<List<KeyValuePair<string, object>>>))
@@ -216,7 +241,10 @@ namespace IntelliScraper.Scrape.Action
                     foreach (KeyValuePair<string, object> d in data)
                     {
                         if (d.Key == rule.inputAttributeKey)
+                        {
                             links.Add((string)d.Value);
+                            break;
+                        }
                     }
                 }
             }
@@ -238,11 +266,13 @@ namespace IntelliScraper.Scrape.Action
             if (!rule.StartEndData.getEndPageNumberFromRule)
                 end = rule.StartEndData.end;
             else end = getStartEndPage(rule.StartEndData.actionAttributeId_getEndPage);
-
+            end = end + rule.StartEndData.appendEndVal;
 
             if (!rule.StartEndData.getStartPageNumberFromRule)
-                end = rule.StartEndData.start;
-            else end = getStartEndPage(rule.StartEndData.actionAttributeId_getStartPage);
+                start = rule.StartEndData.start;
+            else start = getStartEndPage(rule.StartEndData.actionAttributeId_getStartPage);
+
+            start = start + rule.StartEndData.appendStartVal;
 
 
             //Run
@@ -259,57 +289,55 @@ namespace IntelliScraper.Scrape.Action
         /// </summary>
         private int getStartEndPage(string _id)
         {
+            Model.ActionResult r = null;
             if (!_id.Contains("."))
-            {
-                Model.ActionResult r = (from x in actionResult where x.action.id == _id select x).SingleOrDefault();
-                if (r.GetType() == typeof(string))
-                {
-                    return Int32.Parse((string)r.result);
-                }
-            }
+                r = (from x in actionResult where x.action.id == _id select x).SingleOrDefault();
             else
             {
                 string[] ids = _id.Split('.');
-                Model.ActionResult r = (from x in actionResult where x.action.id == ids[0] select x).SingleOrDefault();
-                if (r != null)
-                {
-                    if (r.GetType() == typeof(string))
-                    {
-                        return Int32.Parse((string)r.result);
-                    }
+                r = (from x in actionResult where x.action.id == ids[0] select x).SingleOrDefault();
+            }
 
-                    if (r.GetType() == typeof(List<KeyValuePair<string, object>>))
+            if (r != null)
+            {
+                if (r.result.GetType() == typeof(string))
+                {
+                    return Int32.Parse((string)r.result);
+                }
+
+                if (r.result.GetType() == typeof(List<KeyValuePair<string, object>>))
+                {
+                    try
                     {
-                        try
+                        List<KeyValuePair<string, object>> vals = (List<KeyValuePair<string, object>>)r.result;
+                        var tmp = (from x in vals where x.Key == rule.inputAttributeKey select x).FirstOrDefault();
+                        return Int32.Parse((string)tmp.Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Factory.Instance.log.Error(ex);
+                    }
+                }
+
+                if (r.result.GetType() == typeof(List<List<KeyValuePair<string, object>>>))
+                {
+                    try
+                    {
+                        List<List<KeyValuePair<string, object>>> _vals = (List<List<KeyValuePair<string, object>>>)r.result;
+                        foreach (List<KeyValuePair<string, object>> vals in _vals)
                         {
-                            List<KeyValuePair<string, object>> vals = (List<KeyValuePair<string, object>>)r.result;
                             var tmp = (from x in vals where x.Key == rule.inputAttributeKey select x).FirstOrDefault();
                             return Int32.Parse((string)tmp.Value);
                         }
-                        catch (Exception ex)
-                        {
-                            Factory.Instance.log.Error(ex);
-                        }
                     }
-
-                    if (r.GetType() == typeof(List<List<KeyValuePair<string, object>>>))
+                    catch (Exception ex)
                     {
-                        try
-                        {
-                            List<List<KeyValuePair<string, object>>> _vals = (List<List<KeyValuePair<string, object>>>)r.result;
-                            foreach (List<KeyValuePair<string, object>> vals in _vals)
-                            {
-                                var tmp = (from x in vals where x.Key == rule.inputAttributeKey select x).FirstOrDefault();
-                                return Int32.Parse((string)tmp.Value);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Factory.Instance.log.Error(ex);
-                        }
+                        Factory.Instance.log.Error(ex);
                     }
                 }
             }
+
+
             return -1;
 
         }

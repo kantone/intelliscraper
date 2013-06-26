@@ -18,6 +18,8 @@ namespace IntelliScraper.Scrape
         public void Run(IntelliScraper.Db.intelliScraper i)
         {
             this.actionResult = new List<Model.ActionResult>();
+            this.stat = new Model.Stats();
+            stat.startProcess = DateTime.Now;
             foreach(Db.intelliScraperAction action in  i.actions)
             {
                 object input = getInput(i, action);
@@ -33,6 +35,10 @@ namespace IntelliScraper.Scrape
                     Environment.Exit(8);
                 }
             }
+            stat.endProcess = DateTime.Now;
+            TimeSpan span = stat.endProcess - stat.startProcess;
+            Factory.Instance.iInfo(string.Format("Elapsed time : {0} days, {1} hours, {2} minutes, {3} seconds, {4} milliseconds", span.TotalDays, span.TotalHours, span.TotalMinutes, span.TotalSeconds, span.TotalMilliseconds));
+     
         }
 
         /// <summary>
@@ -88,6 +94,7 @@ namespace IntelliScraper.Scrape
                 }
             }
 
+            //LoopLink
             if (action.type == Db.intelliScraperActionType.loop_link)
             {
                 //find httpGet rule                 
@@ -97,7 +104,61 @@ namespace IntelliScraper.Scrape
                     return new Action.LoopLink(post, actionResult);
                 }
             }
-           
+
+            //downlaod
+            if (action.type == Db.intelliScraperActionType.download)
+            {
+                //find httpGet rule                 
+                Db.download post = (from x in i.rules.download where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)                
+                    return new Action.Download(post);
+                
+            }
+
+            //ftp Put
+            if (action.type == Db.intelliScraperActionType.ftpPut)
+            {
+                //find httpGet rule                 
+                Db.ftpPut post = (from x in i.rules.ftpPut where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)
+                    return new Action.FtpPut(post);
+            }
+
+            //Zip
+            if (action.type == Db.intelliScraperActionType.zip)
+            {
+                //find httpGet rule                 
+                Db.actionZip post = (from x in i.rules.actionZip where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)
+                    return new Action.Zip(post);
+            }
+
+            //ScreenShot
+            if (action.type == Db.intelliScraperActionType.screenShot)
+            {
+                //find httpGet rule                 
+                Db.screenShot post = (from x in i.rules.screenShot where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)
+                    return new Action.ScreenShot(post);
+            }
+
+            //Plugin
+            if (action.type == Db.intelliScraperActionType.plugin)
+            {
+                //find httpGet rule                 
+                Db.plugin post = (from x in i.rules.plugin where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)
+                    return new Action.Plugin(post);
+            }
+
+            //Upload
+            if (action.type == Db.intelliScraperActionType.upload)
+            {
+                //find httpGet rule                 
+                Db.upload post = (from x in i.rules.upload where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)
+                    return new Action.Upload(post);
+            }
 
             return null;
         }

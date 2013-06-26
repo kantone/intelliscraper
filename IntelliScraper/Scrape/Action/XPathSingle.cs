@@ -12,10 +12,16 @@ namespace IntelliScraper.Scrape.Action
     /// </summary>
     public class XPathSingle : IScrapeAction
     {
+        
         Db.xpathSingle rule { get; set; }
         public XPathSingle(Db.xpathSingle rule)
         {
             this.rule = rule;
+        }
+
+        public string getName()
+        {
+            return "XPathSingle";
         }
        
         /// <summary>

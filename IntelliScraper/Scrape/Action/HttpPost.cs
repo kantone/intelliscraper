@@ -10,6 +10,7 @@ namespace IntelliScraper.Scrape.Action
     /// </summary>
     public class HttpPost : IScrapeAction
     {
+        public string Name = "HttpPost";
         Db.httpPost rule { get; set; }
         public bool async { get; set; }
         public HttpPost(Db.httpPost rule, bool async)
@@ -17,7 +18,12 @@ namespace IntelliScraper.Scrape.Action
             this.rule = rule;
             this.async = async;            
         }
-       
+
+        public string getName()
+        {
+            return "HttpPost";
+        }
+
 
         public object Run(object input)
         {

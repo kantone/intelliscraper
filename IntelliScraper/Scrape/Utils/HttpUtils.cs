@@ -181,6 +181,29 @@ namespace IntelliScraper.Scrape
            
         }
 
+        public static string uploadFile(string url, string fileFullPath, string customUserAgent, Db.HttpHeadersInfoCollection httpHeaders,string method)
+        {
+            try
+            {
+                //set new proxy if use proxy
+                CookieAwareWebClient client = Factory.Instance.getWebClientNext(customUserAgent, httpHeaders);
+                client = setCredential(client, url);
+
+                //Set Wait time
+                System.Threading.Thread.Sleep(Factory.Instance.i.Project.ScrapingSetting.waitEachRequestMilliseconds);
+
+                byte[] rawResponse = client.UploadFile(url, method, fileFullPath);
+                string response = System.Text.Encoding.ASCII.GetString(rawResponse);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                //Wait after error - prevent next request
+                System.Threading.Thread.Sleep(Factory.Instance.i.Project.ScrapingSetting.waitAfterError);
+                Factory.Instance.log.Error(ex);
+                return string.Empty;
+            }
+        }
 
         private static CookieAwareWebClient setCredential(CookieAwareWebClient client,string url)
         {
@@ -198,8 +221,8 @@ namespace IntelliScraper.Scrape
                         !string.IsNullOrEmpty(Factory.Instance.i.Project.ScrapingSetting.credential.password) &&
                         string.IsNullOrEmpty(Factory.Instance.i.Project.ScrapingSetting.credential.domain))
                     {
-                        client.Credentials = credCache;
                         credCache.Add(new Uri(url), "Negotiate", new NetworkCredential(Factory.Instance.i.Project.ScrapingSetting.credential.username, Factory.Instance.i.Project.ScrapingSetting.credential.password));
+                        client.Credentials = credCache;
                     }
                 }
             }
