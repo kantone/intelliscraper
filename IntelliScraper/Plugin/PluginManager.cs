@@ -24,6 +24,9 @@ namespace IntelliScraper.Plugin
             this.Load();
         }
 
+        /// <summary>
+        /// Load Plugins
+        /// </summary>
         private void Load()
         {               
             //Get files

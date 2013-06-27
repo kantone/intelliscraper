@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using OfficeOpenXml;
 
 namespace IntelliScraper.Scrape.Action
 {
@@ -37,12 +39,20 @@ namespace IntelliScraper.Scrape.Action
             if (rule.type == Db.loop_linkType.customUrl)
                 links.AddRange(builLinkCustom());
 
+            //Input from csv file
             if (rule.type == Db.loop_linkType.fromCsv)
             {
                 if (rule.csvInputDefinition != null)
                     links.AddRange(getUrlFromCsvFile());
             }
 
+            //Input from excel file
+            if (rule.type == Db.loop_linkType.fromExcel){
+                if (rule.excelInputDefinition != null)
+                    links.AddRange(getUrlFromExcelFile());
+            }
+
+            //Input from database
             if (rule.type == Db.loop_linkType.fromDatabase)
             {
                 if(rule.databaseInputDefinition != null)
@@ -207,6 +217,25 @@ namespace IntelliScraper.Scrape.Action
                 string[] cols = line.Split(storeCsv.CsvExcelSetting.csvSeparator.ToCharArray());
                 links.Add(cols[i]);
             }
+            return links;
+        }
+
+        /// <summary>
+        /// Get Links from excel File
+        /// </summary>
+        private List<string> getUrlFromExcelFile()
+        {
+            List<string> links = new List<string>();
+            //get store by id
+            Db.intelliScraperProjectStoreInfo storeInfo = (from x in Factory.Instance.i.Project.StoreInfo where x.Id == rule.excelInputDefinition.storeId select x).FirstOrDefault();
+            FileInfo newFile = new FileInfo(storeInfo.CsvExcelSetting.csvFileSaveTo);
+            ExcelPackage book = new ExcelPackage(newFile);
+
+            for (int i = 1; i < book.Workbook.Worksheets[rule.excelInputDefinition.sheetName].Dimension.End.Row + 1; i++)
+            {
+                links.Add((string)book.Workbook.Worksheets[rule.excelInputDefinition.sheetName].Cells[i, rule.excelInputDefinition.columnIndex].Value);
+            }
+
             return links;
         }
 

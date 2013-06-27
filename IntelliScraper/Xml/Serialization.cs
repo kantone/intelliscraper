@@ -23,5 +23,20 @@ namespace IntelliScraper.Xml
             }
             return i;
         }
+
+        /// <summary>
+        /// Serialize string xml
+        /// </summary>
+        /// <returns></returns>
+        public static IntelliScraper.Db.intelliScraper SerializeFromString(string xmlText)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(IntelliScraper.Db.intelliScraper));
+            IntelliScraper.Db.intelliScraper i;
+            using (TextReader reader = new StringReader(xmlText))
+            {
+                i = (IntelliScraper.Db.intelliScraper)serializer.Deserialize(reader);
+            }
+            return i;
+        }
     }
 }

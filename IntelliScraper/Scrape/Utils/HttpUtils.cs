@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
+using System.Collections.Specialized;
+using System.Globalization;
 
 namespace IntelliScraper.Scrape
 {
@@ -122,7 +124,9 @@ namespace IntelliScraper.Scrape
             }
         }
 
-
+        /// <summary>
+        /// Post HTML
+        /// </summary>
         public static string postHtml(string url, string customUserAgent, Db.HttpHeadersInfoCollection httpHeaders, List<KeyValuePair<string, string>> parameters)
         {
             //generate post data
@@ -132,7 +136,7 @@ namespace IntelliScraper.Scrape
                 postData += string.Format("{0}={1}&",p.Key,p.Value);
             }
             postData = postData.TrimEnd('&');
-
+            postData = System.Web.HttpUtility.UrlEncode(postData);
 
             //set new proxy if use proxy
             CookieAwareWebClient client = Factory.Instance.getWebClientNext(customUserAgent,httpHeaders);
@@ -155,6 +159,9 @@ namespace IntelliScraper.Scrape
            
         }
 
+        /// <summary>
+        /// Post HTML
+        /// </summary>
         public static string postHtml(string url, string customUserAgent, Db.HttpHeadersInfoCollection httpHeaders, string postData)
         {
            
@@ -181,10 +188,101 @@ namespace IntelliScraper.Scrape
            
         }
 
-        public static string uploadFile(string url, string fileFullPath, string customUserAgent, Db.HttpHeadersInfoCollection httpHeaders,string method)
+        /// <summary>
+        /// Upload multiple files with post data
+        /// </summary>
+        public static string UploadFiles(string address, IEnumerable<Model.UploadFile> files, NameValueCollection values)
+        {
+            System.Net.ServicePointManager.Expect100Continue = false;
+         
+            //set webRequest proxy and credential
+            var request = WebRequest.Create(address);
+            if (Factory.Instance.i.Project.ProxyInfo != null)
+            {
+                if (Factory.Instance.i.Project.ProxyInfo.useProxy)
+                {
+                    ProxyModel p = Factory.Instance.proxyManager.getNext();
+                    WebProxy proxy = new WebProxy(p.Ip,Int32.Parse(p.Port));
+                    if(!string.IsNullOrEmpty(p.Username) && !string.IsNullOrEmpty(p.Password))
+                    {
+                        if(!string.IsNullOrEmpty(p.Domain))
+                            proxy.Credentials = new NetworkCredential( p.Username, p.Password,p.Domain);
+                        else proxy.Credentials = new NetworkCredential( p.Username, p.Password);
+                                 
+                    }
+                    request.Proxy = proxy;
+                }
+            }
+            if (Factory.Instance.i.Project.ScrapingSetting.credential != null)
+            {
+                if (Factory.Instance.i.Project.ScrapingSetting.credential.useNetworkCredential)
+                {
+                    if(!string.IsNullOrEmpty(Factory.Instance.i.Project.ScrapingSetting.credential.username) && !string.IsNullOrEmpty(Factory.Instance.i.Project.ScrapingSetting.credential.password))
+                    {
+                        if(!string.IsNullOrEmpty(Factory.Instance.i.Project.ScrapingSetting.credential.domain))
+                            request.Credentials = new NetworkCredential(Factory.Instance.i.Project.ScrapingSetting.credential.username, Factory.Instance.i.Project.ScrapingSetting.credential.password, Factory.Instance.i.Project.ScrapingSetting.credential.domain);
+                        else request.Credentials = new NetworkCredential(Factory.Instance.i.Project.ScrapingSetting.credential.username, Factory.Instance.i.Project.ScrapingSetting.credential.password);
+                    }
+                    
+                }
+            }
+          
+
+            request.Method = "POST";
+            var boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x", NumberFormatInfo.InvariantInfo);
+            request.ContentType = "multipart/form-data; boundary=" + boundary;
+            boundary = "--" + boundary;
+
+            using (var requestStream = request.GetRequestStream())
+            {
+                // Write the values
+                foreach (string name in values.Keys)
+                {
+                    var buffer = Encoding.ASCII.GetBytes(boundary + Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    buffer = Encoding.ASCII.GetBytes(string.Format("Content-Disposition: form-data; name=\"{0}\"{1}{1}", name, Environment.NewLine));
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    buffer = Encoding.UTF8.GetBytes(values[name] + Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
+                }
+
+                // Write the files
+                foreach (var file in files)
+                {
+                    var buffer = Encoding.ASCII.GetBytes(boundary + Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    buffer = Encoding.UTF8.GetBytes(string.Format("Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"{2}", file.Name, file.Filename, Environment.NewLine));
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    buffer = Encoding.ASCII.GetBytes(string.Format("Content-Type: {0}{1}{1}", file.ContentType, Environment.NewLine));
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    file.Stream.CopyTo(requestStream);
+                    buffer = Encoding.ASCII.GetBytes(Environment.NewLine);
+                    requestStream.Write(buffer, 0, buffer.Length);
+                }
+
+                var boundaryBuffer = Encoding.ASCII.GetBytes(boundary + "--");
+                requestStream.Write(boundaryBuffer, 0, boundaryBuffer.Length);
+            }
+
+            using (var response = request.GetResponse())
+            using (var responseStream = response.GetResponseStream())
+            using (var stream = new MemoryStream())
+            {
+                responseStream.CopyTo(stream);
+                byte[] rawResponse = stream.ToArray();
+                string r = System.Text.Encoding.ASCII.GetString(rawResponse);
+                return r;           
+            }
+        }
+
+        /// <summary>
+        /// Upload file without post Data
+        /// </summary>
+        public static string uploadFileSimple(string url, string fileFullPath, string customUserAgent, Db.HttpHeadersInfoCollection httpHeaders,string method)
         {
             try
             {
+                System.Net.ServicePointManager.Expect100Continue = false;
                 //set new proxy if use proxy
                 CookieAwareWebClient client = Factory.Instance.getWebClientNext(customUserAgent, httpHeaders);
                 client = setCredential(client, url);
@@ -192,6 +290,9 @@ namespace IntelliScraper.Scrape
                 //Set Wait time
                 System.Threading.Thread.Sleep(Factory.Instance.i.Project.ScrapingSetting.waitEachRequestMilliseconds);
 
+                           
+
+                
                 byte[] rawResponse = client.UploadFile(url, method, fileFullPath);
                 string response = System.Text.Encoding.ASCII.GetString(rawResponse);
                 return response;
@@ -205,6 +306,9 @@ namespace IntelliScraper.Scrape
             }
         }
 
+        /// <summary>
+        /// Set CookieAwareWebClient Credential by configuration
+        /// </summary>        
         private static CookieAwareWebClient setCredential(CookieAwareWebClient client,string url)
         {
             if (Factory.Instance.i.Project.ScrapingSetting.credential != null)

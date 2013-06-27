@@ -14,6 +14,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Security.Permissions;
+using System.Collections.Specialized;
 
 
 
@@ -50,16 +51,33 @@ namespace IntelliScraper.Scrape.Action
                 if(d.method == Db.uploadMethod.PUT)
                     method = "PUT";
 
-                 return  HttpUtils.uploadFile(d.uploadUrl, file, d.customUserAgent, d.customHttpHeadersInfo, method);
+                if (d.usePostData)
+                {
+
+                     Model.UploadFile f = new Model.UploadFile();
+                     FileInfo finfo = new FileInfo(file);
+                     f.Filename = file;
+                     f.Stream = File.Open(file, FileMode.Open);
+                     f.ContentType = MimeTypeUtils.GetMimeType(finfo.Extension);
+                     f.Name = finfo.Name;
+                    
+                     List< Model.UploadFile> files = new List<Model.UploadFile>();
+                     files.Add(f);
+
+                    //add post params
+                     NameValueCollection values = new NameValueCollection();
+                     foreach (Db.uploadPostData p in d.postData)
+                         values.Add(p.key, p.value);
+
+                     string res = HttpUtils.UploadFiles(d.uploadUrl,files, values);
+                     f.Stream.Close();
+                     return res;
+                    
+                }
+                else return HttpUtils.uploadFileSimple(d.uploadUrl, file, d.customUserAgent, d.customHttpHeadersInfo, method);
             }
             return string.Empty; ;
         }
-
-        
-
-    
-
-     
 
       
     }

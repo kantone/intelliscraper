@@ -128,7 +128,7 @@ namespace IntelliScraper.Scrape
         public static string trim(this string val, Db.trim a)
         {
 
-            Factory.Instance.log.Info(string.Format("Make Trim of {0}", val));
+            Factory.Instance.iInfo(string.Format("Make Trim of {0}", val));
             if (a.type == Db.trimType.both)
                 val = val.Trim(a.trimValue.ToCharArray());
 

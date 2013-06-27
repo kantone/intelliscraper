@@ -14,6 +14,34 @@ namespace IntelliScraper
    
     public static class Utils
     {
+
+        public static void MergeWith<T>(this T primary, T secondary)
+        {
+            foreach (var pi in typeof(T).GetProperties())
+            {
+                var priValue = pi.GetGetMethod().Invoke(primary, null);
+                var secValue = pi.GetGetMethod().Invoke(secondary, null);
+                if (priValue == null || (pi.PropertyType.IsValueType && priValue.Equals(Activator.CreateInstance(pi.PropertyType))))
+                {
+                    pi.GetSetMethod().Invoke(primary, new object[] { secValue });
+                }
+            }
+        }
+
+        public static void CopyValues<T>(this T target, T source)
+        {
+            Type t = typeof(T);
+
+            var properties = t.GetProperties().Where(prop => prop.CanRead && prop.CanWrite);
+
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(source, null);
+                if (value != null)
+                    prop.SetValue(target, value, null);
+            }
+        }
+
         public static Stream toStream(this string s)
         {
             MemoryStream stream = new MemoryStream();

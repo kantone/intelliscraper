@@ -34,9 +34,11 @@ namespace IntelliScraper
         private System.IO.StreamWriter csvWriter { get; set; }
         public Plugin.PluginManager pluginManager { get; set; }
         public CookieAwareWebClient lastClient { get; set; }
-            
+
+        
+
         //Add custom logger info
-        private static readonly log4net.Core.Level notifyLevel = new log4net.Core.Level(50000, "I-INFO");
+        private static readonly log4net.Core.Level notifyLevel = new log4net.Core.Level(50001, "I-INFO");
 
         /// <summary>
         /// Inizialize Intelliscraper
@@ -50,6 +52,7 @@ namespace IntelliScraper
             log4net.LogManager.GetRepository().LevelMap.Add(notifyLevel);
             XmlConfigurator.Configure();
             this.log = LogManager.GetLogger("IntelliScraper");
+            
 
             //Inizializate            
             this.i = null;
@@ -110,16 +113,38 @@ namespace IntelliScraper
                 return false;
             }
         }
-        
+
+        /// <summary>
+        /// Load some data and Run scraping
+        /// </summary>
+        public void Run(string xmlInput,string xmlDecriptPass)
+        {
+            string uncrypt = IntelliScraper.Crypto.DecryptStringAES(System.IO.File.ReadAllText(xmlInput), xmlDecriptPass);
+            this.i = Xml.Serialization.SerializeFromString(uncrypt);
+            this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
+            this.Run();
+        }
+
         /// <summary>
         /// Load some data and Run scraping
         /// </summary>
         public void Run(string xmlInput)
         {
+            this.i = Xml.Serialization.Serialize(xmlInput);
+            this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
+            this.Run();
+        }
+   
+        /// <summary>
+        /// Load some data and Run scraping
+        /// </summary>
+        private void Run()
+        {
             try
             {
-                this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
-                this.i = Xml.Serialization.Serialize(xmlInput);
+                //this.i = Xml.Serialization.Serialize(xmlInput);
+                //this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
+                
 
                 if (i.Project.ProjectInfo.showInitialMessage)
                 {

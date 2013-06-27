@@ -160,6 +160,15 @@ namespace IntelliScraper.Scrape
                     return new Action.Upload(post);
             }
 
+            //Save
+            if (action.type == Db.intelliScraperActionType.save)
+            {
+                //find httpGet rule                 
+                Db.save post = (from x in i.rules.save where x.id == action.ruleId select x).FirstOrDefault();
+                if (post != null)
+                    return new Action.Save(post, actionResult);
+            }
+
             return null;
         }
 

@@ -121,6 +121,7 @@
                     <xs:element name="CsvExcelSetting">
                       <xs:complexType>
                         <xs:sequence>
+                          <xs:element type="xs:string" name="workSheetName"/>
                           <xs:element type="xs:string" name="csvHeader"/>
                           <xs:element type="xs:string" name="csvFileSaveTo" />
                           <xs:element type="xs:boolean" name="csvFileClear" />
@@ -374,8 +375,8 @@
         </xs:complexType>
 
       </xs:element>
-       
- 
+
+      <xs:element type="save"  name="save" />
       
     </xs:sequence>
   </xs:complexType>
@@ -391,7 +392,7 @@
   <xs:sequence>
     <xs:element type="xs:string"  name="id" />
     <xs:element type="xs:string" name="xpath" minOccurs="0" maxOccurs="unbounded"/>
-    <xs:element type="xpathSingle" name="xpathSingle" minOccurs="0" maxOccurs="unbounded"/>   
+    <xs:element type="xpathSingle" name="xpathSingle" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
 </xs:complexType>
 
@@ -423,6 +424,7 @@
           <xs:enumeration value="customUrl" />
           <xs:enumeration value="fromCsv" />
           <xs:enumeration value="fromDatabase" />
+          <xs:enumeration value="fromExcel" />
         </xs:restriction>
       </xs:simpleType>
     </xs:element>
@@ -457,6 +459,15 @@
         <xs:sequence>
           <xs:element type="xs:string"  name="storeId" />
           <xs:element type="xs:string"  name="columnName" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element  name="excelInputDefinition">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element type="xs:string"  name="sheetName" />
+          <xs:element type="xs:string"  name="storeId" />
+          <xs:element type="xs:int"  name="columnIndex" />
         </xs:sequence>
       </xs:complexType>
     </xs:element>
@@ -599,6 +610,7 @@
     <xs:element type="xs:string" name="inputAttributeKey" />
     <xs:element type="xs:string" name="uploadUrl" />
     <xs:element type="xs:string" name="customFileToUpload" />
+    <xs:element type="xs:boolean" name="usePostData" />
     <xs:element name="method">
       <xs:simpleType>
         <xs:restriction base="xs:string">
@@ -615,6 +627,14 @@
           <xs:enumeration value="custom" />
         </xs:restriction>
       </xs:simpleType>
+    </xs:element>
+    <xs:element name="postData" minOccurs="0" maxOccurs="unbounded">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="key" type="xs:string" />
+          <xs:element name="value" type="xs:string" />          
+        </xs:sequence>
+      </xs:complexType>
     </xs:element>
     <xs:element  name="customUserAgent" type="xs:string" />
     <xs:element name="customHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
@@ -682,26 +702,28 @@
     <xs:element type="xs:string" name="id" />
     <xs:element type="xs:string" name="storeId" />
     <xs:element type="xs:string" name="tableName" />
-    <xs:element  name="mapping" >
+    <xs:element type="xs:boolean" name="saveAllFromInput" />
+
+    <xs:element  name="map"  minOccurs="0" maxOccurs="unbounded">
       <xs:complexType>
         <xs:sequence>
-          <xs:element  name="map"  minOccurs="0" maxOccurs="unbounded">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element type="xs:string" name="mapColName" />
-                <xs:element type="xs:string" name="refId" />
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
+          <xs:element type="xs:string" name="mapColName" />
+          <xs:element type="xs:string" name="actionId" />
+          <xs:element type="xs:string" name="attributeId" />
+          <xs:element type="xs:boolean" name="inputIsXpathCollection" />
+          <xs:element type="xs:int" name="xpathCollectionPosition" default="0" />          
         </xs:sequence>
       </xs:complexType>
     </xs:element>
+        
 
     <xs:element type="xs:boolean" name="checkExistBeforeSave"/>
     <xs:element type="xs:string" name="checkExistAttributes"/>
+    <xs:element type="xs:string" name="checkExistAttributesSeparator"/>
     <xs:element  name="ifExist">
       <xs:simpleType>
         <xs:restriction base="xs:string">
+          <xs:enumeration value="insert" />
           <xs:enumeration value="update" />
           <xs:enumeration value="delete" />
           <xs:enumeration value="stopAll" />

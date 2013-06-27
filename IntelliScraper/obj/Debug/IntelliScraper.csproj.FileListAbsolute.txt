@@ -14,4 +14,5 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.csprojResolveAssemblyReference.cache
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Ionic.Zip.dll
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IEDriverServer.exe
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\EPPlus.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\EPPlus.xml
