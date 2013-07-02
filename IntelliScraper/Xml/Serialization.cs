@@ -38,5 +38,20 @@ namespace IntelliScraper.Xml
             }
             return i;
         }
+
+        /// <summary>
+        /// Serialize input xml file
+        /// </summary>
+        /// <returns></returns>
+        public static IntelliScraper.Db.intelliScraper DeSerialize(IntelliScraper.Db.intelliScraper i,string file)
+        {
+
+            XmlSerializer serializer = new XmlSerializer(typeof(IntelliScraper.Db.intelliScraper));           
+            using (Stream reader = new FileStream(file, FileMode.Open))
+            {
+                serializer.Serialize(reader, i);
+            }
+            return i;
+        }
     }
 }
