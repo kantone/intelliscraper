@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<intelliScraper xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://tempuri.org/iSchema.xsd">
+  <Project>
+    <ProjectInfo>
+      <projectName>test222</projectName>
+      <showInitialMessage>false</showInitialMessage>
+      <logIscraperInfo>false</logIscraperInfo>
+    </ProjectInfo>
+  </Project>
+  <actions />
+  <rules />
+  <postProcess />
+</intelliScraper>

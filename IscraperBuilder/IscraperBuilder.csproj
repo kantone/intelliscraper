@@ -36,9 +36,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>isb.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,15 +62,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Common\HttpHeaderInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PageTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Project\PrjBrowser.xaml">
+    <Page Include="Controls\Project\PrjNew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Project\AddStorage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Project\PrjBrowser2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Project\PrjCustomProxy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Project\PrjFtp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -76,6 +98,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Rules\Action.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\ActionRules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\RuleHttpGet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\RulesWrapper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\RulexpathSingle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Tree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,14 +130,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\Common\HttpHeaderInfo.xaml.cs">
+      <DependentUpon>HttpHeaderInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PageTemplate.xaml.cs">
       <DependentUpon>PageTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Project\PrjBrowser.xaml.cs">
-      <DependentUpon>PrjBrowser.xaml</DependentUpon>
+    <Compile Include="Controls\Project\PrjNew.xaml.cs">
+      <DependentUpon>PrjNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Project\AddStorage.xaml.cs">
+      <DependentUpon>AddStorage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Project\PrjBrowser2.xaml.cs">
+      <DependentUpon>PrjBrowser2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Project\PrjCustomProxy.xaml.cs">
       <DependentUpon>PrjCustomProxy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Project\PrjFtp.xaml.cs">
+      <DependentUpon>PrjFtp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Project\PrjInfo.xaml.cs">
       <DependentUpon>PrjInfo.xaml</DependentUpon>
@@ -99,6 +157,27 @@
     <Compile Include="Controls\Project\PrjProxy.xaml.cs">
       <DependentUpon>PrjProxy.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Rules\Action.xaml.cs">
+      <DependentUpon>Action.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\ActionRules.xaml.cs">
+      <DependentUpon>ActionRules.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\IRule.cs" />
+    <Compile Include="Controls\Rules\Rule\RuleHttpGet.xaml.cs">
+      <DependentUpon>RuleHttpGet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\RulesWrapper.xaml.cs">
+      <DependentUpon>RulesWrapper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\RulexpathSingle.xaml.cs">
+      <DependentUpon>RulexpathSingle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\TreeViewLineConverter.cs" />
+    <Compile Include="Controls\Rules\Tree.xaml.cs">
+      <DependentUpon>Tree.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\TreeviewH.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -168,6 +247,37 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\035.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\isb.ico" />
+    <Resource Include="img\isb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="isb.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\075.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\048.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\051.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\028.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\029.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\012.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\050.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\043.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

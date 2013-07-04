@@ -1,7 +1,11 @@
 ﻿
 
-Project setting
+Action Rules
+	1. Load type -> impostare i campi attivabili come helper
+	2. Caricare/creare la regola
 
-Action Builder
-	& 
+Rules
+	1. Elenco regole -> edit
+
+Action Flow
 

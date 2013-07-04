@@ -1,0 +1,91 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Project.AddStorage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+     d:DesignHeight="640" d:DesignWidth="750"
+	Title="Add Storage">
+
+    <Grid Background="#F6FBFE">
+        <TabControl HorizontalAlignment="Stretch"  Name="tabControl1" VerticalAlignment="Stretch" Margin="0,-6,0,6">
+            <TabItem Header="Add new" Name="tabItem1">
+                <Grid>
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="59,35,0,0" Name="cmbType" VerticalAlignment="Top" Width="206" />
+                    <Label Content="TYPE" Height="28" HorizontalAlignment="Left" Margin="6,35,0,0" Name="label1" VerticalAlignment="Top" />
+                    <Label Content="ID" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label2" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="59,6,0,0" Name="txtNewId" VerticalAlignment="Top" Width="120" />
+                    <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="59,79,0,0" Name="button1" VerticalAlignment="Top" Width="91" Click="button1_Click" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Storage List" Name="tabItem2">
+                <Grid>
+                <Border BorderBrush="Silver" BorderThickness="1" Height="50" Name="border1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                    <Grid>
+                            <ComboBox Height="23" Name="cmbIds" Width="200" Margin="135,15,403,9" SelectionChanged="cmbIds_SelectionChanged" />
+                    <Label Content="Select Storage by Id" Height="26" HorizontalAlignment="Left" Margin="6,12,0,0" Name="label3" VerticalAlignment="Top" Width="123" />
+                            <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="361,16,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+                            <Button Content="Delete" Height="23" HorizontalAlignment="Right" Margin="0,16,221,0" Name="button3" VerticalAlignment="Top" Width="75" Click="button3_Click" />
+                        </Grid>
+                  </Border>
+                <TabControl  HorizontalAlignment="Stretch" Margin="0,60,0,0" Name="tabControl2" VerticalAlignment="Stretch" >
+                    <TabItem Header="Csv/Excel" Name="tabCsv">
+                        <Grid>
+                                <Label Content="Csv Separator" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label6" VerticalAlignment="Top" />
+                                <Label Content="Header columns" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="label7" VerticalAlignment="Top" />
+                                <Label Content="Save To" Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" Name="label8" VerticalAlignment="Top" />
+                                <Label Content="Work Sheet Name" Height="28" HorizontalAlignment="Left" Margin="6,142,0,0" Name="label10" VerticalAlignment="Top" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="179,6,0,0" Name="txtCsvSeparator" VerticalAlignment="Top" Width="34" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="179,40,0,0" Name="txtHeaders" VerticalAlignment="Top" Width="253" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="179,79,0,0" Name="txtCsvSaveTo" VerticalAlignment="Top" Width="253" />
+                                <Button Content="Select file to save" Height="23" HorizontalAlignment="Left" Margin="458,79,0,0" Name="button4" VerticalAlignment="Top" Width="121" Click="button4_Click" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="179,142,0,0" Name="txtWorkSheet" VerticalAlignment="Top" Width="253" />
+                                <CheckBox Content="Clear File at start process" Height="16" HorizontalAlignment="Left" Margin="179,113,0,0" Name="chkCsvClearFile" VerticalAlignment="Top" />
+                                <TextBlock TextWrapping="Wrap" Height="44" HorizontalAlignment="Left" Margin="458,24,0,0" Name="label9" VerticalAlignment="Top" Width="243">
+                                    Columns separated by Csv Separator.
+                                    Example ( 
+                                        sep = ;
+                                        Headers = col1;col2;col3 )
+                                </TextBlock>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Database" Name="tabDB">
+                            <Grid>
+                                <Label Content="Connection String" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label4" VerticalAlignment="Top" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="131,6,0,0" Name="txtConnectionString" VerticalAlignment="Top" Width="349" />
+                                <Label Content="Provider Name" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="label5" VerticalAlignment="Top" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="131,40,0,0" Name="txtProviderName" VerticalAlignment="Top" Width="349" />
+                                <ComboBox Height="23" HorizontalAlignment="Left" Margin="131,77,0,0" Name="comboBox2" VerticalAlignment="Top" Width="349" SelectedIndex="0" SelectionChanged="comboBox2_SelectionChanged">
+                                    <ComboBoxItem Content="MySql.Data.MySqlClient" />
+                                    <ComboBoxItem Content="System.Data.OracleClient" />
+                                    <ComboBoxItem Content="Npgsql" />
+                                    <ComboBoxItem Content="System.Data.SqlServerCe.4.0" />
+                                    <ComboBoxItem Content="System.Data.SqlClient" />
+                                </ComboBox>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="XML" Name="tabXML" Visibility="Hidden">
+                            <Grid>
+                                <Label Content="Save To" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label11" VerticalAlignment="Top" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="131,12,0,0" Name="txtXmlFile" VerticalAlignment="Top" Width="253" />
+                                <Button Content="Select file to save" Height="23" HorizontalAlignment="Left" Margin="402,11,0,0" Name="button5" VerticalAlignment="Top" Width="121" />
+                                <CheckBox Content="Clear File at start process" Height="16" HorizontalAlignment="Left" Margin="131,49,0,0" Name="checkBox2" VerticalAlignment="Top" />
+                                <Label Content="Xml Parent Tag" Height="28" HorizontalAlignment="Left" Margin="10,78,0,0" Name="label12" VerticalAlignment="Top" />
+                                <TextBox Height="23" HorizontalAlignment="Left" Margin="131,80,0,0" Name="textBox2" VerticalAlignment="Top" Width="82" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="JSON" Name="tabJson" Visibility="Hidden">
+                            <Grid />
+                        </TabItem>
+
+
+                    </TabControl>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Page>

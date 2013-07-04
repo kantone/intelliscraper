@@ -9,29 +9,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 
-namespace IscraperBuilder.Controls.Project
+namespace IscraperBuilder.Controls
 {
     /// <summary>
-    /// Logica di interazione per PrjBrowser.xaml
+    /// Logica di interazione per PrjNew.xaml
     /// </summary>
-    public partial class PrjBrowser : Page
+    public partial class PrjNew : Window
     {
-        public PrjBrowser()
+        public string projectName { get; set; }
+        public PrjNew()
         {
             InitializeComponent();
         }
 
-        //Prevent text
-        private bool IsTextAllowed(string text)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-            return !regex.IsMatch(text);
+            this.projectName = textBox1.Text;
+            this.Close();
         }
     }
-
-    
 }

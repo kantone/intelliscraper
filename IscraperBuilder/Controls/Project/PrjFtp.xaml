@@ -1,0 +1,31 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Project.PrjFtp"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="640" d:DesignWidth="750"
+	Title="Ftp Connections">
+    
+    <Grid Background="#F6FBFE">
+        <Label Content="ID" Height="28" HorizontalAlignment="Left" Margin="12,58,0,0" Name="label2" VerticalAlignment="Top" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="152,60,0,0" Name="txtNewId" VerticalAlignment="Top" Width="218" />
+            <Button Content="Add or Update" Height="23" HorizontalAlignment="Left" Margin="152,272,0,0" Name="button1" VerticalAlignment="Top" Width="108" Click="button1_Click" />
+            <Label Content="Ftp Server String" Height="28" HorizontalAlignment="Left" Margin="12,92,0,0" Name="label13" VerticalAlignment="Top" />
+            <Label Content="UserName" Height="28" HorizontalAlignment="Left" Margin="12,159,0,0" Name="label14" VerticalAlignment="Top" />
+            <Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="12,193,0,0" Name="label15" VerticalAlignment="Top" />
+        <Label Content="Select Ftp Connection" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label3" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="152,12,0,0" Name="comboBox1" VerticalAlignment="Top" Width="218" SelectionChanged="comboBox1_SelectionChanged" />
+        <Label Content="Domain" Height="28" HorizontalAlignment="Left" Margin="12,227,0,0" Name="label4" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="152,97,0,0" Name="txtFptServerString" VerticalAlignment="Top" Width="218" />
+        <CheckBox Content="Authenticate" Height="16" HorizontalAlignment="Left" Margin="152,134,0,0" Name="chkAuthenticate" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="152,161,0,0" Name="txtUserName" VerticalAlignment="Top" Width="218" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="152,193,0,0" Name="txtPassword" VerticalAlignment="Top" Width="218" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="152,227,0,0" Name="txtDomain" VerticalAlignment="Top" Width="218" />
+        <Button Content="New" Height="23" HorizontalAlignment="Left" Margin="390,11,0,0" Name="button2" VerticalAlignment="Top" Width="108" Click="button2_Click" />
+        <TextBlock Height="23" Foreground="Gray" HorizontalAlignment="Left" Margin="390,100,0,0" Name="textBlock1" Text="TextBlock" VerticalAlignment="Top" Width="156">
+           Like : ftp://server/folder
+        </TextBlock>
+        <Button Content="Test Connection" Height="23" HorizontalAlignment="Left" Margin="278,272,0,0" Name="button3" VerticalAlignment="Top" Width="92" Click="button3_Click" />
+    </Grid>
+</Page>

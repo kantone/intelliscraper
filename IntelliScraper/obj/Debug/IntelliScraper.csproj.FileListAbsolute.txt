@@ -12,7 +12,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\log4net.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.exe
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.pdb
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.csprojResolveAssemblyReference.cache
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Ionic.Zip.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\EPPlus.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\EPPlus.xml
@@ -21,3 +20,4 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\HtmlAgilityPack.xml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Newtonsoft.Json.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Newtonsoft.Json.xml
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.csprojResolveAssemblyReference.cache

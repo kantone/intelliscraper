@@ -55,6 +55,8 @@
                     <xs:element type="xs:int" name="waitEachRequestMilliseconds"/>
                     <xs:element type="xs:int" name="waitAfterError"/>
                     <xs:element type="xs:string" name="imageFolderDownload"/>
+                    <xs:element  type="xs:boolean" name="rotateUserAgents" />
+                    <xs:element  type="xs:string" name="defaultAgent" />
 
                     <xs:element name="GlobalHttpHeadersInfo" type="HttpHeadersInfo" minOccurs="0" maxOccurs="unbounded" />
                     

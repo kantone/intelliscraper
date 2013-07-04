@@ -1,0 +1,207 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Project.PrjBrowser2"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+       d:DesignHeight="640" d:DesignWidth="750"
+	Title="PrjBrowser">
+
+    <Grid Background="#F6FBFE">
+        <TabControl  HorizontalAlignment="Stretch" Margin="0,40,0,0"  Name="tabControl1" VerticalAlignment="Stretch" >
+            <TabItem Header="Global Option" Name="tabItem1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Content="Wait requests millisecond " Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left"  Name="txtWait" VerticalAlignment="Center" Width="100" />
+                    <Image Margin="5,0,0,0" ToolTip="How many milliseconds wait for each new http request?" Source="/img/help2_50.jpg" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+                  
+                    <Label Grid.Column="0" Grid.Row="1" Content="Wait millisecond after error " Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left"  Name="txtErrorWait" VerticalAlignment="Center" Width="100" />
+                    <Image Margin="5,0,0,0" ToolTip="How many milliseconds wait after an error?" Source="/img/help2_50.jpg" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+
+
+                    <Label Grid.Column="0" Grid.Row="2" Content="Download folder" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left"  Name="txtDownloadfolder" VerticalAlignment="Center" Width="250" />
+                    <Image Margin="5,0,0,0" ToolTip="Where you want save downloaded files?" Source="/img/help2_50.jpg" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+                    <Button Content="Select Folder" Grid.Column="2" Grid.Row="2" Name="dwnFolderBtn"   HorizontalAlignment="Left" VerticalAlignment="top" Margin="5,8,0,0" Click="dwnFolderBtn_Click" />
+
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Network Credential" Name="tabItem3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0" Content="Network Credential" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <CheckBox Content="Use network Credential" Grid.Column="1" Grid.Row="0" Height="16" HorizontalAlignment="Left"  Name="chkUseCredential" VerticalAlignment="Top" Margin="0,11,0,0" />
+                    <Image Margin="5,0,0,0" ToolTip="Use network credential? ( intranet )" Source="/img/help2_50.jpg" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="Credential User name" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left"  Name="txtCredUserName" VerticalAlignment="Center" Width="200" />
+                    
+                    <Label Grid.Column="0" Grid.Row="2" Content="Credential User password" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox  Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left"  Name="txtCredPass" VerticalAlignment="Center" Width="200" />
+                    
+                    <Label Grid.Column="0" Grid.Row="3" Content="Credential domain" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left"  Name="txtCredDomain" VerticalAlignment="Center" Width="200" />
+                    
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="User Agent" Name="tabItem2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0" Content="Dinamic user agents" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <CheckBox Content="Rotate User Agents" Grid.Column="1" Grid.Row="0" Height="16" HorizontalAlignment="Left"  Name="chkRotateUserAgent" VerticalAlignment="Top" Margin="0,11,0,0" />
+                    <Image Margin="5,0,0,0" ToolTip="Change user Agent for each http request. (from file and custom defined joined )" Source="/img/help2_50.jpg" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="Default user Agent" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left"  Name="txtDefaultUserAgent" VerticalAlignment="Center" Width="200" />
+                    <Image Margin="5,0,0,0" ToolTip="Default user agent used when Rotate User Agents is disabled!" Source="/img/help2_50.jpg" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+
+                    <Label Grid.Column="0" Grid.Row="2" Content="User Agent From File" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <CheckBox Content="Load user agent from file" Grid.Column="1" Grid.Row="2" Height="16" HorizontalAlignment="Left"  Name="chkUserAgentFromFile" VerticalAlignment="Top" Margin="0,11,0,0" />
+                    <Image Margin="5,0,0,0" ToolTip="Load agents from file to add into userAgent rotator" Source="/img/help2_50.jpg" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+                    
+                    <Label Grid.Column="0" Grid.Row="3" Content="User Agent rotator file" Height="28" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+                    <TextBox   Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left"  Name="txtUserAgentFile" VerticalAlignment="Center" Width="200" />
+                    <Image Margin="5,0,0,0" ToolTip="File contains list of user agent(one per line)" Source="/img/help2_50.jpg" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="20" Height="20" Opacity="1"   />
+                    <Button Content="Select Folder" Grid.Column="2" Grid.Row="3" Name="btnUAgentSelectFolder"   HorizontalAlignment="Left" VerticalAlignment="top" Margin="5,8,0,0" Click="btnUAgentSelectFolder_Click" />
+
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Global Http Headers" Name="tabItem2a">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="15"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+               
+                    <Grid Grid.Row="0">
+                        <Label Content="Name" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="lbIp" VerticalAlignment="Top" />
+                        <Label Content="Value" Height="28" HorizontalAlignment="Left" Margin="240,6,0,0" Name="lbPorl" VerticalAlignment="Top" />                       
+                        <TextBox Height="23" HorizontalAlignment="Left" Margin="45,6,0,0" Name="txtHname" VerticalAlignment="Top" Width="178" />
+                        <TextBox Height="23"  HorizontalAlignment="Left" Margin="278,6,0,0" Name="txtHValue" VerticalAlignment="Top" Width="287" />
+                  
+                        <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="571,5,0,0" Name="button2" VerticalAlignment="Top" Width="62" Click="button2_Click" />
+                        <Button Content="Delete Selection" Height="23" HorizontalAlignment="Right" Margin="0,5,6,0" Name="button3" VerticalAlignment="Top" Width="96" Click="button3_Click" />
+                    </Grid>
+                    <Grid Grid.Row="1" HorizontalAlignment="Stretch" Background="#ffffff"  VerticalAlignment="Top">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" />
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="Value" />
+                    </Grid>
+
+                    <ListView Grid.Row="2"  HorizontalAlignment="Stretch"  Name="listViewHttpHeaders" VerticalAlignment="Stretch"  >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+
+
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding name}" />
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding value}" />
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </Grid>
+                
+            </TabItem>
+
+            <TabItem Header="Custom user Agent (rotator)" Name="tabItem4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Label Content="User Agent Value" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
+                        <TextBox Height="23"  HorizontalAlignment="Left" Margin="114,6,0,0" Name="txtCustmUserAgent" VerticalAlignment="Top" Width="432" />
+                        <Button Content="Add" Height="23" HorizontalAlignment="Right" Margin="0,5,107,0" Name="btnAddUAgent" VerticalAlignment="Top" Width="62" Click="btnAddUAgent_Click" />
+                        <Button Content="Remove Selected" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="btnRemoveSelected" VerticalAlignment="Top" Width="96" Click="btnRemoveSelected_Click" />
+                        <TextBlock Margin="417,35,184,28" Width="139"><Hyperlink Click="navigate_Click">Open User agent strings</Hyperlink></TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="1" HorizontalAlignment="Stretch" Background="#ffffff"  VerticalAlignment="Top">
+
+                       
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="User Agent" />
+                       
+                    </Grid>
+
+                    
+                    <ListView Grid.Row="2"  HorizontalAlignment="Stretch"  Name="listViewUserAgent" VerticalAlignment="Stretch" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                   
+
+
+                                    <TextBlock Grid.Column="0" Text="{Binding agentValue}"  />
+                                   
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Name="button1" VerticalAlignment="Top" Width="113" Click="button1_Click" />
+    </Grid>
+</Page>

@@ -1,0 +1,22 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Rules.RuleHttpGet"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+     d:DesignHeight="560" d:DesignWidth="750"
+	Title="Http Get" xmlns:my="clr-namespace:IscraperBuilder.Controls.Common">
+
+    <Grid Background="#F6FBFE">
+        <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Url Type" Height="28" HorizontalAlignment="Left" Margin="12,45,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Custom Url" Height="28" HorizontalAlignment="Left" Margin="12,77,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Custom User Agent" Height="28" HorizontalAlignment="Left" Margin="12,111,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Custom Http Headers" Height="28" HorizontalAlignment="Left" Margin="297,154,0,0" Name="label5" VerticalAlignment="Top" />
+        <my:HttpHeaderInfo HorizontalAlignment="Left" Margin="12,179,0,0" x:Name="httpHeaderInfo1" VerticalAlignment="Top" Height="271" Width="736" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="174,14,0,0" Name="txtId" VerticalAlignment="Top" Width="120" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="174,45,0,0" Name="cmbUrlType" VerticalAlignment="Top" Width="215" SelectionChanged="cmbUrlType_SelectionChanged" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="174,82,0,0" Name="txtCustomUrl" VerticalAlignment="Top" Width="215" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="174,116,0,0" Name="txtCustUserAgent" VerticalAlignment="Top" Width="215" />
+    </Grid>
+</Page>

@@ -31,9 +31,9 @@ namespace IntelliScraper.Scrape.Action
         /// </summary>
         public object Run(object input)
         {
-            string url = string.Empty;
+           /* string url = string.Empty;
             if(input != null)
-                url = (string)input;
+                url = (string)input;*/
 
             //Load node by input type
             HtmlNode node = null;

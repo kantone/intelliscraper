@@ -174,17 +174,27 @@ namespace IntelliScraper
                 }
                 
                 //Load user agent
-                foreach(Db.HttpHeadersInfo header in i.Project.ScrapingSetting.GlobalHttpHeadersInfo)
+                this.userAgentManager.UserAgents.Add(i.Project.ScrapingSetting.defaultAgent);
+                if (i.Project.ScrapingSetting.rotateUserAgents)
                 {
-                     this.userAgentManager.UserAgents.Add(header.value);
-                }
+                    //Load custom agents
+                    if (i.Project.ScrapingSetting.GlobalUserAgentsInfo != null)
+                    {
+                        foreach (string agent in i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue)
+                            this.userAgentManager.UserAgents.Add(agent);
+                    }
 
-                //Load user agents from file              
-                if (i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile)
-                {
-                    this.log.Info(string.Format("Loading user agent rotator from file {0}", i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile));
-                    List<string> agents =  IntelliScraper.Scrape.UserAgentManager.GetUserAgentList(i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile);
-                    this.userAgentManager = new Scrape.UserAgentManager(agents);
+                    //Load user agents from file              
+                    if (i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile)
+                    {
+                        if (System.IO.File.Exists(i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile))
+                        {
+                            this.log.Info(string.Format("Loading user agent rotator from file {0}", i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile));
+                            List<string> agents = IntelliScraper.Scrape.UserAgentManager.GetUserAgentList(i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile);
+                            this.userAgentManager = new Scrape.UserAgentManager(agents);
+                        }
+                        else this.log.Info(string.Format("Cannot load user agents from file {0} (not exist)", i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile));
+                    }
                 }
 
                 Scrape.Scraper s = new  Scrape.Scraper();

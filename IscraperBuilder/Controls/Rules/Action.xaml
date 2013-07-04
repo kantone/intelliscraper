@@ -1,0 +1,28 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Rules.Action"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="560" d:DesignWidth="750"
+	Title="Action">
+
+    <Grid Background="#F6FBFE">
+        <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="RuleId" Height="28" HorizontalAlignment="Left" Margin="12,80,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Type" Height="28" HorizontalAlignment="Left" Margin="12,46,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Input Type" Height="28" HorizontalAlignment="Left" Margin="12,168,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Input action Id" Height="28" HorizontalAlignment="Left" Margin="12,202,0,0" Name="label5" VerticalAlignment="Top" />
+        <Label Content="Custom Value" Height="28" HorizontalAlignment="Left" Margin="12,236,0,0" Name="lbCustomValue" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="186,14,0,0" Name="txtId" VerticalAlignment="Top" Width="117" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="186,80,0,0" Name="cmbRuleId" VerticalAlignment="Top" Width="222" SelectionChanged="cmbRuleId_SelectionChanged" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="186,46,0,0" Name="cmbType" VerticalAlignment="Top" Width="222" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="186,168,0,0" Name="cmbInputType" VerticalAlignment="Top" Width="222" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="186,202,0,0" Name="cmbInputActionId" VerticalAlignment="Top" Width="222" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="186,236,0,0" Name="txtCustomVal" VerticalAlignment="Top" Width="360" />
+        <Button Content="Select File" Height="23" HorizontalAlignment="Right" Margin="0,235,112,0" Name="btnSelectFile" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="Add new Rule" Height="23" HorizontalAlignment="Left" Margin="433,112,0,0" Name="btnAddRule" VerticalAlignment="Top" Width="92" Click="btnAddRule_Click" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="186,304,0,0" Name="button1" VerticalAlignment="Top" Width="222" Click="button1_Click_1" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="186,112,0,0" Name="cmbRuleType" VerticalAlignment="Top" Width="222" />
+    </Grid>
+</Page>

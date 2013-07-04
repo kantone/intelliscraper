@@ -66,8 +66,32 @@ namespace IntelliScraper
             }
         
         }
-    
-            
+
+        public bool testConnection()
+        {
+
+            request = (FtpWebRequest)WebRequest.Create(ftpServerString);
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+
+            if (authenticate)
+            {
+                if (string.IsNullOrEmpty(this.domain))
+                    request.Credentials = new NetworkCredential(user, pass);
+                else request.Credentials = new NetworkCredential(user, pass, domain);
+            }
+
+
+            try
+            {
+                WebResponse r = request.GetResponse();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
         
     }
 }

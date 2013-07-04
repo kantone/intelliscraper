@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="IscraperBuilder.Controls.Common.HttpHeaderInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+            d:DesignHeight="300" d:DesignWidth="650"
+	>
+
+    <Border BorderBrush="Gray" BorderThickness="2">
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightGray" >
+            <Label Content="Name" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="lbIp" VerticalAlignment="Top" />
+            <Label Content="Value" Height="28" HorizontalAlignment="Left" Margin="240,6,0,0" Name="lbPorl" VerticalAlignment="Top" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="45,6,0,0" Name="txtHname" VerticalAlignment="Top" Width="178" />
+            <TextBox Height="23"  HorizontalAlignment="Left" Margin="278,6,0,0" Name="txtHValue" VerticalAlignment="Top" Width="239" />
+
+            <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="523,6,0,0" Name="button2" VerticalAlignment="Top" Width="62" Click="button2_Click" />
+            <Button Content="Delete Selection" Height="23" HorizontalAlignment="left" Margin="523,31,0,0" Name="button3" VerticalAlignment="Top" Width="96" Click="button3_Click" />
+        </Grid>
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Background="#ffffff"  VerticalAlignment="Top">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name" />
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="Value" />
+        </Grid>
+
+        <ListView Grid.Row="2"  HorizontalAlignment="Stretch"  Name="listViewHttpHeaders" VerticalAlignment="Stretch"  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding name}" />
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding value}" />
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+    </Border>
+</UserControl>
