@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="640" d:DesignWidth="750"
+      d:DesignHeight="640" d:DesignWidth="700"
 	Title="PrjCustomProxy">
 
     <Grid Background="#F6FBFE">
@@ -19,18 +19,18 @@
         <Grid Grid.Row="1">
 
             <Label Content="Ip" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="lbIp" VerticalAlignment="Top" />
-            <Label Content="Port" Height="28" HorizontalAlignment="Left" Margin="240,6,0,0" Name="lbPorl" VerticalAlignment="Top" />
-            <Label Content="Domain" Height="28" HorizontalAlignment="Left" Margin="480,6,0,0" Name="lpDomain" VerticalAlignment="Top" />
-            <Label Content="User" Height="28" HorizontalAlignment="Left" Margin="240,37,0,0" Name="lpUser" VerticalAlignment="Top" />
-            <Label Content="Pass" Height="28" HorizontalAlignment="Left" Margin="480,29,0,0" Name="laPass" VerticalAlignment="Top" />
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="45,6,0,0" Name="txtIp" VerticalAlignment="Top" Width="178" />
-            <TextBox Height="23" Text="8080" HorizontalAlignment="Left" Margin="278,6,0,0" Name="txtPort" VerticalAlignment="Top" Width="178" />
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="536,6,0,0" Name="txtDomain" VerticalAlignment="Top" Width="178" />
-            <TextBox Height="24" HorizontalAlignment="Left" Margin="278,37,0,0" Name="txtUser" VerticalAlignment="Top" Width="178" />
-            <TextBox Height="24" HorizontalAlignment="Left" Margin="536,31,0,0" Name="txtPass" VerticalAlignment="Top" Width="178" />
-            <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="480,61,0,0" Name="button2" VerticalAlignment="Top" Width="90" Click="button2_Click" />
-            <Button Content="Save Changes" Height="23" HorizontalAlignment="Right" Margin="0,61,73,0" Name="button1" VerticalAlignment="Top" Width="90" Click="button1_Click" />
-            <CheckBox Content="Authenticate" Height="16" HorizontalAlignment="Left" Margin="139,42,0,0" Name="checkAuthenticate" VerticalAlignment="Top" />
+            <Label Content="Port" Height="28" HorizontalAlignment="Left" Margin="214,6,0,0" Name="lbPorl" VerticalAlignment="Top" />
+            <Label Content="Domain" Height="28" HorizontalAlignment="Left" Margin="383,6,0,0" Name="lpDomain" VerticalAlignment="Top" />
+            <Label Content="User" Height="28" HorizontalAlignment="Left" Margin="214,37,0,0" Name="lpUser" VerticalAlignment="Top" />
+            <Label Content="Pass" Height="28" HorizontalAlignment="Left" Margin="390,33,0,0" Name="laPass" VerticalAlignment="Top" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="45,6,0,0" Name="txtIp" VerticalAlignment="Top" Width="155" />
+            <TextBox Height="23" Text="8080" HorizontalAlignment="Left" Margin="252,6,0,0" Name="txtPort" VerticalAlignment="Top" Width="113" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="441,8,0,0" Name="txtDomain" VerticalAlignment="Top" Width="117" />
+            <TextBox Height="24" Margin="254,37,335,0" Name="txtUser" VerticalAlignment="Top" />
+            <TextBox Height="24" HorizontalAlignment="Left" Margin="441,35,0,0" Name="txtPass" VerticalAlignment="Top" Width="117" />
+            <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="441,61,0,0" Name="button2" VerticalAlignment="Top" Width="90" Click="button2_Click" />
+            <Button Content="Save Changes" Height="23" HorizontalAlignment="Right" Margin="0,61,65,0" Name="button1" VerticalAlignment="Top" Width="90" Click="button1_Click" />
+            <CheckBox Content="Authenticate" Height="16" HorizontalAlignment="Left" Margin="116,39,0,0" Name="checkAuthenticate" VerticalAlignment="Top" />
         </Grid>
 
 
@@ -39,7 +39,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
@@ -72,7 +72,7 @@
                             <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="40" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />

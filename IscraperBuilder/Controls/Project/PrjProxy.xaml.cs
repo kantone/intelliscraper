@@ -27,12 +27,16 @@ namespace IscraperBuilder.Controls.Project
 
         private void loadSetting()
         {
-            this.useProxy.IsChecked = Factory.Instance.i.Project.ProxyInfo.useProxy;
-            this.proxyFilePath.Text = Factory.Instance.i.Project.ProxyInfo.proxyFile;          
-            if (Factory.Instance.i.Project.ProxyInfo.type == IntelliScraper.Db.intelliScraperProjectProxyInfoType.file)
-                this.proxyType.SelectedIndex = 0;
-            if (Factory.Instance.i.Project.ProxyInfo.type == IntelliScraper.Db.intelliScraperProjectProxyInfoType.custom)
-                this.proxyType.SelectedIndex = 1;
+            if (Factory.Instance.i.Project.ProxyInfo != null)
+            {
+                this.useProxy.IsChecked = Factory.Instance.i.Project.ProxyInfo.useProxy;
+                this.proxyFilePath.Text = Factory.Instance.i.Project.ProxyInfo.proxyFile;
+                if (Factory.Instance.i.Project.ProxyInfo.type == IntelliScraper.Db.intelliScraperProjectProxyInfoType.file)
+                    this.proxyType.SelectedIndex = 0;
+                if (Factory.Instance.i.Project.ProxyInfo.type == IntelliScraper.Db.intelliScraperProjectProxyInfoType.custom)
+                    this.proxyType.SelectedIndex = 1;
+            }
+            else Factory.Instance.i.Project.ProxyInfo = new IntelliScraper.Db.intelliScraperProjectProxyInfo();
         }
 
         private void setConfig()

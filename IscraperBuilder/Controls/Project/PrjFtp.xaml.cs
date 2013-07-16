@@ -37,8 +37,9 @@ namespace IscraperBuilder.Controls.Project
 
                 if (Factory.Instance.i.Project.FtpSetting.Count >= 0)
                     comboBox1.SelectedIndex = 0;
-               
+
             }
+            else Factory.Instance.i.Project.FtpSetting = new IntelliScraper.Db.intelliScraperProjectFtpSettingCollection();
         }
 
         /// <summary>

@@ -182,6 +182,9 @@ namespace IscraperBuilder
                 if (type == typeof(IntelliScraper.Db.xpathSingle))
                     h = new IscraperBuilder.Controls.Rules.Rule.RulexpathSingle(ruleId);
 
+                if (type == typeof(IntelliScraper.Scrape.Action.Zip) || type == typeof(IntelliScraper.Db.actionZip))
+                    h = new IscraperBuilder.Controls.Rules.RuleHttpGet(ruleId);
+
                 /* if (type == typeof(IntelliScraper.Db.httpPost))
                     h = new IscraperBuilder.Controls.Rules.RuleHttpPost(ruleId);         
 

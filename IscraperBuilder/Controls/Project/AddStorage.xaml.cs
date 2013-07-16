@@ -35,19 +35,24 @@ namespace IscraperBuilder.Controls.Project
             }
             cmbType.SelectedIndex = 0;
 
+
             if (Factory.Instance.i.Project.StoreInfo != null)
             {
-               txtNewId.Text = (Factory.Instance.i.Project.StoreInfo.Count + 1).ToString();
+                txtNewId.Text = (Factory.Instance.i.Project.StoreInfo.Count + 1).ToString();
 
                 cmbIds.Items.Clear();
                 foreach (IntelliScraper.Db.intelliScraperProjectStoreInfo st in Factory.Instance.i.Project.StoreInfo)
                     cmbIds.Items.Add(st.Id);
 
-                if(Factory.Instance.i.Project.StoreInfo.Count >=0)
+                if (Factory.Instance.i.Project.StoreInfo.Count >= 0)
                     cmbIds.SelectedIndex = 0;
 
             }
-            else txtNewId.Text = "1";
+            else
+            {
+                txtNewId.Text = "1";
+                Factory.Instance.i.Project.StoreInfo = new IntelliScraper.Db.intelliScraperProjectStoreInfoCollection();
+            }
         }
 
         private void comboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)

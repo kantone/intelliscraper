@@ -20,12 +20,14 @@ namespace IscraperBuilder.Controls.Rules
             none,
         }
 
-        public TreeviewH(string header)
+        public TreeviewH(string id,string header)
         {
             this.Header = header;
+            this.Tag = id;
             //this.IsExpanded = true;
             this.FontWeight = FontWeights.Normal;
             this.MouseUp += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
+            this.ContextMenu = MainWindow.main.Resources["ActionContextMenu"] as ContextMenu;
         }
 
         public TreeviewH(string header, TreeType type)
@@ -35,6 +37,7 @@ namespace IscraperBuilder.Controls.Rules
             this.Tag = type;
             this.FontWeight = FontWeights.Normal;
             this.MouseUp += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
+            this.ContextMenu = MainWindow.main.Resources["ActionContextMenu"] as ContextMenu;
         }
 
         public static StackPanel getTreeWithImage(string header, TreeType type,string img,string id)

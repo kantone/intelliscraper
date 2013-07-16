@@ -51,5 +51,29 @@ namespace IscraperBuilder.Controls.Project
             loadSetting();
             MainWindow.main.Status = "Saved!";
         }
+
+        /// <summary>
+        /// delete project
+        /// </summary>
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(string.Format("Delete project {0}?", Factory.Instance.i.Project.ProjectInfo.projectName), "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                path += "\\projects\\";
+                string prjFile = path + MainWindow.main.cmbPrjts.SelectedValue;
+                int index = MainWindow.main.cmbPrjts.SelectedIndex;
+                if (System.IO.File.Exists(prjFile))                             
+                    System.IO.File.Delete(prjFile);
+
+                MainWindow.main.cmbPrjts.SelectedIndex = 0;
+                MainWindow.main.frame1.Content = null;
+                MainWindow.main.frame1.NavigationService.RemoveBackEntry();
+                MessageBox.Show(string.Format("Project {0} deleted!", Factory.Instance.i.Project.ProjectInfo.projectName));
+                Factory.Instance.i = null;
+                Factory.Instance.openedFileProject = null;
+                MainWindow.main.cmbPrjts.Items.RemoveAt(index);
+            }
+        }
     }
 }

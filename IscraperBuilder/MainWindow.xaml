@@ -13,6 +13,36 @@
         <local:TreeViewLineConverter x:Key="LineConverter"/>
         <SolidColorBrush x:Key="GlyphBrush" Color="#1BA1E2" />
 
+        
+       
+        
+        <ContextMenu x:Key="ActionContextMenu">
+            <MenuItem Header="Add Child Action/Rule" Click="MenuItem_Click_3" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                <MenuItem.Icon>
+                    <Image Source="img/021.png" Width="15" Height="15" Opacity="0.5" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Remove" Click="MenuItem_Click_4" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                <MenuItem.Icon>
+                    <Image Source="img/022.png" Width="15" Height="15" Opacity="0.5" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
+
+        <ContextMenu x:Key="RuleContextMenu">           
+            <MenuItem Header="Remove" Click="MenuItem_Click_5" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                <MenuItem.Icon>
+                    <Image Source="img/022.png" Width="15" Height="15" Opacity="0.5" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Save name" Click="MenuItem_Click_6" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                <MenuItem.Icon>
+                    <Image Source="img/023.png" Width="15" Height="15" Opacity="0.5" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
         <!--=================================================================
       TreeViewItem
   ==================================================================-->
@@ -194,6 +224,8 @@
     <Border  BorderBrush="#1BA1E2" BorderThickness="2">
 
         <Grid Name="g2">
+            
+            
             <Grid Name="GridTop">
                 <StackPanel   Height="80" HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="stackPanelTop" VerticalAlignment="Top"  >
                     <StackPanel.Background>
@@ -284,14 +316,19 @@
 
                     
                     
-                    <Border BorderBrush="#CCCCCC" BorderThickness="0,0,2,0" Margin="0,0,0,20">
-                        <TreeView  Margin="10,0,0,0" BorderBrush="#ffffff" BorderThickness="0" Name="treeView1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Border BorderBrush="#CCCCCC" BorderThickness="0,0,2,0" Margin="0,30,0,20">
+                        <Grid>
+                            <ComboBox  Background="#ffffff"  Height="23" Name="cmbPrjts" BorderBrush="#ffffff" BorderThickness="0" SelectedIndex="0" Margin="10,-25,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="cmbPrjts_SelectionChanged">
+                                <ComboBoxItem Content="Projects" />
+                            </ComboBox>
+
+                            <TreeView  Margin="10,0,0,0" BorderBrush="#ffffff" BorderThickness="0" Name="treeView1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             
 
                             
-                            <TreeViewItem  IsExpanded="True" >
+                            <TreeViewItem  Name="prjSetting" IsExpanded="True" >
                                 <TreeViewItem.Header>
-                                    <StackPanel Name="sPrjSetting" Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown">
+                                    <StackPanel Name="sPrjSetting"  Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown">
                                         <Image Source="/img/025.png" Width="16" Height="16"  Opacity="0.7" />
                                         <TextBlock Text="Project Settings" />
                                     </StackPanel>
@@ -354,42 +391,107 @@
                                 <TreeViewItem.Header>
                                     <StackPanel Name="Action" Orientation="Horizontal"  MouseLeftButtonDown="sRules_MouseLeftButtonDown">
                                         <Image Source="/img/075.png" Width="16" Height="16"  Opacity="0.7" />
-                                        <TextBlock Text="Actions/Rules" />
+                                            <TextBlock Name="tTreeViewAction" Text="Actions/Rules" />
+                                       
                                     </StackPanel>
                                 </TreeViewItem.Header>
+                                
                             </TreeViewItem>
+                            
+                            
 
-                            <TreeViewItem  IsExpanded="True" >
-                                <TreeViewItem.Header>
-                                    <StackPanel Name="ActionTree" Orientation="Horizontal"  MouseLeftButtonDown="sRules_MouseLeftButtonDown">
-                                        <Image Source="/img/075.png" Width="16" Height="16"  Opacity="0.7" />
-                                        <TextBlock Text="Tree" />
-                                    </StackPanel>
-                                </TreeViewItem.Header>
-                            </TreeViewItem>
 
-                            <TreeViewItem  IsExpanded="True" >
+                            <TreeViewItem Name="rules"  >
                                 <TreeViewItem.Header>
                                     <StackPanel Name="sRules" Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown">
                                         <Image Source="/img/051.png" Width="16" Height="16"  Opacity="0.7" />
-                                        <TextBlock Text="Rules" />
+                                            <TextBlock Name="trules" Text="Rules" />
                                     </StackPanel>
                                 </TreeViewItem.Header>
                             </TreeViewItem>
 
-                            <TreeViewItem  IsExpanded="True" >
+                            <TreeViewItem  >
                                 <TreeViewItem.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/img/028.png" Width="16" Height="16"  Opacity="0.7" />
-                                        <TextBlock Text="Post Process Data" />
+                                        <TextBlock Name="tPpData" Text="Post Process Data" />
                                     </StackPanel>
                                 </TreeViewItem.Header>
-                            </TreeViewItem>
+                                
+                                    <TreeViewItem Name="pReplace" >
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/004.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock  Name="tReplace" Text="Replace" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+                                    <TreeViewItem  Name="pTrim">
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/012a.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock  Name="tTrim" Text="Trim" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+
+                                    <TreeViewItem Name="pRegex" >
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/007.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock  Name="tRegex" Text="Regular expression" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+                                    <TreeViewItem Name="pSubstring" >
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/009.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock Name="tSubstring" Text="Substring" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+                                    <TreeViewItem  Name="pStartEndWith">
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/017.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock  Name="tStartEndWith" Text="Start/End With" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+
+                                    <TreeViewItem Name="pAppend" >
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/016.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock Name="tAppend" Text="Append" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+
+                                    <TreeViewItem Name="pHtmlEncodeDecode" >
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/img/027.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock  Name="tHtmlEncodeDecode" Text="Html Encode Decode" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+                                    </TreeViewItem>
+
+                                </TreeViewItem>
                         </TreeView>
+                        </Grid>
                     </Border>
+                    
                 </DockPanel>
                 <Frame  HorizontalAlignment="Stretch"  Name="frame1" VerticalAlignment="Stretch" Margin="310,100,20,40" Background="#F6FBFE"  />
-                <StackPanel HorizontalAlignment="Stretch" Background="#F6FBFE" Name="messagePanele" VerticalAlignment="Bottom" Height="20" Margin="210,100,20,20" >
+                <StackPanel HorizontalAlignment="Stretch" Background="#F6FBFE" Name="messagePanele" VerticalAlignment="Bottom" Height="20" Margin="310,100,20,20" >
                     <Label VerticalAlignment="Center"  Name="currentMessage" Margin="0,-3,0,0" />
                 </StackPanel>
             </Grid>

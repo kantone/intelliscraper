@@ -1,11 +1,4 @@
 ﻿
-
-Action Rules
-	1. Load type -> impostare i campi attivabili come helper
-	2. Caricare/creare la regola
-
-Rules
-	1. Elenco regole -> edit
-
-Action Flow
-
+3. Custom httpHeader and others control -> show/hide panel
+4. Post Process Data
+5. Rule By Type controls

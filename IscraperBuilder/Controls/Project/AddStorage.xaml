@@ -22,10 +22,10 @@
                 <Grid>
                 <Border BorderBrush="Silver" BorderThickness="1" Height="50" Name="border1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                     <Grid>
-                            <ComboBox Height="23" Name="cmbIds" Width="200" Margin="135,15,403,9" SelectionChanged="cmbIds_SelectionChanged" />
+                            <ComboBox Height="23" Name="cmbIds" HorizontalAlignment="Left" Width="133" Margin="135,15,0,9" SelectionChanged="cmbIds_SelectionChanged" />
                     <Label Content="Select Storage by Id" Height="26" HorizontalAlignment="Left" Margin="6,12,0,0" Name="label3" VerticalAlignment="Top" Width="123" />
-                            <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="361,16,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
-                            <Button Content="Delete" Height="23" HorizontalAlignment="Right" Margin="0,16,221,0" Name="button3" VerticalAlignment="Top" Width="75" Click="button3_Click" />
+                            <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="290,16,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+                            <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="381,16,0,0" Name="button3" VerticalAlignment="Top" Width="75" Click="button3_Click" />
                         </Grid>
                   </Border>
                 <TabControl  HorizontalAlignment="Stretch" Margin="0,60,0,0" Name="tabControl2" VerticalAlignment="Stretch" >

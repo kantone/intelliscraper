@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\RandomUtil.cs" />
     <Page Include="Controls\Common\HttpHeaderInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Rules\ActRuleTabFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Rules\Rule\RuleHttpGet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,10 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Rules\Rule\RulexpathSingle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Rules\Tree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,6 +164,9 @@
     <Compile Include="Controls\Rules\ActionRules.xaml.cs">
       <DependentUpon>ActionRules.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Rules\ActRuleTabFrame.xaml.cs">
+      <DependentUpon>ActRuleTabFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Rules\Rule\IRule.cs" />
     <Compile Include="Controls\Rules\Rule\RuleHttpGet.xaml.cs">
       <DependentUpon>RuleHttpGet.xaml</DependentUpon>
@@ -174,9 +178,6 @@
       <DependentUpon>RulexpathSingle.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Rules\Rule\TreeViewLineConverter.cs" />
-    <Compile Include="Controls\Rules\Tree.xaml.cs">
-      <DependentUpon>Tree.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Rules\TreeviewH.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -278,6 +279,33 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\043.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\012a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\009.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\016.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\027.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\017.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\022.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\023.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

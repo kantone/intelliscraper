@@ -22,14 +22,17 @@ namespace IscraperBuilder.Controls.Rules
     {
         List<object> rules { get; set; }
         Action action { get; set; }
+        IntelliScraper.Db.intelliScraperAction act { get; set; }
         bool isNew = false;
         IRule ruleOpened { get; set; }
         public ActionRules()       
         {
+            act = null;
             InitializeComponent(); 
             load();
         }
 
+       
         private void load()
         {
             try
@@ -45,6 +48,11 @@ namespace IscraperBuilder.Controls.Rules
             {
                 MainWindow.main.Status = "Error : " + ex.Message;
             }
+        }
+
+        public void setParentId(string id)
+        {
+            this.act = (from x in Factory.Instance.i.actions where x.id == id select x).FirstOrDefault();
         }
 
         private void loadItems()
@@ -98,7 +106,7 @@ namespace IscraperBuilder.Controls.Rules
             IntelliScraper.Db.intelliScraperActionType t = (IntelliScraper.Db.intelliScraperActionType) Enum.Parse(typeof(IntelliScraper.Db.intelliScraperActionType), val);
 
             isNew = true;
-            action = new Action(true, t, this, null);
+            action = new Action(true, t, this, act);
             frame1.Navigate(action);
             
         }

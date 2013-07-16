@@ -31,44 +31,64 @@ namespace IscraperBuilder.Controls.Project
 
         private void loadData()
         {
-            txtWait.Text = Factory.Instance.i.Project.ScrapingSetting.waitEachRequestMilliseconds.ToString();
-            txtErrorWait.Text = Factory.Instance.i.Project.ScrapingSetting.waitAfterError.ToString();
-            txtDownloadfolder.Text = Factory.Instance.i.Project.ScrapingSetting.imageFolderDownload;
-
-            if (Factory.Instance.i.Project.ScrapingSetting.credential != null)
+            if (Factory.Instance.i.Project.ScrapingSetting != null)
             {
-                chkUseCredential.IsChecked = Factory.Instance.i.Project.ScrapingSetting.credential.useNetworkCredential;
-                txtCredDomain.Text = Factory.Instance.i.Project.ScrapingSetting.credential.domain;
-                txtCredPass.Text = Factory.Instance.i.Project.ScrapingSetting.credential.password;
-                txtCredUserName.Text = Factory.Instance.i.Project.ScrapingSetting.credential.username;              
+                txtWait.Text = Factory.Instance.i.Project.ScrapingSetting.waitEachRequestMilliseconds.ToString();
+                txtErrorWait.Text = Factory.Instance.i.Project.ScrapingSetting.waitAfterError.ToString();
+                txtDownloadfolder.Text = Factory.Instance.i.Project.ScrapingSetting.imageFolderDownload;
+
+                if (Factory.Instance.i.Project.ScrapingSetting.credential != null)
+                {
+                    chkUseCredential.IsChecked = Factory.Instance.i.Project.ScrapingSetting.credential.useNetworkCredential;
+                    txtCredDomain.Text = Factory.Instance.i.Project.ScrapingSetting.credential.domain;
+                    txtCredPass.Text = Factory.Instance.i.Project.ScrapingSetting.credential.password;
+                    txtCredUserName.Text = Factory.Instance.i.Project.ScrapingSetting.credential.username;
+                }
+
+                chkRotateUserAgent.IsChecked = Factory.Instance.i.Project.ScrapingSetting.rotateUserAgents;
+                txtDefaultUserAgent.Text = Factory.Instance.i.Project.ScrapingSetting.defaultAgent;
+                if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo != null)
+                {
+                    chkUserAgentFromFile.IsChecked = Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile;
+                    txtUserAgentFile.Text = Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile;
+                }
+
+                if (Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo != null)
+                {
+                    var sequence = Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo;
+                    listViewHttpHeaders.ItemsSource = sequence;
+                }
+
+                if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo != null)
+                {
+                    if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue != null)
+                    {
+                        object[] x = new object[Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue.Length];
+
+                        int i = 0;
+                        foreach (string a in Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue)
+                        {
+                            x[i] = new { agentValue = a };
+                            i++;
+                        }
+                        listViewUserAgent.ItemsSource = x;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(Factory.Instance.i.Project.ScrapingSetting.defaultAgent))
+                    txtDefaultUserAgent.Text = System.Configuration.ConfigurationManager.AppSettings["defaultUserAgent"];
+            }
+            else
+            {
+                Factory.Instance.i.Project.ScrapingSetting = new IntelliScraper.Db.intelliScraperProjectScrapingSetting();
+                txtDefaultUserAgent.Text = System.Configuration.ConfigurationManager.AppSettings["defaultUserAgent"];
+                txtWait.Text = System.Configuration.ConfigurationManager.AppSettings["defaultWaitRequest"];
+               txtErrorWait.Text = System.Configuration.ConfigurationManager.AppSettings["defaultWaitRequestAfterError"];
+ 
             }
 
-            chkRotateUserAgent.IsChecked = Factory.Instance.i.Project.ScrapingSetting.rotateUserAgents;
-            txtDefaultUserAgent.Text = Factory.Instance.i.Project.ScrapingSetting.defaultAgent;
-            if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo != null)
-            {
-                chkUserAgentFromFile.IsChecked = Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile;
-                txtUserAgentFile.Text = Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile;
-            }
+          
 
-            if (Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo != null)
-            {
-                var sequence = Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo;
-                listViewHttpHeaders.ItemsSource = sequence;
-            }
-
-            if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo != null)
-            {
-                 object[] x = new object[Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue.Length];
-
-                 int i = 0;
-                 foreach (string a in Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue)
-                 {
-                     x[i] = new { agentValue = a };
-                     i++;
-                 }
-                listViewUserAgent.ItemsSource = x;               
-            }
         }
 
         /// <summary>
@@ -131,6 +151,8 @@ namespace IscraperBuilder.Controls.Project
                     i++;                    
                 }
                 dt[listViewUserAgent.Items.Count] = txtCustmUserAgent.Text;
+                if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo == null)
+                    Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo = new IntelliScraper.Db.intelliScraperProjectScrapingSettingGlobalUserAgentsInfo();
                 Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue = dt;
                 loadData();
                 CollectionViewSource.GetDefaultView(Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue).Refresh();

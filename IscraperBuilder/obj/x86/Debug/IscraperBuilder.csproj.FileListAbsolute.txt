@@ -50,5 +50,5 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\IscraperBuilder_MarkupCompile.lref
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RulexpathSingle.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RulexpathSingle.g.cs
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Tree.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Tree.g.cs
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\ActRuleTabFrame.baml
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\ActRuleTabFrame.g.cs
