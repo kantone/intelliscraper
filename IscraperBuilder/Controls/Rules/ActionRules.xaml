@@ -7,7 +7,7 @@
      d:DesignHeight="640" d:DesignWidth="750"
 	Title="Action Rules">
 
-    <Grid Background="#F6FBFE">
+    <Grid>
         <Border BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Stretch" Name="border1" VerticalAlignment="Top" Height="40">
             <Grid>
                 <Label Content="Add new action"  Name="label1" Margin="4,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>

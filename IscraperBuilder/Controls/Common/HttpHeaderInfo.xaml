@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-            d:DesignHeight="300" d:DesignWidth="650"
+            d:DesignHeight="300" d:DesignWidth="550"
 	>
 
     <Border BorderBrush="Gray" BorderThickness="2">
@@ -15,14 +15,14 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="LightGray" >
+        <Grid Grid.Row="0" Background="LightSkyBlue" >
             <Label Content="Name" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="lbIp" VerticalAlignment="Top" />
-            <Label Content="Value" Height="28" HorizontalAlignment="Left" Margin="240,6,0,0" Name="lbPorl" VerticalAlignment="Top" />
-            <TextBox Height="23" HorizontalAlignment="Left" Margin="45,6,0,0" Name="txtHname" VerticalAlignment="Top" Width="178" />
-            <TextBox Height="23"  HorizontalAlignment="Left" Margin="278,6,0,0" Name="txtHValue" VerticalAlignment="Top" Width="239" />
+            <Label Content="Value" Height="28" HorizontalAlignment="Left" Margin="6,30,0,0" Name="lbPorl" VerticalAlignment="Top" />
+            <TextBox Height="23" HorizontalAlignment="Left" Margin="45,6,0,0" Name="txtHname" VerticalAlignment="Top" Width="239" />
+            <TextBox Height="23"  HorizontalAlignment="Left" Margin="45,30,0,0" Name="txtHValue" VerticalAlignment="Top" Width="239" />
 
-            <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="523,6,0,0" Name="button2" VerticalAlignment="Top" Width="62" Click="button2_Click" />
-            <Button Content="Delete Selection" Height="23" HorizontalAlignment="left" Margin="523,31,0,0" Name="button3" VerticalAlignment="Top" Width="96" Click="button3_Click" />
+            <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="308,6,0,0" Name="button2" VerticalAlignment="Top" Width="62" Click="button2_Click" />
+            <Button Content="Delete Selection" Height="23" HorizontalAlignment="left" Margin="308,31,0,0" Name="button3" VerticalAlignment="Top" Width="96" Click="button3_Click" />
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Stretch" Background="#ffffff"  VerticalAlignment="Top">
 

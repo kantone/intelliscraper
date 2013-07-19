@@ -1,0 +1,44 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Common.xpathAttribute"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="430"
+	Title="xpathAttribute">
+
+    <ScrollViewer >
+        <Grid>
+       
+        <Label Content="Id" Height="26" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Xpath" Height="26" HorizontalAlignment="Left" Margin="12,44,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Attribute Name" Height="26" HorizontalAlignment="Left" Margin="12,104,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Get Type" Height="26" HorizontalAlignment="Left" Margin="12,72,0,0" Name="label4" VerticalAlignment="Top" />
+        <TextBox Name="txtId" Height="23" HorizontalAlignment="Left" Margin="116,12,0,0" VerticalAlignment="Top" Width="120" />
+        <TextBox Name="txtXpath" Height="23" HorizontalAlignment="Left" Margin="116,44,0,0"  VerticalAlignment="Top" Width="267" />
+        <ComboBox Name="cmbGetType" Height="23" HorizontalAlignment="Left" Margin="116,72,0,0"  VerticalAlignment="Top" Width="211" SelectionChanged="cmbGetType_SelectionChanged" />
+        <TextBox Name="txtAttrName" IsEnabled="false" Height="23" HorizontalAlignment="Left" Margin="116,104,0,0"  VerticalAlignment="Top" Width="211" />
+        <Button Content="Save" Height="23" Click="button1_Click" HorizontalAlignment="Left" Margin="252,142,0,0" Name="button1" VerticalAlignment="Top" Width="75" />
+        <StackPanel>
+            <Expander IsExpanded="False" Header="Process Fetched Data with custom selection of post process rules" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="auto" Margin="12,196,0,27">
+                <Grid Width="404">                
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="115,18,0,0" Name="cmbPp" VerticalAlignment="Top" Width="212" SelectionChanged="cmbPp_SelectionChanged" />
+                    <ListBox Height="156" HorizontalAlignment="Left" Margin="18,47,0,0" Name="listBox1" VerticalAlignment="Top" Width="326" />
+                    <Button Content="Remove selected"  Height="23" HorizontalAlignment="Left" Margin="234,209,0,0" Name="button2" VerticalAlignment="Top" Width="110" Click="button2_Click" />
+                    <Label Content="Select Rule" Height="28" HorizontalAlignment="Left" Margin="18,18,0,0" Name="label5" VerticalAlignment="Top" />               
+                </Grid>
+            </Expander>
+                <Expander Header="Process data with a set of defined rules (Post Process Group Rule)" Margin="12,-20,12,42">
+                <Grid Height="240">
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="118,11,0,0" Name="cmbGrIds" VerticalAlignment="Top" Width="212" SelectionChanged="cmbGrIds_SelectionChanged" />
+                    <Label Content="Add Rule Group" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label6" VerticalAlignment="Top" />
+                    <ListBox Height="137" HorizontalAlignment="Left" Margin="14,40,0,0" Name="listBox2" VerticalAlignment="Top" Width="316" />
+                    <Button Content="Remove selected" Height="23" HorizontalAlignment="Left" Margin="222,183,0,0" Name="button3" VerticalAlignment="Top" Width="108" Click="button3_Click" />
+                </Grid>
+                
+            </Expander>
+        </StackPanel>
+        
+    </Grid>
+    </ScrollViewer>
+</Page>

@@ -63,7 +63,7 @@
   <actions>
     <action>
       <id>GetTagPage</id>
-      <ruleId>httpGet-tagpage</ruleId>
+      <ruleId>getTagPage</ruleId>
       <type>httpGet</type>
       <input>
         <type>custom</type>
@@ -72,21 +72,45 @@
     </action>
     <action>
       <id>single</id>
-      <ruleId>xpathSingle-getTagsInfo1</ruleId>
+      <ruleId>xpathSingle-getTagsInfoa1</ruleId>
       <type>xpathSingle</type>
       <input>
         <type>custom</type>
         <customInputValue />
       </input>
     </action>
+    <action>
+      <id>LoadHtml</id>
+      <ruleId>none</ruleId>
+      <type>loadHtmlFromFile</type>
+      <input>
+        <type>custom</type>
+        <customInputValue>F:\sp2can\P\_me\prjects-publics\IntelliScraper\alabama.html</customInputValue>
+      </input>
+    </action>
   </actions>
   <rules>
     <httpGet>
-      <id>httpGet-tagpage</id>
+      <id>getTagPage</id>
+      <customUrl>http://stackoverflow.com/tags</customUrl>
+      <urlType>custom</urlType>
+      <customUserAgent />
+    </httpGet>
+    <httpGet>
+      <id>httpGet-HFGQ6</id>
       <urlType>custom</urlType>
     </httpGet>
     <xpathSingle>
-      <id>xpathSingle-getTagsInfo1</id>
+      <id>xpathSingle-getTagsInfoa1</id>
+      <attributes>
+        <id>test</id>
+        <xpath>asdf</xpath>
+        <attributeName />
+        <getType>attribute</getType>
+      </attributes>
+      <postProcessTriggerGroup>
+        <id>g1</id>
+      </postProcessTriggerGroup>
     </xpathSingle>
   </rules>
   <postProcess />

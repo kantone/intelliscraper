@@ -7,7 +7,7 @@
       d:DesignHeight="560" d:DesignWidth="750"
 	Title="Rules Wrapper">
 
-    <Grid Background="#F6FBFE">
+    <Grid>
         <Border BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Stretch" Name="border1" VerticalAlignment="Top" Height="80">
             <Grid>
                 <Label Content="Select Rule" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />

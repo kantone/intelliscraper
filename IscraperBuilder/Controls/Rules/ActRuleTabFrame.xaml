@@ -7,7 +7,7 @@
      
 	 d:DesignHeight="640" d:DesignWidth="750"
 	Title="Action and Rule">
-    <Grid Background="#F6FBFE">
+    <Grid>
         <TabControl  HorizontalAlignment="Stretch"  Name="tabControl1" VerticalAlignment="Stretch">
             <TabItem Header="Action" Name="tabItem1">
                 <Grid>

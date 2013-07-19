@@ -14,7 +14,7 @@ namespace IntelliScraper.Scrape.Action
         int csvExistRowPosition { get; set; }
         string csvCurrentRowValue { get; set; }
         bool cleared = false;
-        bool isLast = false;
+        //bool isLast = false;
         int lastRow = 1;
         int existRowIndex = 0;
         public Save(Db.save save,List<Model.ActionResult> results)
@@ -48,15 +48,15 @@ namespace IntelliScraper.Scrape.Action
                 foreach (List<KeyValuePair<string, object>> mvals in data)
                 {
                     cols = new List<KeyValuePair<string, object>>();
-                    List<KeyValuePair<string, object>> valsx = (List<KeyValuePair<string, object>>)mvals;
+                   List<KeyValuePair<string, object>> valsx = (List<KeyValuePair<string, object>>)mvals;
                     foreach (Db.saveMap map in save.map)
                     {
                         KeyValuePair<string, object> kval = (from x in valsx where x.Key == map.attributeId select x).FirstOrDefault();
                         cols.Add(new KeyValuePair<string, object>(map.mapColName, (string)kval.Value));
                     }
 
-                    if (i == data.Count-1)
-                        isLast = true;
+                   /* if (i == data.Count-1)
+                        isLast = true;*/
 
                     singleSaveWrapper(cols, storeInfo);
                    

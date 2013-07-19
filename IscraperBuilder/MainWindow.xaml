@@ -321,6 +321,18 @@
                             <ComboBox  Background="#ffffff"  Height="23" Name="cmbPrjts" BorderBrush="#ffffff" BorderThickness="0" SelectedIndex="0" Margin="10,-25,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="cmbPrjts_SelectionChanged">
                                 <ComboBoxItem Content="Projects" />
                             </ComboBox>
+                            <Button  Height="20" Click="button1_Click" Name="button1" Width="20" Background="Transparent" BorderThickness="0" Margin="10,-25,0,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <StackPanel>
+                                    <Image Source="img/003.png" Width="15" Height="15" Opacity="0.5" />
+                                    <TextBlock>Disconnect from Server</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button ToolTip="Open project xml file" Click="button2_Click"  Height="20" Name="button2" Width="20" Background="Transparent" BorderThickness="0" Margin="10,-25,25,0" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <StackPanel>
+                                    <Image Source="img/055.png" Width="15" Height="15" Opacity="0.5"   />
+                                    <TextBlock>Disconnect from Server</TextBlock>
+                                </StackPanel>
+                            </Button>
 
                             <TreeView  Margin="10,0,0,0" BorderBrush="#ffffff" BorderThickness="0" Name="treeView1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             
@@ -406,11 +418,13 @@
                                     <StackPanel Name="sRules" Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown">
                                         <Image Source="/img/051.png" Width="16" Height="16"  Opacity="0.7" />
                                             <TextBlock Name="trules" Text="Rules" />
-                                    </StackPanel>
+                                          
+                                            
+                                        </StackPanel>
                                 </TreeViewItem.Header>
                             </TreeViewItem>
 
-                            <TreeViewItem  >
+                            <TreeViewItem  IsExpanded="False" >
                                 <TreeViewItem.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/img/028.png" Width="16" Height="16"  Opacity="0.7" />
@@ -485,12 +499,20 @@
                                     </TreeViewItem>
 
                                 </TreeViewItem>
+                                <TreeViewItem>
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" Name="sRun">
+                                            <Image Source="/img/035a.png" Width="16" Height="16"  Opacity="0.7" />
+                                            <TextBlock Name="tRun" Text="Run" />
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
+                                </TreeViewItem>
                         </TreeView>
                         </Grid>
                     </Border>
-                    
+                   
                 </DockPanel>
-                <Frame  HorizontalAlignment="Stretch"  Name="frame1" VerticalAlignment="Stretch" Margin="310,100,20,40" Background="#F6FBFE"  />
+                <Frame  HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  Name="frame1" VerticalAlignment="Stretch" Margin="310,100,20,40"   />
                 <StackPanel HorizontalAlignment="Stretch" Background="#F6FBFE" Name="messagePanele" VerticalAlignment="Bottom" Height="20" Margin="310,100,20,20" >
                     <Label VerticalAlignment="Center"  Name="currentMessage" Margin="0,-3,0,0" />
                 </StackPanel>

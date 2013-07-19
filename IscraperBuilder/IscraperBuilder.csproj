@@ -62,8 +62,74 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Common\ImageConvert.xaml.cs">
+      <DependentUpon>ImageConvert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\xpathAttribute.xaml.cs">
+      <DependentUpon>xpathAttribute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\xpathAttributeGroupPP.xaml.cs">
+      <DependentUpon>xpathAttributeGroupPP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\xpathSingle.xaml.cs">
+      <DependentUpon>xpathSingle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Execute\Run.xaml.cs">
+      <DependentUpon>Run.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\ruleDownload.xaml.cs">
+      <DependentUpon>ruleDownload.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\ruleFtpPut.xaml.cs">
+      <DependentUpon>ruleFtpPut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\RuleHttpPost.xaml.cs">
+      <DependentUpon>RuleHttpPost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\RuleLoopLink.xaml.cs">
+      <DependentUpon>RuleLoopLink.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\rulePlugin.xaml.cs">
+      <DependentUpon>rulePlugin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\ruleSave.xaml.cs">
+      <DependentUpon>ruleSave.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\ruleScreenShot.xaml.cs">
+      <DependentUpon>ruleScreenShot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\ruleUpload.xaml.cs">
+      <DependentUpon>ruleUpload.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\ruleZip.xaml.cs">
+      <DependentUpon>ruleZip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rules\Rule\xpathCollection.xaml.cs">
+      <DependentUpon>xpathCollection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TreeViewActionResult.cs" />
     <Compile Include="Utils\RandomUtil.cs" />
     <Page Include="Controls\Common\HttpHeaderInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Common\ImageConvert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Common\xpathAttribute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Common\xpathAttributeGroupPP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Common\xpathSingle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Execute\Run.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,6 +177,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Rules\Rule\ruleDownload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\ruleFtpPut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Rules\Rule\RuleHttpGet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,7 +193,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Rules\Rule\RuleHttpPost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\RuleLoopLink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\rulePlugin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\ruleSave.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\ruleScreenShot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\ruleUpload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Rules\Rule\RulexpathSingle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\ruleZip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Rules\Rule\xpathCollection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,6 +413,16 @@
   <ItemGroup>
     <Resource Include="img\023.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\055.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\035a.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

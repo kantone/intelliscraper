@@ -138,28 +138,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="testData\Copia di yh.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="testData\storage.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="testData\test.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="testData\yh.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="testData\hpImg.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="testData\input2.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="TO-DO.txt" />
-    <Content Include="testData\input1.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Xml\iSchema.Generated.xml">
       <DependentUpon>iSchema.xsd</DependentUpon>
     </Content>

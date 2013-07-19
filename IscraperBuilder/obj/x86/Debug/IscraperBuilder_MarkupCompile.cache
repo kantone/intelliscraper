@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\App.xaml
-16-1923293108
+31814806886
 
-251043638969
+411062246374
 16-1449018262
-Controls\Common\HttpHeaderInfo.xaml;Controls\PageTemplate.xaml;Controls\Project\PrjNew.xaml;Controls\Project\AddStorage.xaml;Controls\Project\PrjBrowser2.xaml;Controls\Project\PrjCustomProxy.xaml;Controls\Project\PrjFtp.xaml;Controls\Project\PrjInfo.xaml;Controls\Project\PrjProxy.xaml;Controls\Rules\Action.xaml;Controls\Rules\ActionRules.xaml;Controls\Rules\ActRuleTabFrame.xaml;Controls\Rules\Rule\RuleHttpGet.xaml;Controls\Rules\RulesWrapper.xaml;Controls\Rules\Rule\RulexpathSingle.xaml;MainWindow.xaml;
+Controls\Common\HttpHeaderInfo.xaml;Controls\Common\ImageConvert.xaml;Controls\Common\xpathAttribute.xaml;Controls\Common\xpathAttributeGroupPP.xaml;Controls\Common\xpathSingle.xaml;Controls\Execute\Run.xaml;Controls\PageTemplate.xaml;Controls\Project\PrjNew.xaml;Controls\Project\AddStorage.xaml;Controls\Project\PrjBrowser2.xaml;Controls\Project\PrjCustomProxy.xaml;Controls\Project\PrjFtp.xaml;Controls\Project\PrjInfo.xaml;Controls\Project\PrjProxy.xaml;Controls\Rules\Action.xaml;Controls\Rules\ActionRules.xaml;Controls\Rules\ActRuleTabFrame.xaml;Controls\Rules\Rule\ruleDownload.xaml;Controls\Rules\Rule\ruleFtpPut.xaml;Controls\Rules\Rule\RuleHttpGet.xaml;Controls\Rules\RulesWrapper.xaml;Controls\Rules\Rule\RuleHttpPost.xaml;Controls\Rules\Rule\RuleLoopLink.xaml;Controls\Rules\Rule\rulePlugin.xaml;Controls\Rules\Rule\ruleSave.xaml;Controls\Rules\Rule\ruleScreenShot.xaml;Controls\Rules\Rule\ruleUpload.xaml;Controls\Rules\Rule\RulexpathSingle.xaml;Controls\Rules\Rule\ruleZip.xaml;Controls\Rules\Rule\xpathCollection.xaml;MainWindow.xaml;
 
 False
 

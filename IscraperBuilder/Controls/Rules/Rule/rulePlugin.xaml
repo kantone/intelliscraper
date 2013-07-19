@@ -1,0 +1,25 @@
+﻿<Page x:Class="IscraperBuilder.Controls.Rules.Rule.rulePlugin"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="560" d:DesignWidth="650"
+
+	Title="rulePlugin" xmlns:my="clr-namespace:IscraperBuilder.Controls.Common">
+
+    <Grid>
+        <TextBlock FontWeight="Bold" Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" Name="txtId" Opacity="0.7" Text="ID" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="139,105,0,0" Name="txtInputAttrKey" ToolTip="Format : actionId | action.ruleAttr" VerticalAlignment="Top" Width="198" />
+        <Label Content="Input attribute key" Height="28" HorizontalAlignment="Left" Margin="10,103,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Plugin Name" Height="28" HorizontalAlignment="Left" Margin="10,29,0,0" Name="label1" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="139,29,0,0" Name="cmbPlugins" VerticalAlignment="Top" Width="196" />
+        <Label Content="Custom Input" Height="28" HorizontalAlignment="Left" Margin="12,137,0,0" Name="label2" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="139,139,0,0" Name="txtCustomInput" ToolTip="Format : actionId | action.ruleAttr" VerticalAlignment="Top" Width="295" />
+        <Label Content="Input type" Height="28" HorizontalAlignment="Left" Margin="10,69,0,0" Name="label5" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="139,69,0,0" Name="cmbInputType" VerticalAlignment="Top" Width="196" SelectionChanged="cmbInputType_SelectionChanged" />
+        <my:ImageConvert HorizontalAlignment="Left" Margin="12,237,0,0" x:Name="imageConvert1" VerticalAlignment="Top" Width="567" />
+        <Label Content="Image Convert" Height="28" HorizontalAlignment="Left" Margin="12,213,0,0" Name="label4" VerticalAlignment="Top" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="470,29,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+    </Grid>
+</Page>

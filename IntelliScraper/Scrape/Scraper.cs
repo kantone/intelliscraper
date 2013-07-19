@@ -8,7 +8,7 @@ namespace IntelliScraper.Scrape
 {
     public class Scraper
     {
-        private bool getHtmlAsync = false;
+        //private bool getHtmlAsync = false;
         public Model.Stats stat { get; set; }
         public List<Model.ActionResult> actionResult { get; set; }
 

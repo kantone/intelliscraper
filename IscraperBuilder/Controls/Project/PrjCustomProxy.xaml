@@ -7,7 +7,7 @@
       d:DesignHeight="640" d:DesignWidth="700"
 	Title="PrjCustomProxy">
 
-    <Grid Background="#F6FBFE">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="90"></RowDefinition>

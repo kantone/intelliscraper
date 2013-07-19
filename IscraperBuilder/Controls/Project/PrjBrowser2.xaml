@@ -7,7 +7,7 @@
        d:DesignHeight="640" d:DesignWidth="750"
 	Title="PrjBrowser">
 
-    <Grid Background="#F6FBFE">
+    <Grid >
         <TabControl  HorizontalAlignment="Stretch" Margin="0,40,0,0"  Name="tabControl1" VerticalAlignment="Stretch" >
             <TabItem Header="Global Option" Name="tabItem1">
                 <Grid>

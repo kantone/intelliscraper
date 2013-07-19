@@ -23,10 +23,11 @@ namespace IscraperBuilder.Controls.Rules
         List<object> rules { get; set; }
         Action action { get; set; }
         IntelliScraper.Db.intelliScraperAction act { get; set; }
-        bool isNew = false;
+        bool isNew { get; set; }
         IRule ruleOpened { get; set; }
         public ActionRules()       
         {
+            this.isNew = false;
             act = null;
             InitializeComponent(); 
             load();

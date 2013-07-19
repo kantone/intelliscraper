@@ -1,4 +1,26 @@
 ﻿
-3. Custom httpHeader and others control -> show/hide panel
-4. Post Process Data
-5. Rule By Type controls
+	Global
+
+		Crypt Options
+		Check validation foreach rule items/action/project
+		Make rule type "name" LABEL
+
+	Runner
+		
+
+	Post Process Data
+		Replace
+		trim
+		regex
+		substring
+		start/end with
+		append
+		html encode/decode
+
+	Check Project (validate)
+
+
+	[Separate Project]
+	Project Creatore/Exporter
+		Console
+		Win Client

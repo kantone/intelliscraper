@@ -45,9 +45,15 @@ namespace IscraperBuilder
 
             this.evt =  EventManager.RegisterRoutedEvent("keyEnterEvt", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TextBox));
             this.evtArg = new RoutedEventArgs(this.evt);
+
+            
         }
 
         #region loaders
+
+        /// <summary>
+        /// Load rules tree
+        /// </summary>
         public void loadRules()
         {
             if (Factory.Instance.i != null)
@@ -67,6 +73,8 @@ namespace IscraperBuilder
                         i.ToolTip = "Inline edit : write and press enter to change rule name!";
                         i.Tag = r;
                         i.MouseUp +=  new System.Windows.Input.MouseButtonEventHandler(ruleClick);
+                        i.GotFocus += new RoutedEventHandler(i_GotFocus);
+                        i.LostFocus += new RoutedEventHandler(i_LostFocus);
                         i.ContextMenu = Resources["RuleContextMenu"] as ContextMenu;
                         rules.Items.Add(i);
                         c++;
@@ -76,6 +84,10 @@ namespace IscraperBuilder
             }
         }
 
+
+        /// <summary>
+        /// Load Post Proces sData tree
+        /// </summary>
         public void loadPostProcessData()
         {
             if (Factory.Instance.i != null)
@@ -201,6 +213,7 @@ namespace IscraperBuilder
 
             }
         }
+
         #endregion
 
         #region Window 	behavior
@@ -264,6 +277,51 @@ namespace IscraperBuilder
         {
 
         }
+
+       
+
+        /// <summary>
+        /// Rule Focus lost change color
+        /// </summary>
+        void i_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox mi = e.Source as TextBox;
+            mi.Background = new SolidColorBrush(Colors.White);
+        }
+
+        /// <summary>
+        /// Rule Focus open rule editor and change color
+        /// </summary>
+        void i_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox mi = e.Source as TextBox;
+            mi.Background = new SolidColorBrush(Colors.LightGreen);
+            string id = mi.Text;
+            Factory.Instance.LoadRuleFrame(id, this.frame1, false, null);
+        }
+
+
+        /// <summary>
+        /// Open xml File
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            if (Factory.Instance.openedFileProject != null)
+                System.Diagnostics.Process.Start(Factory.Instance.openedFileProject);
+        }
+
+        /// <summary>
+        /// refresh
+        /// </summary>
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            loadActionTree();
+            loadRules();
+            loadPostProcessData();
+        }
+
 
         #endregion 
 
@@ -410,9 +468,7 @@ namespace IscraperBuilder
                     name = (e.Source as StackPanel).Name;
                 if (e.Source.GetType() == typeof(TextBlock))
                     name = (e.Source as TextBlock).Text;
-                /* if (e.Source.GetType() == typeof(Image))
-                     name = (e.Source as Image).Name;*/
-                
+                               
                 switch (name)
                 {
                     case "sPrjSetting":
@@ -469,6 +525,12 @@ namespace IscraperBuilder
                     case "sRules":
                         {
                             this.frame1.Source = new Uri("Controls\\Rules\\RulesWrapper.xaml", UriKind.Relative);
+                            break;
+                        }
+                    case "sRun":
+                    case "Run":
+                        {
+                            this.frame1.Source = new Uri("Controls\\Execute\\Run.xaml", UriKind.Relative);
                             break;
                         }
                    
@@ -531,7 +593,7 @@ namespace IscraperBuilder
         /// </summary>
         private TreeViewActionResult getActiontreeView(IntelliScraper.Db.intelliScraperAction a)
         {
-            TreeviewH singleAction = new TreeviewH(a.id,string.Format("{0} - ({1})",a.id,a.ruleId));
+            TreeviewH singleAction = new TreeviewH(a.id,string.Format("{0} ({1})",a.id,a.ruleId));
            
             singleAction.FontWeight = FontWeights.Bold;
             if (string.IsNullOrEmpty(a.ruleId))
@@ -607,15 +669,17 @@ namespace IscraperBuilder
                 tbf.setFrame1(a);
 
                 string ruleId = string.Empty;
-                int index = header.IndexOf("-");
+                int index = header.IndexOf("(");
                 if (index > 0)
                 {
-                    ruleId = header.Substring(index).Replace("-", "").Replace("(", "").Replace(")","").Trim();
+                    ruleId = header.Substring(index).Replace("(", "").Replace(")","").Trim();
                     tbf.tabItem2.Header = ruleId;
                 }
 
-                Factory.Instance.LoadRuleFrame(ruleId, tbf.frame2, false, null);
-                
+                tbf.tabItem2.Visibility = Visibility.Visible;
+                IscraperBuilder.Controls.Rules.Rule.IRule rule = Factory.Instance.LoadRuleFrame(ruleId, tbf.frame2, false, null);
+                if (rule == null)
+                    tbf.tabItem2.Visibility = Visibility.Hidden;
 
                 MainWindow.main.frame1.Navigate(tbf);
             }
@@ -800,7 +864,7 @@ namespace IscraperBuilder
                     {
                         if (r.GetType() == typeof(IntelliScraper.Db.httpGet))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.httpGet where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.httpGet where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -808,7 +872,8 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.xpathSingle))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.xpathSingle where x.id == h.Tag select x).FirstOrDefault();
+                         
+                            var rule = (from x in Factory.Instance.i.rules.xpathSingle where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -816,7 +881,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.httpPost))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.httpPost where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.httpPost where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -824,7 +889,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.xpathCollection))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.xpathCollection where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.xpathCollection where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -832,7 +897,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.loop_link))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.loop_link where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.loop_link where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -840,7 +905,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.download))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.download where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.download where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -848,7 +913,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.upload))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.upload where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.upload where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -856,7 +921,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.ftpPut))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.ftpPut where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.ftpPut where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -864,7 +929,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.actionZip))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.actionZip where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.actionZip where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -872,7 +937,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.save))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.save where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.save where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -880,7 +945,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.screenShot))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.screenShot where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.screenShot where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -888,7 +953,7 @@ namespace IscraperBuilder
 
                         if (r.GetType() == typeof(IntelliScraper.Db.plugin))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.plugin where x.id == h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.plugin where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -921,9 +986,13 @@ namespace IscraperBuilder
         /// </summary>
         private void saveRuleNameEnter(object sender, KeyEventArgs e)
         {
+            TextBox mi = e.Source as TextBox;
+
+            mi.Background = new SolidColorBrush(Colors.LightSkyBlue);
             if (e.Key == Key.Enter)
             {
-                TextBox mi = e.Source as TextBox;
+
+                mi.Background = new SolidColorBrush(Colors.White);
                 this.evtArg.Source = mi;
                /* RoutedEventArgs e1 = new RoutedEventArgs();
                 e1.RoutedEvent = EventManager.RegisterRoutedEvent("Click", RoutingStrategy.Bubble, typeof(RoutedEventHandler),mi.GetType());
@@ -936,17 +1005,7 @@ namespace IscraperBuilder
 
         #endregion
 
-       
-
-     
-       
-
-        
+                       
     }
-
-    public class TreeViewActionResult
-    {
-        public TreeviewH treeView { get; set; }
-        public IntelliScraper.Db.intelliScraperAction action { get; set; }
-    }
+    
 }

@@ -7,7 +7,7 @@
       d:DesignHeight="640" d:DesignWidth="750"
 	Title="Ftp Connections">
     
-    <Grid Background="#F6FBFE">
+    <Grid >
         <Label Content="ID" Height="28" HorizontalAlignment="Left" Margin="12,58,0,0" Name="label2" VerticalAlignment="Top" />
             <TextBox Height="23" HorizontalAlignment="Left" Margin="152,60,0,0" Name="txtNewId" VerticalAlignment="Top" Width="218" />
             <Button Content="Add or Update" Height="23" HorizontalAlignment="Left" Margin="152,272,0,0" Name="button1" VerticalAlignment="Top" Width="108" Click="button1_Click" />

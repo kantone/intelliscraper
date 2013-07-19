@@ -99,8 +99,15 @@ namespace IscraperBuilder.Controls.Rules
                 this.rule.customUserAgent = txtCustUserAgent.Text;
                 this.rule.urlType = (IntelliScraper.Db.httpGetUrlType)Enum.Parse(typeof(IntelliScraper.Db.httpGetUrlType), (string)cmbUrlType.SelectedValue);
                 this.rule.customUrl = txtCustomUrl.Text;
+                this.rule.customHttpHeadersInfo = httpHeaderInfo1.getHeaders();
+                Factory.Instance.Save();
                 return "Updated " + oldId;
             }           
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+           MainWindow.main.Status =save();
         }
     }
 }

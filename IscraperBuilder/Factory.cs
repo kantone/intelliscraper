@@ -82,6 +82,9 @@ namespace IscraperBuilder
             return ids;
         }
 
+        /// <summary>
+        /// Get all Rules as objects
+        /// </summary>        
         public List<object> getAllObj()
         {
             List<object> ids = new List<object>();
@@ -124,7 +127,39 @@ namespace IscraperBuilder
             return ids;
         }
 
-     
+        /// <summary>
+        /// Get all Post Process as objects
+        /// </summary>     
+        public List<object> getAllPostProcessObj()
+        {
+            List<object> ids = new List<object>();
+            if (Factory.Instance.i.postProcess != null)
+            {
+                if(Factory.Instance.i.postProcess.append != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.append.ToList<object>());
+
+                if (Factory.Instance.i.postProcess.htmlEncodeDecode != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.htmlEncodeDecode.ToList<object>());
+
+                if (Factory.Instance.i.postProcess.regularExpression != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.regularExpression.ToList<object>());
+
+                if (Factory.Instance.i.postProcess.replace != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.replace.ToList<object>());
+
+                if (Factory.Instance.i.postProcess.startEndWith != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.startEndWith.ToList<object>());
+
+                if (Factory.Instance.i.postProcess.substring != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.substring.ToList<object>());
+
+                if (Factory.Instance.i.postProcess.trim != null)
+                    ids.AddRange(Factory.Instance.i.postProcess.trim.ToList<object>());                    
+            }
+           
+
+            return ids;
+        }
 
         /// <summary>
         /// Get id from rule with reflection
@@ -139,8 +174,7 @@ namespace IscraperBuilder
             }
             return ids;
         }
-
-
+        
         /// <summary>
         /// Get id from rule with reflection
         /// </summary>
@@ -155,7 +189,9 @@ namespace IscraperBuilder
             return ids;
         }
 
-
+        /// <summary>
+        /// Get rule by id
+        /// </summary>
         public IscraperBuilder.Controls.Rules.Rule.IRule getRuleById(string ruleId, bool useCustomType, Type t)
         {
             IscraperBuilder.Controls.Rules.Rule.IRule h = null;
@@ -179,43 +215,39 @@ namespace IscraperBuilder
                 if (type == typeof(IntelliScraper.Scrape.Action.HttpGet) || type == typeof(IntelliScraper.Db.httpGet))
                     h = new IscraperBuilder.Controls.Rules.RuleHttpGet(ruleId);
 
+                if (type == typeof(IntelliScraper.Db.httpPost))
+                    h = new IscraperBuilder.Controls.Rules.Rule.RuleHttpPost(ruleId);    
+
                 if (type == typeof(IntelliScraper.Db.xpathSingle))
                     h = new IscraperBuilder.Controls.Rules.Rule.RulexpathSingle(ruleId);
 
-                if (type == typeof(IntelliScraper.Scrape.Action.Zip) || type == typeof(IntelliScraper.Db.actionZip))
-                    h = new IscraperBuilder.Controls.Rules.RuleHttpGet(ruleId);
-
-                /* if (type == typeof(IntelliScraper.Db.httpPost))
-                    h = new IscraperBuilder.Controls.Rules.RuleHttpPost(ruleId);         
-
-                   
-
                 if (type == typeof(IntelliScraper.Db.xpathCollection))
-                    h = new IscraperBuilder.Controls.Rules.RulexpathCollection(ruleId);         
+                    h = new IscraperBuilder.Controls.Rules.Rule.xpathCollection(ruleId);
 
                 if (type == typeof(IntelliScraper.Db.loop_link))
-                    h = new IscraperBuilder.Controls.Rules.Ruleloop_link(ruleId);         
-                
+                    h = new IscraperBuilder.Controls.Rules.Rule.RuleLoopLink(ruleId);
+
                 if (type == typeof(IntelliScraper.Db.download))
-                    h = new IscraperBuilder.Controls.Rules.Ruledownload(ruleId);  
-       
+                    h = new IscraperBuilder.Controls.Rules.Rule.ruleDownload(ruleId);
+
+                if (type == typeof(IntelliScraper.Scrape.Action.Zip) || type == typeof(IntelliScraper.Db.actionZip))
+                    h = new IscraperBuilder.Controls.Rules.Rule.ruleZip(ruleId);
+
+                if (type == typeof(IntelliScraper.Db.screenShot))
+                    h = new IscraperBuilder.Controls.Rules.Rule.ruleScreenShot(ruleId);
+
                 if (type == typeof(IntelliScraper.Db.upload))
-                    h = new IscraperBuilder.Controls.Rules.Ruleupload(ruleId);  
-       
+                    h = new IscraperBuilder.Controls.Rules.Rule.ruleUpload(ruleId);
+
                 if (type == typeof(IntelliScraper.Db.ftpPut))
-                    h = new IscraperBuilder.Controls.Rules.RuleftpPut(ruleId); 
-        
-                if (type == typeof(IntelliScraper.Db.actionZip))
-                    h = new IscraperBuilder.Controls.Rules.RuleactionZip(ruleId); 
+                    h = new IscraperBuilder.Controls.Rules.Rule.ruleFtpPut(ruleId);
+                
+                if (type == typeof(IntelliScraper.Db.plugin))
+                    h = new IscraperBuilder.Controls.Rules.Rule.rulePlugin(ruleId);  
         
                 if (type == typeof(IntelliScraper.Db.save))
-                    h = new IscraperBuilder.Controls.Rules.Rulesave(ruleId); 
-        
-                if (type == typeof(IntelliScraper.Db.screenShot))
-                    h = new IscraperBuilder.Controls.Rules.RulescreenShot(ruleId);
-         
-                if (type == typeof(IntelliScraper.Db.plugin))
-                    h = new IscraperBuilder.Controls.Rules.Ruleplugin(ruleId);    */  
+                    h = new IscraperBuilder.Controls.Rules.Rule.ruleSave(ruleId); 
+           
             }
             return h;
 
@@ -236,7 +268,7 @@ namespace IscraperBuilder
             return null;
 
         }
-
+        
         /// <summary>
         /// Get rule Type by typeName
         /// </summary>

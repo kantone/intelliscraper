@@ -28,7 +28,7 @@ namespace IntelliScraper
 
             
 
-            string fname = @"F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\testData\yh.xml";
+            //string fname = @"F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\testData\yh.xml";
             string fnameCrypted = @"F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\testData\yh_crypted.xml";
             
         /*    string crypted = IntelliScraper.Crypto.EncryptStringAES(System.IO.File.ReadAllText(fname),"yh4393xr");

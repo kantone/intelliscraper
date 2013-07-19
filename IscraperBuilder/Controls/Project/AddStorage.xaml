@@ -7,7 +7,7 @@
      d:DesignHeight="640" d:DesignWidth="750"
 	Title="Add Storage">
 
-    <Grid Background="#F6FBFE">
+    <Grid >
         <TabControl HorizontalAlignment="Stretch"  Name="tabControl1" VerticalAlignment="Stretch" Margin="0,-6,0,6">
             <TabItem Header="Add new" Name="tabItem1">
                 <Grid>
