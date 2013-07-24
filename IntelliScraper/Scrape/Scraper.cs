@@ -26,6 +26,10 @@ namespace IntelliScraper.Scrape
                 IScrapeAction act = getScraperAction(input, action, i);
                 if (act != null)
                 {
+                    string rule = string.Empty;
+                    if(action.ruleId != null)
+                        rule = action.ruleId;
+                    Factory.Instance.iInfo(string.Format("Action : {0} (rule : {1})", action.id, rule));
                     object result = act.Run(input);
                     actionResult.Add(new Model.ActionResult(action, result, result.GetType()));
                 }

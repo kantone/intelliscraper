@@ -27,43 +27,46 @@ namespace IntelliScraper.Scrape.Action
 
         public object Run(object input)
         {
+            List<KeyValuePair<string, object>> vals = new List<KeyValuePair<string, object>>();
+
             if (input != null)
             {
-                List<KeyValuePair<string, object>> vals = (List<KeyValuePair<string, object>>)input;
-
-                //build post data
-                string _prms = buildPostData(vals);
-               
-                string url = string.Empty;
-                if (rule.urlType == Db.httpPostUrlType.custom)
-                {
-                    if (!string.IsNullOrEmpty(rule.customUrl))
-                        url = rule.customUrl;
-                }
-
-                if (rule.urlType == Db.httpPostUrlType.fromInput)
-                {
-                    KeyValuePair<string, object> t = (from x in vals where x.Key == rule.inputUrlAttributeKey select x).SingleOrDefault();
-                    try
-                    {
-                        url = (string)t.Value;
-                    }
-                    catch (Exception ex)
-                    {
-                        Factory.Instance.log.Error(ex);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(url))
-                  return  HttpUtils.postHtml(url, rule.customUserAgent, rule.customHttpHeadersInfo, _prms);
-
+                if (input.GetType() != typeof(string))     
+                    vals = (List<KeyValuePair<string, object>>)input;
             }
+            //build post data
+            string _prms = buildPostData(vals);
+
+            string url = string.Empty;
+            if (rule.urlType == Db.httpPostUrlType.custom)
+            {
+                if (!string.IsNullOrEmpty(rule.customUrl))
+                    url = rule.customUrl;
+            }
+
+            if (rule.urlType == Db.httpPostUrlType.fromInput)
+            {
+                KeyValuePair<string, object> t = (from x in vals where x.Key == rule.inputUrlAttributeKey select x).SingleOrDefault();
+                try
+                {
+                    url = (string)t.Value;
+                }
+                catch (Exception ex)
+                {
+                    Factory.Instance.log.Error(ex);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(url))
+                return HttpUtils.postHtml(url, rule.customUserAgent, rule.customHttpHeadersInfo, _prms);
+
+
 
 
 
 
             return null;
-           
+
         }
 
         /// <summary>

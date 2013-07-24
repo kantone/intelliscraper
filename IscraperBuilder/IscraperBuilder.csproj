@@ -40,6 +40,14 @@
     <ApplicationIcon>isb.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\refDll\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\refDll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -65,6 +73,9 @@
     <Compile Include="Controls\Common\ImageConvert.xaml.cs">
       <DependentUpon>ImageConvert.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Common\Loader.xaml.cs">
+      <DependentUpon>Loader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Common\xpathAttribute.xaml.cs">
       <DependentUpon>xpathAttribute.xaml</DependentUpon>
     </Compile>
@@ -74,8 +85,35 @@
     <Compile Include="Controls\Common\xpathSingle.xaml.cs">
       <DependentUpon>xpathSingle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Errors.xaml.cs">
+      <DependentUpon>Errors.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Execute\Run.xaml.cs">
       <DependentUpon>Run.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\Append.xaml.cs">
+      <DependentUpon>Append.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\HtmlEncodeDecode.xaml.cs">
+      <DependentUpon>HtmlEncodeDecode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\PostProcessData.xaml.cs">
+      <DependentUpon>PostProcessData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\Regex.xaml.cs">
+      <DependentUpon>Regex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\Replace.xaml.cs">
+      <DependentUpon>Replace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\StartEndWith.xaml.cs">
+      <DependentUpon>StartEndWith.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\SubString.xaml.cs">
+      <DependentUpon>SubString.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostProcess\Trim.xaml.cs">
+      <DependentUpon>Trim.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Rules\Rule\ruleDownload.xaml.cs">
       <DependentUpon>ruleDownload.xaml</DependentUpon>
@@ -107,13 +145,22 @@
     <Compile Include="Controls\Rules\Rule\xpathCollection.xaml.cs">
       <DependentUpon>xpathCollection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Tools\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeViewActionResult.cs" />
+    <Compile Include="Utils\CloneUtil.cs" />
+    <Compile Include="Utils\PopUp.cs" />
     <Compile Include="Utils\RandomUtil.cs" />
     <Page Include="Controls\Common\HttpHeaderInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Common\ImageConvert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Common\Loader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,11 +176,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Errors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Execute\Run.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\PageTemplate.xaml">
+    <Page Include="Controls\PostProcess\Append.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\HtmlEncodeDecode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\PostProcessData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\Regex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\Replace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\StartEndWith.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\SubString.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostProcess\Trim.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +308,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Tools\Page1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -239,9 +322,6 @@
     </Compile>
     <Compile Include="Controls\Common\HttpHeaderInfo.xaml.cs">
       <DependentUpon>HttpHeaderInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PageTemplate.xaml.cs">
-      <DependentUpon>PageTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Project\PrjNew.xaml.cs">
       <DependentUpon>PrjNew.xaml</DependentUpon>
@@ -422,7 +502,15 @@
   <ItemGroup>
     <Resource Include="img\035a.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\ajax-loader.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\026a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\017a.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

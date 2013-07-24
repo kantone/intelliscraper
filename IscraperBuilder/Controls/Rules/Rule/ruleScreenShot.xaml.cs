@@ -71,8 +71,14 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 txtCustomUrl.Text = rule.customUrl;
                 txtSaveTo.Text = rule.saveTo;
 
-                if(rule.ImgConvertAction != null)
+                if (rule.ImgConvertAction == null)
+                {
+                    rule.ImgConvertAction = new IntelliScraper.Db.imageConvert();
+                    rule.ImgConvertAction.id = Utils.RandomUtil.RandomString(4);
+                }
+
                     imageConvert1.load(rule.ImgConvertAction);
+                
 
                 cmbInputType.SelectedValue = rule.inputType.ToString();
                 cmbInputType_SelectionChanged(this, null);

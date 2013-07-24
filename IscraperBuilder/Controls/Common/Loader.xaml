@@ -1,0 +1,10 @@
+﻿<Window x:Class="IscraperBuilder.Controls.Common.Loader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loader" Height="438" Width="596">
+    <Grid>
+        <Image Source="/img/ajax-loader.gif" Width="128" Height="15" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,180"/>
+        <Label Content="Saving ..." Height="28" HorizontalAlignment="Center" Margin="257,158,261,0" Name="label2" VerticalAlignment="Top" />
+
+    </Grid>
+</Window>

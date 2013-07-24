@@ -43,6 +43,14 @@
             </MenuItem>
         </ContextMenu>
 
+        <ContextMenu x:Key="PpContextMenu">
+            <MenuItem Header="Remove" Click="MenuItem_Click_7" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                <MenuItem.Icon>
+                    <Image Source="img/022.png" Width="15" Height="15" Opacity="0.5" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+
         <!--=================================================================
       TreeViewItem
   ==================================================================-->
@@ -424,9 +432,9 @@
                                 </TreeViewItem.Header>
                             </TreeViewItem>
 
-                            <TreeViewItem  IsExpanded="False" >
+                             <TreeViewItem  Name="tPpData1" IsExpanded="False" >
                                 <TreeViewItem.Header>
-                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal"  MouseLeftButtonDown="sRules_MouseLeftButtonDown">
                                         <Image Source="/img/028.png" Width="16" Height="16"  Opacity="0.7" />
                                         <TextBlock Name="tPpData" Text="Post Process Data" />
                                     </StackPanel>
@@ -499,6 +507,26 @@
                                     </TreeViewItem>
 
                                 </TreeViewItem>
+                               
+                                <TreeViewItem>
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" >
+                                            <Image Source="/img/026a.png" Width="16" Height="16"  Opacity="0.7" />
+                                            <TextBlock Name="tTool" Text="Tools" />
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
+
+                                    <TreeViewItem>
+                                        <TreeViewItem.Header>
+                                            <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" >
+                                                <Image Source="/img/017a.png" Width="16" Height="16"  Opacity="0.7" />
+                                                <TextBlock Text="xPathTest" />
+                                            </StackPanel>
+                                        </TreeViewItem.Header>
+
+                                    </TreeViewItem>
+
+                                </TreeViewItem>
                                 <TreeViewItem>
                                     <TreeViewItem.Header>
                                         <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" Name="sRun">
@@ -507,15 +535,27 @@
                                         </StackPanel>
                                     </TreeViewItem.Header>
                                 </TreeViewItem>
-                        </TreeView>
+                            </TreeView>
                         </Grid>
                     </Border>
                    
                 </DockPanel>
-                <Frame  HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  Name="frame1" VerticalAlignment="Stretch" Margin="310,100,20,40"   />
+                <Frame  HorizontalAlignment="Stretch" NavigationUIVisibility="Hidden"  Name="frame1" VerticalAlignment="Stretch" Margin="310,117,20,40"   />
+
+                <StackPanel Name="modalLoader" Visibility="Hidden" Background="Black" Opacity="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="310,100,20,40" >
+                    <Image Source="/img/ajax-loader.gif" Width="128" Height="15" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,180"/>
+                    <Label Content="Saving ..." Height="28" Foreground="White" HorizontalAlignment="Center" Margin="0,-220" Name="label2" VerticalAlignment="Top" />
+
+                </StackPanel>
                 <StackPanel HorizontalAlignment="Stretch" Background="#F6FBFE" Name="messagePanele" VerticalAlignment="Bottom" Height="20" Margin="310,100,20,20" >
                     <Label VerticalAlignment="Center"  Name="currentMessage" Margin="0,-3,0,0" />
                 </StackPanel>
+                <Image Height="15" HorizontalAlignment="Left" Margin="310,98,0,0" Name="imgTitle" Stretch="Fill" VerticalAlignment="Top" Width="15" />
+                <Border Margin="331,90,0,0" Name="borderTitle" Height="23" BorderBrush="Red" BorderThickness="0,0,0,1"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <TextBlock Height="23"  HorizontalAlignment="Left" Margin="0,5,0,0" Name="txtTitle" Opacity="0.7" Text=""  VerticalAlignment="Top" />
+
+                </Border>
+                
             </Grid>
             <StackPanel HorizontalAlignment="Left" Margin="263,0,0,0" Name="stackPanel3" VerticalAlignment="Top" Width="63" Background="#1BA1E2" Height="68">
                

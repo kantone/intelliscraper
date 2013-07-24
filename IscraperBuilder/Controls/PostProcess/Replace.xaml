@@ -1,0 +1,19 @@
+﻿<Page x:Class="IscraperBuilder.Controls.PostProcess.Replace"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="379" d:DesignWidth="493"
+	Title="Replace">
+
+    <Grid>
+        <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="0,12,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Find text" Height="28" HorizontalAlignment="Left" Margin="0,37,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Replace With" Height="28" HorizontalAlignment="Left" Margin="0,68,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="97,12,0,0" Name="txtId" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="97,39,0,0" Name="txtFind" VerticalAlignment="Top" Width="340" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="97,68,0,0" Name="txtReplace" VerticalAlignment="Top" Width="340" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="97,105,0,0" Name="button1" VerticalAlignment="Top" Width="91" Click="button1_Click" />
+    </Grid>
+</Page>

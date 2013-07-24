@@ -54,8 +54,6 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                    <Label Content="Custom Url" Height="28" HorizontalAlignment="Left" Margin="6,71,0,0" Name="label5" VerticalAlignment="Top" />
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="121,76,0,0" Name="txtCustomUrl" VerticalAlignment="Top" Width="448" />
                 </Grid>
             </TabItem>
             <TabItem Header="MultiThread Options" Name="tabItem3">

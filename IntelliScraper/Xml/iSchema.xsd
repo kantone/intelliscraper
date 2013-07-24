@@ -825,9 +825,11 @@
           <xs:enumeration value="fromTo" />
           <xs:enumeration value="search" />
           <xs:enumeration value="searchTo" />
+          <xs:enumeration value="searchFrom" />
         </xs:restriction>
       </xs:simpleType>
     </xs:element>
+    <xs:element type="xs:boolean" name="searchLast" default="false"/>
     <xs:element type="xs:int" name="substring"/>
     <xs:element type="xs:int" name="substringFrom"/>
     <xs:element type="xs:int" name="substringTo"/>

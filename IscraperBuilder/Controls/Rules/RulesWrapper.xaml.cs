@@ -29,10 +29,7 @@ namespace IscraperBuilder.Controls.Rules
 
         private void load()
         {
-            cmbRules.Items.Clear();
-            foreach (var x in Factory.Instance.getAllRulesId(Factory.Instance.getAllObj()))            
-                cmbRules.Items.Add((string)x);
-            
+           
             cmbNewRule.Items.Clear();
            
             string[] types = Enum.GetNames(typeof(IntelliScraper.Db.intelliScraperActionType));
@@ -50,9 +47,9 @@ namespace IscraperBuilder.Controls.Rules
         /// </summary>
         private void cmbRules_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainWindow.main.Status = "";
+           /* MainWindow.main.Status = "";
             if (cmbRules.SelectedValue != null)
-                rule = Factory.Instance.LoadRuleFrame((string)cmbRules.SelectedValue, this.frame1,false,null);
+                rule = Factory.Instance.LoadRuleFrame((string)cmbRules.SelectedValue, this.frame1,false,null);*/
         }
 
         /// <summary>
@@ -60,12 +57,12 @@ namespace IscraperBuilder.Controls.Rules
         /// </summary>
         private void cmbNewRule_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainWindow.main.Status = "";
+           /* MainWindow.main.Status = "";
             if (cmbNewRule.SelectedValue != null)
             {
                 Type t = Factory.Instance.GetRuleTypeByName((string)cmbNewRule.SelectedValue);
                 rule = Factory.Instance.LoadRuleFrame(null, this.frame1, true, t);
-            }
+            }*/
         }
 
         /// <summary>
@@ -73,7 +70,52 @@ namespace IscraperBuilder.Controls.Rules
         /// </summary>
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            if (this.rule != null)
+
+            if (cmbNewRule.SelectedValue != null && !string.IsNullOrEmpty(txtId.Text))
+            {
+                IntelliScraper.Db.intelliScraperActionType t = (IntelliScraper.Db.intelliScraperActionType)Enum.Parse(typeof(IntelliScraper.Db.intelliScraperActionType), (string)cmbNewRule.SelectedValue);
+                if (t == IntelliScraper.Db.intelliScraperActionType.download)
+                    frame1.Navigate(new Controls.Rules.Rule.ruleDownload(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.ftpPut)
+                    frame1.Navigate(new Controls.Rules.Rule.ruleFtpPut(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.httpGet)
+                    frame1.Navigate(new Controls.Rules.RuleHttpGet(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.httpPost)
+                    frame1.Navigate(new Controls.Rules.Rule.RuleHttpPost(txtId.Text));
+
+               /* if (t == IntelliScraper.Db.intelliScraperActionType.loadHtmlFromFile)
+                    frame1.Navigate(new Controls.Rules.(txtId.Text));*/
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.loop_link)
+                    frame1.Navigate(new Controls.Rules.Rule.RuleLoopLink(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.plugin)
+                    frame1.Navigate(new Controls.Rules.Rule.rulePlugin(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.save)
+                    frame1.Navigate(new Controls.Rules.Rule.ruleSave(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.screenShot)
+                    frame1.Navigate(new Controls.Rules.Rule.ruleScreenShot(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.upload)
+                    frame1.Navigate(new Controls.Rules.Rule.ruleUpload(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.xpathCollection)
+                    frame1.Navigate(new Controls.Rules.Rule.xpathCollection(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.xpathSingle)
+                    frame1.Navigate(new Controls.Rules.Rule.RulexpathSingle(txtId.Text));
+
+                if (t == IntelliScraper.Db.intelliScraperActionType.zip)
+                    frame1.Navigate(new Controls.Rules.Rule.ruleZip(txtId.Text));
+            }
+            else MessageBox.Show("Id & type are mandatory!", "Error");
+
+            /*if (this.rule != null)
             {
                 try
                 {
@@ -84,7 +126,7 @@ namespace IscraperBuilder.Controls.Rules
                 {
                     MainWindow.main.Status = "Error : " + ex.Message;
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -93,14 +135,7 @@ namespace IscraperBuilder.Controls.Rules
        
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbRules.SelectedValue != null)
-            {
-                Factory.Instance.deleteRuleByTypeAndIndex((string)cmbRules.SelectedValue);
-                Factory.Instance.Save();
-                MainWindow.main.Status = "Delete " + (string)cmbRules.SelectedValue;
-                load();
-                frame1.Navigate(null);//// = null;
-            }
+           
         }
 
         private void removeRuleByName()

@@ -89,7 +89,7 @@ namespace IntelliScraper.Scrape
                 Factory.Instance.iInfo(string.Format("Substring from {0}", a.substringFrom));
                 txt = txt.Substring(a.substringFrom);
             }
-            if (a.type == Db.substringType.fromTo && a.substringFrom > 0 && a.substringTo > 0)
+            if (a.type == Db.substringType.fromTo && a.substringFrom >= 0 && a.substringTo >= 0)
             {
                 Factory.Instance.iInfo(string.Format("Substring from {0} to {1}", a.substringFrom, a.substringTo));
                 txt = txt.Substring(a.substringFrom, a.substringTo);
@@ -98,7 +98,10 @@ namespace IntelliScraper.Scrape
             if (a.type == Db.substringType.search && !string.IsNullOrEmpty(a.substringSearch))
             {
                 Factory.Instance.iInfo(string.Format("Substring from - by string search - {0}", a.substringSearch));
-                int index = txt.IndexOf(a.substringSearch);
+                int index = -1;
+                if(a.searchLast)
+                    index = txt.LastIndexOf(a.substringSearch);
+                else index = txt.IndexOf(a.substringSearch);
                 if (index > 0)
                 {
                     txt = txt.Substring(index + 1);
@@ -108,12 +111,29 @@ namespace IntelliScraper.Scrape
             if (a.type == Db.substringType.searchTo && !string.IsNullOrEmpty(a.substringSearch))
             {
                 Factory.Instance.iInfo(string.Format("Substring from/to - by string search - {0}", a.substringSearch));
-                int index = txt.IndexOf(a.substringSearch);
+                int index = -1;
+                if(a.searchLast)
+                    index = txt.LastIndexOf(a.substringSearch);
+                else index = txt.IndexOf(a.substringSearch); 
                 if (index > 0)
                 {
                     txt = txt.Substring(0, index);
                 }
             }
+
+            if (a.type == Db.substringType.searchFrom && !string.IsNullOrEmpty(a.substringSearch))
+            {
+                Factory.Instance.iInfo(string.Format("Substring from/to - by string search - {0}", a.substringSearch));
+                int index = -1;
+                if (a.searchLast)
+                    index = txt.LastIndexOf(a.substringSearch);
+                else index = txt.IndexOf(a.substringSearch);
+                if (index > 0)
+                {
+                    txt = txt.Substring(index + a.substringSearch.Length);// + a.substringSearch.Length, txt.Length - index - a.substringSearch.Length);
+                }
+            }
+
             return txt;
         }
 

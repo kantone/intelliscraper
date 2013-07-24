@@ -20,8 +20,10 @@ namespace IscraperBuilder.Controls.Rules
             none,
         }
 
+        public string currentHeader { get; set; }
         public TreeviewH(string id,string header)
         {
+            this.currentHeader = header;
             this.Header = header;
             this.Tag = id;
             //this.IsExpanded = true;
@@ -32,6 +34,7 @@ namespace IscraperBuilder.Controls.Rules
 
         public TreeviewH(string header, TreeType type)
         {
+            this.currentHeader = header;
             this.Header = header;
             //this.IsExpanded = true;
             this.Tag = type;

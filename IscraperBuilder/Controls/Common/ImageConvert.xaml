@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="419" d:DesignWidth="554">
-    <Grid>
-        <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+    
+        <ScrollViewer >
+        <Grid>
+            <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
         <CheckBox Content="Convert format?" Height="16" HorizontalAlignment="Left" Margin="12,46,0,0" Name="chkConvertFormat" VerticalAlignment="Top" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="143,39,0,0" Name="cmbConvertType" VerticalAlignment="Top" Width="166" />
         <CheckBox Content="Resize?" Height="16" HorizontalAlignment="Left" Margin="12,81,0,0" Name="chkResize" VerticalAlignment="Top" />
@@ -72,4 +74,6 @@
         </Expander>
         <TextBox Height="23" HorizontalAlignment="Left" Margin="38,12,0,0" Name="txtId" IsEnabled="False" VerticalAlignment="Top" Width="120" />
     </Grid>
+    </ScrollViewer>
+   
 </UserControl>

@@ -38,6 +38,9 @@ namespace IscraperBuilder.Controls.Rules.Rule
 
             if (this.rule != null)
             {
+                if (this.rule.xpath == null)
+                    this.rule.xpath = new string[0];
+
                 cmbXpath.Items.Clear();
                 foreach (string xpath in this.rule.xpath)                
                     cmbXpath.Items.Add(xpath);
@@ -46,6 +49,8 @@ namespace IscraperBuilder.Controls.Rules.Rule
                     cmbXpath.SelectedIndex = 0;
 
                 comboBox1.Items.Clear();
+                if (rule.xpathSingle == null)
+                    rule.xpathSingle = new IntelliScraper.Db.xpathSingleCollection();
                 foreach (var single in rule.xpathSingle)                
                     comboBox1.Items.Add(single.id);
 
@@ -131,6 +136,21 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 load();
                 cmbXpath.SelectedValue = txtXpath.Text;
                 txtXpath.Text = txtXpath.Text;
+            }
+        }
+
+        /// <summary>
+        /// Delete selected
+        /// </summary>
+        private void button4_Click(object sender, RoutedEventArgs e)
+        {
+            if (cmbXpath.SelectedIndex >= 0 && this.rule.xpath != null)
+            {
+                List<string> dt = new List<string>(this.rule.xpath);
+                dt.RemoveAt(cmbXpath.SelectedIndex);
+                this.rule.xpath = dt.ToArray();
+                Factory.Instance.Save();
+                load();
             }
         }
     }

@@ -1,26 +1,42 @@
-﻿
-	Global
+﻿Global
 
-		Crypt Options
+
+		[Easier]
+		Come far diventare tutto più facile?
+
+
+		[Problemi strutturali]
+		Quando eseguo un loop_link ad esempio apro n pagine
+			se per quella pagina voglio dei dati multipli eseguo xpath Collection
+
+			che però prevede in input o l'html 0 un htmlNode sul quale poi fare xpath
+
+			Bisogna aggiungere una variabile per xPathCollection che indica se recurepare l'oggetto da un attributo di una azione precedente
+			esempio (questionDetail.html) 
+
+			Bisogna aggiungere il parsing per HtmlNodeCollection...
+
+
+		[Run Single]
+		Run single Action/Rule
+
+		[VALIDATE]
 		Check validation foreach rule items/action/project
-		Make rule type "name" LABEL
+			On save run valitation function
+					
+					Prj						
 
-	Runner
-		
-
-	Post Process Data
-		Replace
-		trim
-		regex
-		substring
-		start/end with
-		append
-		html encode/decode
+			
 
 	Check Project (validate)
 
 
 	[Separate Project]
-	Project Creatore/Exporter
+	Project Creatore/Exporter 
 		Console
 		Win Client
+
+		[options]
+		crypt
+		verbose
+		file xml to .db

@@ -41,6 +41,7 @@ namespace IscraperBuilder.Controls.Common
                     listViewHttpHeaders.ItemsSource = this.headers;
                 }
             }
+            else this.headers = new IntelliScraper.Db.HttpHeadersInfoCollection();
         }
 
         /// <summary>

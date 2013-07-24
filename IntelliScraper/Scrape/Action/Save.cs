@@ -349,8 +349,16 @@ namespace IntelliScraper.Scrape.Action
             }
             else
             {
+                List<string> headers = new List<string>(storeInfo.CsvExcelSetting.csvHeader.Split(storeInfo.CsvExcelSetting.csvSeparator.ToCharArray()));
+                string row = string.Empty;
+                foreach (string h in headers)
+                {
+                    KeyValuePair<string, object> r = (from x in cols where x.Key == h select x).SingleOrDefault();
+                    row += r.Value + storeInfo.CsvExcelSetting.csvSeparator;
+                }
+
                 List<string> rows = new List<string>();
-                rows.Add(this.csvCurrentRowValue);
+                rows.Add(row);
                 System.IO.File.AppendAllLines(storeInfo.CsvExcelSetting.csvFileSaveTo, rows);
             }
             

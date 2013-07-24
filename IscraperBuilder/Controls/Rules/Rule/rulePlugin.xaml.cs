@@ -24,6 +24,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
         IntelliScraper.Db.plugin rule { get; set; }
         public rulePlugin(string id)
         {
+            inizialize(id);
+        }
+
+        void inizialize(string id)
+        {
             if (string.IsNullOrEmpty(id))
                 isNew = true;
             else
@@ -108,8 +113,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
             imageConvert1.save();
 
             Factory.Instance.Save();
-
-            load();
+            inizialize(id); 
         }
     }
 }

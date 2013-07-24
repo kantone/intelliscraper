@@ -165,8 +165,10 @@ namespace IscraperBuilder.Controls.Project
         /// <summary>
         /// Save
         /// </summary>
+        Utils.PopUp p = new Utils.PopUp();
         private void button2_Click(object sender, RoutedEventArgs e)
         {
+            p.hide();
             MainWindow.main.Status = "";
             try
             {
@@ -176,19 +178,37 @@ namespace IscraperBuilder.Controls.Project
                  {
                      if (st.type == IntelliScraper.Db.intelliScraperProjectStoreInfoType.csv || st.type == IntelliScraper.Db.intelliScraperProjectStoreInfoType.excel)
                      {
-                         st.CsvExcelSetting.csvSeparator= txtCsvSeparator.Text;
-                         st.CsvExcelSetting.csvHeader= txtHeaders.Text;
-                         st.CsvExcelSetting.csvFileSaveTo= txtCsvSaveTo.Text;
-                         st.CsvExcelSetting.csvFileClear= (bool)chkCsvClearFile.IsChecked;
-                         st.CsvExcelSetting.workSheetName = txtWorkSheet.Text;
+                         if (validateCsvExcel())
+                         {
+                             st.CsvExcelSetting.csvSeparator = txtCsvSeparator.Text;
+                             st.CsvExcelSetting.csvHeader = txtHeaders.Text;
+                             st.CsvExcelSetting.csvFileSaveTo = txtCsvSaveTo.Text;
+                             st.CsvExcelSetting.csvFileClear = (bool)chkCsvClearFile.IsChecked;
+                             st.CsvExcelSetting.workSheetName = txtWorkSheet.Text;
+                         }
+                         else
+                         {
+                             p.show("Errors (cannot save)", button2);
+                             return;
+                         }
                      }
                      else
                      {
-                         st.DatabaseSetting.connection = txtConnectionString.Text;
-                         st.DatabaseSetting.providerName  = txtProviderName.Text;
+                         if (validateDatabase())
+                         {
+                             st.DatabaseSetting.connection = txtConnectionString.Text;
+                             st.DatabaseSetting.providerName = txtProviderName.Text;
+                         }
+                         else
+                         {
+                             p.show("Errors (cannot save)", button2);
+                             return;
+                         }
                      }
                      Factory.Instance.Save();
                      load();
+                     cmbIds.SelectedValue = id;
+                     cmbIds_SelectionChanged(this, null);
                      MainWindow.main.Status = "Saved!";
 
                  }
@@ -197,6 +217,48 @@ namespace IscraperBuilder.Controls.Project
             {
                 MainWindow.main.Status = "Error : " + ex.Message;
             }
+        }
+
+        private bool validateDatabase()
+        {
+            if (string.IsNullOrEmpty(txtConnectionString.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtConnectionString);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtProviderName.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtProviderName);
+                return false;
+            }
+
+           
+
+            return true;
+        }
+
+        private bool validateCsvExcel()
+        {
+            if (string.IsNullOrEmpty(txtCsvSeparator.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtCsvSeparator);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtHeaders.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtHeaders);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtCsvSaveTo.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtCsvSaveTo);
+                return false;
+            }
+
+            return true;
         }
     }
 }

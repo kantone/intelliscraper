@@ -24,6 +24,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
         IntelliScraper.Db.upload rule { get; set; }
         public ruleUpload(string id)
         {
+            inizialize(id);
+        }
+
+        private void inizialize(string id)
+        {
             InitializeComponent();
             if (string.IsNullOrEmpty(id))
                 isNew = true;
@@ -178,7 +183,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
             rule.customHttpHeadersInfo = httpHeaderInfo1.getHeaders();
 
             Factory.Instance.Save();
-            load();
+            inizialize(this.id);
 
             MainWindow.main.Status = "Saved!";
 

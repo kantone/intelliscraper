@@ -25,6 +25,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
         private string placeHolderPostData { get; set; }
         public RuleHttpPost(string id)
         {
+            inizialize(id);
+        }
+
+        void inizialize(string id)
+        {
             InitializeComponent();
 
             if (string.IsNullOrEmpty(id))
@@ -80,6 +85,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 txtCustomUrl.Text = this.rule.customUrl;
                 txtCustomUserAgent.Text = this.rule.customUserAgent;
                 cmbInputType.SelectedValue = this.rule.urlType.ToString();
+                txtInputAttrKey.Text = this.rule.inputUrlAttributeKey;
 
                 if(this.rule.customHttpHeadersInfo != null)
                     httpHeaderInfo1.load(this.rule.customHttpHeadersInfo);
@@ -136,6 +142,8 @@ namespace IscraperBuilder.Controls.Rules.Rule
         {
             if (!string.IsNullOrEmpty(txtPostDataKey.Text) && !string.IsNullOrEmpty(txtPostDataVal.Text) && cmbPostDataInputType.SelectedValue != null && txtPostDataVal.Text != this.placeHolderPostData)
             {
+                if (this.rule.postData == null)
+                    this.rule.postData = new IntelliScraper.Db.httpPostPostDataCollection();
                 IntelliScraper.Db.httpPostPostData pd = new IntelliScraper.Db.httpPostPostData();
                 if ((string)cmbPostDataInputType.SelectedValue == "custom")
                     pd.customValue = txtPostDataVal.Text;
@@ -144,8 +152,10 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 pd.key = txtPostDataKey.Text;
                 pd.type = (IntelliScraper.Db.httpPostPostDataType)Enum.Parse(typeof(IntelliScraper.Db.httpPostPostDataType), (string)cmbPostDataInputType.SelectedValue);
                 this.rule.postData.Add(pd);
-                CollectionViewSource.GetDefaultView(rule.postData).Refresh();
                 Factory.Instance.Save();
+                //Factory.Instance.ReSync();
+                inizialize(this.id);
+                CollectionViewSource.GetDefaultView(rule.postData).Refresh();
                 load();
 
                 
@@ -163,6 +173,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
             {
                 rule.postData.RemoveAt(listViewPostData.SelectedIndex);
                 Factory.Instance.Save();
+                inizialize(this.id);
                 load();
                 CollectionViewSource.GetDefaultView(rule.postData).Refresh();               
             }

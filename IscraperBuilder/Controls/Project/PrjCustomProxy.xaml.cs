@@ -46,18 +46,23 @@ namespace IscraperBuilder.Controls.Project
         private void button2_Click(object sender, RoutedEventArgs e)
         {
             try{
-                IntelliScraper.Db.intelliScraperProjectProxyInfoProxies p = new IntelliScraper.Db.intelliScraperProjectProxyInfoProxies();
-                p.autenticate = (bool)checkAuthenticate.IsChecked;
-                p.domain = txtDomain.Text;
-                p.ip = txtIp.Text;
-                p.password = txtPass.Text;
-                p.port = txtPort.Text;
-                p.userName = txtUser.Text;
-                if (Factory.Instance.i.Project.ProxyInfo.proxies == null)
-                    Factory.Instance.i.Project.ProxyInfo.proxies = new IntelliScraper.Db.intelliScraperProjectProxyInfoProxiesCollection();
-                Factory.Instance.i.Project.ProxyInfo.proxies.Add(p);
-                loadProxies();
-                CollectionViewSource.GetDefaultView(Factory.Instance.i.Project.ProxyInfo.proxies).Refresh();
+
+                if (!string.IsNullOrEmpty(txtIp.Text) && !string.IsNullOrEmpty(txtPort.Text))
+                {
+                    IntelliScraper.Db.intelliScraperProjectProxyInfoProxies p = new IntelliScraper.Db.intelliScraperProjectProxyInfoProxies();
+                    p.autenticate = (bool)checkAuthenticate.IsChecked;
+                    p.domain = txtDomain.Text;
+                    p.ip = txtIp.Text;
+                    p.password = txtPass.Text;
+                    p.port = txtPort.Text;
+                    p.userName = txtUser.Text;
+                    if (Factory.Instance.i.Project.ProxyInfo.proxies == null)
+                        Factory.Instance.i.Project.ProxyInfo.proxies = new IntelliScraper.Db.intelliScraperProjectProxyInfoProxiesCollection();
+                    Factory.Instance.i.Project.ProxyInfo.proxies.Add(p);
+                    loadProxies();
+                    CollectionViewSource.GetDefaultView(Factory.Instance.i.Project.ProxyInfo.proxies).Refresh();
+                }
+                else MessageBox.Show("Ip & port mandatory!");
 
             }
             catch(Exception ex){

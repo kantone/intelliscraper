@@ -15,13 +15,15 @@ using System.Windows.Shapes;
 namespace IscraperBuilder.Controls
 {
     /// <summary>
-    /// Logica di interazione per PageTemplate.xaml
+    /// Logica di interazione per Errors.xaml
     /// </summary>
-    public partial class PageTemplate : Page
+    public partial class Errors : Page
     {
-        public PageTemplate()
+        public Errors()
         {
+            
             InitializeComponent();
+            richTextBox1.AppendText("ASDFAFD");
         }
     }
 }

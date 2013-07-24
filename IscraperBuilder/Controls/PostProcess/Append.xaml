@@ -1,0 +1,19 @@
+﻿<Page x:Class="IscraperBuilder.Controls.PostProcess.Append"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+       d:DesignHeight="379" d:DesignWidth="593"
+	Title="Append">
+
+    <Grid>
+        <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Type" Height="28" HorizontalAlignment="Left" Margin="10,44,0,0" Name="label2" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="80,46,0,0" Name="cmbType" VerticalAlignment="Top" Width="144" />
+        <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="False" Margin="79,10,0,0" Name="txtID" VerticalAlignment="Top" Width="145" />
+        <Label Content="Value" Height="28" HorizontalAlignment="Left" Margin="10,78,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="81,76,0,0" Name="txtVal" VerticalAlignment="Top" Width="297" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="79,115,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+    </Grid>
+</Page>

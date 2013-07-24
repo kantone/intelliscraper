@@ -101,6 +101,8 @@ namespace IscraperBuilder.Controls.Project
                 IntelliScraper.Db.HttpHeadersInfo i = new IntelliScraper.Db.HttpHeadersInfo();
                 i.name = txtHname.Text;
                 i.value = txtHValue.Text;
+                if (Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo == null)
+                    Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo = new IntelliScraper.Db.HttpHeadersInfoCollection();
                 Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo.Add(i);
                 loadData();
                 CollectionViewSource.GetDefaultView(Factory.Instance.i.Project.ScrapingSetting.GlobalHttpHeadersInfo).Refresh();
@@ -160,34 +162,81 @@ namespace IscraperBuilder.Controls.Project
             else MessageBox.Show("User Agent value is Mandatory!", "Error");
         }
 
+        Utils.PopUp p = new Utils.PopUp();
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Factory.Instance.i.Project.ScrapingSetting.waitEachRequestMilliseconds = Int32.Parse(txtWait.Text);
-            Factory.Instance.i.Project.ScrapingSetting.waitAfterError = Int32.Parse(txtErrorWait.Text);
-            Factory.Instance.i.Project.ScrapingSetting.imageFolderDownload = txtDownloadfolder.Text;
+            p.hide();
+            if (validate())
+            {
+                Factory.Instance.i.Project.ScrapingSetting.waitEachRequestMilliseconds = Int32.Parse(txtWait.Text);
+                Factory.Instance.i.Project.ScrapingSetting.waitAfterError = Int32.Parse(txtErrorWait.Text);
+                Factory.Instance.i.Project.ScrapingSetting.imageFolderDownload = txtDownloadfolder.Text;
 
-            if (Factory.Instance.i.Project.ScrapingSetting.credential == null)
-                Factory.Instance.i.Project.ScrapingSetting.credential = new IntelliScraper.Db.intelliScraperProjectScrapingSettingCredential();
+                if (Factory.Instance.i.Project.ScrapingSetting.credential == null)
+                    Factory.Instance.i.Project.ScrapingSetting.credential = new IntelliScraper.Db.intelliScraperProjectScrapingSettingCredential();
 
-            Factory.Instance.i.Project.ScrapingSetting.credential.useNetworkCredential = (bool)chkUseCredential.IsChecked;
-            Factory.Instance.i.Project.ScrapingSetting.credential.domain = txtCredDomain.Text;
-            Factory.Instance.i.Project.ScrapingSetting.credential.password = txtCredPass.Text;
-            Factory.Instance.i.Project.ScrapingSetting.credential.username = txtCredUserName.Text;
-
-
-            Factory.Instance.i.Project.ScrapingSetting.rotateUserAgents = (bool)chkRotateUserAgent.IsChecked;
-            Factory.Instance.i.Project.ScrapingSetting.defaultAgent = txtDefaultUserAgent.Text;
-
-            if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo == null)
-                Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo = new IntelliScraper.Db.intelliScraperProjectScrapingSettingGlobalUserAgentsInfo();
-
-            Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile = (bool)chkUserAgentFromFile.IsChecked;
-            Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile = txtUserAgentFile.Text;
+                Factory.Instance.i.Project.ScrapingSetting.credential.useNetworkCredential = (bool)chkUseCredential.IsChecked;
+                Factory.Instance.i.Project.ScrapingSetting.credential.domain = txtCredDomain.Text;
+                Factory.Instance.i.Project.ScrapingSetting.credential.password = txtCredPass.Text;
+                Factory.Instance.i.Project.ScrapingSetting.credential.username = txtCredUserName.Text;
 
 
+                Factory.Instance.i.Project.ScrapingSetting.rotateUserAgents = (bool)chkRotateUserAgent.IsChecked;
+                Factory.Instance.i.Project.ScrapingSetting.defaultAgent = txtDefaultUserAgent.Text;
 
-            Factory.Instance.Save();
-            MainWindow.main.Status = "Saved!";
+                if (Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo == null)
+                    Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo = new IntelliScraper.Db.intelliScraperProjectScrapingSettingGlobalUserAgentsInfo();
+
+                
+
+                Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.loadAgentsFromFile = (bool)chkUserAgentFromFile.IsChecked;
+                Factory.Instance.i.Project.ScrapingSetting.GlobalUserAgentsInfo.customUserAgentFile = txtUserAgentFile.Text;
+
+
+
+                Factory.Instance.Save();
+                MainWindow.main.Status = "Saved!";
+            }
+            else p.show("Errors ( cannot save! )", button1);
+        }
+
+        private bool validate()
+        {
+            if (string.IsNullOrEmpty(txtWait.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtWait);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtWait.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtErrorWait);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtWait.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtDefaultUserAgent);
+                return false;
+            }
+
+            if ((bool)chkUseCredential.IsChecked)
+            {
+                if (string.IsNullOrEmpty(txtCredUserName.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtCredUserName);
+                    return false;
+                }
+                if (string.IsNullOrEmpty(txtCredPass.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtCredPass);
+                    return false;
+                }
+            }
+            
+            
+
+            return true;
         }
 
         private void navigate_Click(object sender, RoutedEventArgs e)

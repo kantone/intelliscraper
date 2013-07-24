@@ -174,15 +174,30 @@ namespace IntelliScraper.Scrape
             using (client)
             {
                
-                if(string.IsNullOrEmpty(client.Headers[HttpRequestHeader.ContentType]))
-                    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                if (string.IsNullOrEmpty(client.Headers[HttpRequestHeader.Accept]))
-                    client.Headers.Add(HttpRequestHeader.Accept, "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-                if (string.IsNullOrEmpty(client.Headers[HttpRequestHeader.AcceptEncoding]))
+                //if(string.IsNullOrEmpty(client.Headers[HttpRequestHeader.ContentType]))
+                    //client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+               // if (string.IsNullOrEmpty(client.Headers[HttpRequestHeader.Accept]))
+                   // client.Headers.Add(HttpRequestHeader.Accept, "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+               /* if (string.IsNullOrEmpty(client.Headers[HttpRequestHeader.AcceptEncoding]))
                     client.Headers.Add(HttpRequestHeader.AcceptEncoding,"identity");
                 if (string.IsNullOrEmpty(client.Headers[HttpRequestHeader.AcceptLanguage]))
                     client.Headers.Add(HttpRequestHeader.AcceptLanguage,"en-US,en;q=0.8");
-                return client.UploadString(url, "POST", postData);
+                */
+                NameValueCollection nc = new NameValueCollection();
+                List<string> dt = new List<string>(postData.Split('&'));
+                foreach (string d in dt)
+                {
+                    string[] val = d.Split('=');
+                    nc.Add(val[0],val[1]);
+                }
+
+                //string html = client.UploadString(url, "POST", postData);
+                //string html = client.UploadValues(url, "POST", nc);
+                byte[] byteArray = client.UploadValues(url, "POST", nc);
+                string html = System.Text.Encoding.UTF8.GetString(byteArray);
+         
+
+                return html;
 
             }
            

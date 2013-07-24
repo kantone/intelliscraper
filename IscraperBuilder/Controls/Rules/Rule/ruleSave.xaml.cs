@@ -24,6 +24,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
         IntelliScraper.Db.save rule { get; set; }
         public ruleSave(string id)
         {
+            inizialize(id);
+        }
+
+        private void inizialize(string id)
+        {
             if (string.IsNullOrEmpty(id))
                 isNew = true;
             else
@@ -35,7 +40,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
             InitializeComponent();
 
 
-            load();
+            load();        
         }
 
         private void load()
@@ -72,6 +77,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
                         dataGrid1.Items.Add(m);
                 }
 
+                cmbMapColName.Items.Clear();
                 var store = (from x in Factory.Instance.i.Project.StoreInfo where x.Id == rule.storeId select x).FirstOrDefault();
                 if (store != null)
                 {
@@ -168,7 +174,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
                     rule.map = new IntelliScraper.Db.saveMapCollection();
                 rule.map.Add(m);
                 Factory.Instance.Save();
-                load();
+                inizialize(id);
             }
             else MessageBox.Show("Missing some attributes!", "Error");
         }
@@ -187,6 +193,30 @@ namespace IscraperBuilder.Controls.Rules.Rule
         {
             if (cmbAttributes.SelectedValue != null)
                 txtAttributeId.Text = (string)cmbAttributes.SelectedValue;
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            rule.tableName=txtTableName.Text;
+             rule.saveAllFromInput=(bool)chkSaveAllFromInput.IsChecked;
+
+             rule.checkExistBeforeSave = (bool)chkCheckExist.IsChecked;
+            rule.checkExistAttributes= txtCheckExistAttrs.Text;
+            rule.checkExistAttributesSeparator=txtCheckExistSeparator.Text;
+
+            if(cmbExistAction.SelectedValue != null)
+                rule.ifExist = (IntelliScraper.Db.saveIfExist)Enum.Parse(typeof(IntelliScraper.Db.saveIfExist), (string)cmbExistAction.SelectedValue);
+
+            if (cmbExistAction.SelectedValue != null)
+                rule.storeId = (string)cmbStoreId.SelectedValue;
+
+           /* rule.map = new IntelliScraper.Db.saveMapCollection();
+            foreach (IntelliScraper.Db.saveMap m in dataGrid1.Items)
+            {
+             rule.map.Add(m); 
+            }*/
+            Factory.Instance.Save();
+            inizialize(id); 
         }
     }
 }

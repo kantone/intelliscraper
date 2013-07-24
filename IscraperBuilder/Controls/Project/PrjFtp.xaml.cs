@@ -87,59 +87,96 @@ namespace IscraperBuilder.Controls.Project
         /// <summary>
         /// Add or update
         /// </summary>
+        Utils.PopUp p = new Utils.PopUp();
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            p.hide();
             try
             {
-              
 
-                //Add
-                if (isNew)
+                if (validate())
                 {
-                    if (!string.IsNullOrEmpty(txtNewId.Text) && !string.IsNullOrEmpty(txtFptServerString.Text))
+                    //Add
+                    if (isNew)
                     {
+                        if (!string.IsNullOrEmpty(txtNewId.Text) && !string.IsNullOrEmpty(txtFptServerString.Text))
+                        {
 
-                        IntelliScraper.Db.intelliScraperProjectFtpSetting f = new IntelliScraper.Db.intelliScraperProjectFtpSetting();
+                            IntelliScraper.Db.intelliScraperProjectFtpSetting f = new IntelliScraper.Db.intelliScraperProjectFtpSetting();
+                            f.domain = txtDomain.Text;
+                            f.ftpServerString = txtFptServerString.Text;
+                            f.id = txtNewId.Text;
+                            f.pass = txtPassword.Text;
+                            f.user = txtUserName.Text;
+                            f.authenticate = (bool)chkAuthenticate.IsChecked;
+
+                            Factory.Instance.i.Project.FtpSetting.Add(f);
+                            Factory.Instance.Save();
+                            load();
+                            MainWindow.main.Status = "Added!";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Id & FptServerString mandatory!");
+                            return;
+                        }
+                    }
+                    //update
+                    else
+                    {
+                        string id = (string)comboBox1.SelectedValue;
+                        IntelliScraper.Db.intelliScraperProjectFtpSetting f = (from x in Factory.Instance.i.Project.FtpSetting where x.id == id select x).FirstOrDefault();
+
                         f.domain = txtDomain.Text;
                         f.ftpServerString = txtFptServerString.Text;
                         f.id = txtNewId.Text;
                         f.pass = txtPassword.Text;
                         f.user = txtUserName.Text;
                         f.authenticate = (bool)chkAuthenticate.IsChecked;
-
-                        Factory.Instance.i.Project.FtpSetting.Add(f);
                         Factory.Instance.Save();
                         load();
-                         MainWindow.main.Status = "Added!";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Id & FptServerString mandatory!");
-                        return;
+                        MainWindow.main.Status = "Updated!";
                     }
                 }
-                //update
-                else
-                {
-                    string id = (string)comboBox1.SelectedValue;
-                    IntelliScraper.Db.intelliScraperProjectFtpSetting f = (from x in Factory.Instance.i.Project.FtpSetting where x.id == id select x).FirstOrDefault();
-
-                    f.domain = txtDomain.Text;
-                    f.ftpServerString = txtFptServerString.Text;
-                    f.id = txtNewId.Text;
-                    f.pass = txtPassword.Text;
-                    f.user = txtUserName.Text;
-                    f.authenticate = (bool)chkAuthenticate.IsChecked;
-                    Factory.Instance.Save();
-                    load();
-                    MainWindow.main.Status = "Updated!";
-                }
+                else p.showCannotSave(button1);
                
             }
             catch (Exception ex)
             {
                 MainWindow.main.Status = "Error : " + ex.Message;
             }
+        }
+
+        private bool validate()
+        {
+            if (string.IsNullOrEmpty(txtNewId.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtNewId);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txtFptServerString.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtFptServerString);
+                return false;
+            }
+
+            if ((bool)chkAuthenticate.IsChecked)
+            {
+                if (string.IsNullOrEmpty(txtPassword.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtPassword);
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(txtUserName.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtUserName);
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

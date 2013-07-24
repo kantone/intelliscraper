@@ -16,45 +16,33 @@ using System.IO;
 using System.Windows.Threading;
 using System.Threading;
 
+
 namespace IscraperBuilder.Controls.Execute
 {
     
 
-    public class TextBoxStreamWriter : TextWriter
-    {
-        RichTextBox _output = null;
-
-        public TextBoxStreamWriter(RichTextBox output)
-        {
-            
-            _output = output;
-        }
-       
-
-        public override void Write(char value)
-        {
-            //base.AppendText(value.ToString());
-            _output.Dispatcher.Invoke(DispatcherPriority.Normal,
-    (ThreadStart)delegate { _output.AppendText(value.ToString()); });
-            //_output.AppendText(value.ToString()); // When character data is written, append it to the text box.
-        }
-
-        public override Encoding Encoding
-        {
-            get { return System.Text.Encoding.UTF8; }
-        }
-    }
-
+   
     /// <summary>
     /// Logica di interazione per Run.xaml
     /// </summary>
     public partial class Run : Page
     {
-        System.Threading.Thread t { get; set; }       
+        System.Threading.Thread t { get; set; }
+        ManualResetEvent _event = new ManualResetEvent(true); 
         StringWriter consoleOut { get; set; }
+        bool runnnig = false;
         public Run()
         {
+            runnnig = false; 
             InitializeComponent();
+
+            cmbrunFrom.Items.Add("all");
+            if (Factory.Instance.i.actions != null)
+            {
+                foreach (var s in Factory.Instance.i.actions)
+                    cmbrunFrom.Items.Add(s.id);
+
+            }
         }
 
 
@@ -63,31 +51,123 @@ namespace IscraperBuilder.Controls.Execute
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            btnRun.IsEnabled = false;
+            btnStop.IsEnabled = true;
             TextBoxStreamWriter tt = new TextBoxStreamWriter(richTextBox1);
             Console.SetOut(tt);
-            int i = 0;
-            
-            
-            t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(run));
-            t.Start();
-            
            
 
-            
+            runnnig = true;
+            richTextBox1.Document.Blocks.Clear();
+            t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(run));
+            t.Start(cmbrunFrom);
+                       
         }
 
         private void run(object o){
 
-           // IntelliScraper.Factory.Instance.Run(Factory.Instance.openedFileProject);
-            int i = 0;
-            while (i < 1000)
+            ComboBox c = (ComboBox)o;
+            string val = string.Empty;
+            c.Dispatcher.Invoke((System.Windows.Forms.MethodInvoker)delegate()
             {
-                Console.WriteLine(i);
-                i++;
-                System.Threading.Thread.Sleep(10);
+                val = (string)c.SelectedValue;
+            });
+            if (val == null)
+            {
+                IntelliScraper.Factory.Instance.Run(Factory.Instance.openedFileProject);
             }
+            else
+            {
+                if (val == "all")
+                    IntelliScraper.Factory.Instance.Run(Factory.Instance.openedFileProject);
+                else
+                {
+                    IntelliScraper.Db.intelliScraperActionCollection actions = new IntelliScraper.Db.intelliScraperActionCollection();
+                    foreach(var a in Factory.Instance.i.actions){
+                        if(a.id == val)
+                            actions.Add(a);
+                    }
+                    Factory.Instance.i.actions = actions;
+                    IntelliScraper.Factory.Instance.Run(Factory.Instance.i);
+                }
+            }
+            
+            while (true)
+            {
+                if (IntelliScraper.Factory.Instance.isRunning)
+                {
+                    _event.WaitOne();
+                   // Console.WriteLine(i);
+                   // i++;
+                }
+                else break;
+            }
+            btnRun.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnRun.IsEnabled = true; });
+            btnStop.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStop.IsEnabled = false; });
+        }
+
+        /// <summary>
+        /// Pause
+        /// </summary>
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+            btnPause.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnPause.IsEnabled = false; });
+            btnStart.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStart.IsEnabled = true; });
+            btnStop.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStop.IsEnabled = false; });
+            _event.Reset();
+            
+        }
+
+        /// <summary>
+        /// Restart
+        /// </summary>
+        private void button4_Click(object sender, RoutedEventArgs e)
+        {
+            btnPause.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnPause.IsEnabled = true; });
+            btnStart.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStart.IsEnabled = false; });
+            btnStop.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStop.IsEnabled = true; });
+           
+            _event.Set();
+        }
+
+        /// <summary>
+        /// Strop
+        /// </summary>
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            runnnig = false;          
+            btnRun.IsEnabled = true;
+            btnStop.IsEnabled = false;
         }
 
         
     }
+
+    public class TextBoxStreamWriter : TextWriter
+    {
+        RichTextBox _output = null;
+
+        public TextBoxStreamWriter(RichTextBox output)
+        {
+
+            _output = output;
+        }
+
+
+        public override void Write(char value)
+        {
+            if (value != '\n')
+            {
+                //base.AppendText(value.ToString());
+                _output.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { _output.AppendText(value.ToString()); });
+                _output.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { _output.ScrollToEnd(); });
+            }
+        }
+
+        public override Encoding Encoding
+        {
+            get { return System.Text.Encoding.UTF8; }
+        }
+    }
+
 }

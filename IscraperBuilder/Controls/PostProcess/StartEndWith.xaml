@@ -1,0 +1,24 @@
+﻿<Page x:Class="IscraperBuilder.Controls.PostProcess.StartEndWith"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="379" d:DesignWidth="593"
+	Title="StartEndWith">
+
+    <Grid>
+        <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="label1" VerticalAlignment="Top" />
+        <Label Content="Type" Height="28" HorizontalAlignment="Left" Margin="12,64,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Attach Type" Height="28" HorizontalAlignment="Left" Margin="12,95,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="If start/end with" Height="28" HorizontalAlignment="Left" Margin="12,132,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Append/prepend text" Height="28" HorizontalAlignment="Left" Margin="12,163,0,0" Name="label5" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="177,69,0,0" Name="cmbType" VerticalAlignment="Top" Width="144" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="177,100,0,0" Name="cmbAttachType" VerticalAlignment="Top" Width="144" />
+        <TextBox Height="23" Margin="176,15,272,0" Name="txtID" IsEnabled="False" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="179,134,0,0" Name="txtIfStartEndWith" VerticalAlignment="Top" Width="142" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="179,163,0,0" Name="txtAppendText" VerticalAlignment="Top" Width="142" />
+        <CheckBox Content="Is enabled?" Height="16" HorizontalAlignment="Left" Margin="179,47,0,0" Name="chkEnabled" VerticalAlignment="Top" Checked="chkEnabled_Checked_1" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="181,201,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+    </Grid>
+</Page>

@@ -6,7 +6,8 @@ using System.Text;
 namespace IscraperBuilder
 {
     public class Factory
-    {  //SIngleTon
+    {  
+        //SIngleTon       
         private static Factory instance;
         public static Factory Instance
         {
@@ -27,13 +28,20 @@ namespace IscraperBuilder
         /// Save project
         /// </summary>
         public void Save()
-        {            
+        {
+            System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
+            string caller = stackTrace.GetFrame(1).GetMethod().DeclaringType.Name;
+
             System.IO.File.Delete(Factory.Instance.openedFileProject);
             System.IO.FileStream s = System.IO.File.Create(Factory.Instance.openedFileProject);
             s.Close();
+            System.Threading.Thread.Sleep(100);
             IntelliScraper.Xml.Serialization.DeSerialize(Factory.Instance.i, Factory.Instance.openedFileProject);
             this.i = IntelliScraper.Xml.Serialization.Serialize(openedFileProject);
+            MainWindow.main.Status = string.Format("Saved ({0})",caller);
         }
+
+       
 
         /// <summary>
         /// Get all rule id
@@ -155,8 +163,41 @@ namespace IscraperBuilder
 
                 if (Factory.Instance.i.postProcess.trim != null)
                     ids.AddRange(Factory.Instance.i.postProcess.trim.ToList<object>());                    
+            }          
+
+            
+            return ids;
+        }
+
+        /// <summary>
+        /// Get all Post Process as objects
+        /// </summary>     
+        public List<string> getAllPostProcessObjTypesName()
+        {
+            List<string> ids = new List<string>();
+            if (Factory.Instance.i.postProcess != null)
+            {
+                if (Factory.Instance.i.postProcess.append != null)
+                    ids.Add(Factory.Instance.i.postProcess.append.GetType().Name.Replace("Collection",""));
+
+                if (Factory.Instance.i.postProcess.htmlEncodeDecode != null)
+                    ids.Add(Factory.Instance.i.postProcess.htmlEncodeDecode.GetType().Name.Replace("Collection", ""));
+
+                if (Factory.Instance.i.postProcess.regularExpression != null)
+                    ids.Add(Factory.Instance.i.postProcess.regularExpression.GetType().Name.Replace("Collection", ""));
+
+                if (Factory.Instance.i.postProcess.replace != null)
+                    ids.Add(Factory.Instance.i.postProcess.replace.GetType().Name.Replace("Collection", ""));
+
+                if (Factory.Instance.i.postProcess.startEndWith != null)
+                    ids.Add(Factory.Instance.i.postProcess.startEndWith.GetType().Name.Replace("Collection", ""));
+
+                if (Factory.Instance.i.postProcess.substring != null)
+                    ids.Add(Factory.Instance.i.postProcess.substring.GetType().Name.Replace("Collection", ""));
+
+                if (Factory.Instance.i.postProcess.trim != null)
+                    ids.Add(Factory.Instance.i.postProcess.trim.GetType().Name.Replace("Collection", ""));
             }
-           
 
             return ids;
         }

@@ -10,12 +10,11 @@
     <Grid>
         <Border BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Stretch" Name="border1" VerticalAlignment="Top" Height="80">
             <Grid>
-                <Label Content="Select Rule" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
-                <Label Content="Add New Rule" Height="28" HorizontalAlignment="Left" Margin="6,0,0,19" Name="label2" VerticalAlignment="Bottom" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="126,6,0,0" Name="cmbRules" VerticalAlignment="Top" Width="274" SelectionChanged="cmbRules_SelectionChanged" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="126,36,0,0" Name="cmbNewRule" VerticalAlignment="Top" Width="274" SelectionChanged="cmbNewRule_SelectionChanged" />
-                <Button Content="Add or Update selected" Height="23" HorizontalAlignment="Left" Margin="445,36,0,0" Name="button1" VerticalAlignment="Top" Width="160" Click="button1_Click" />
-                <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="445,6,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+                <Label Content="Add New Rule" Height="28" HorizontalAlignment="Left" Margin="6,0,0,44" Name="label2" VerticalAlignment="Bottom" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="126,11,0,0" Name="cmbNewRule" VerticalAlignment="Top" Width="274" SelectionChanged="cmbNewRule_SelectionChanged" />
+                <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="411,44,0,0" Name="button1" VerticalAlignment="Top" Width="73" Click="button1_Click" />
+                <Label Content="Rule id" Height="28" HorizontalAlignment="Left" Margin="6,0,0,10" Name="label1" VerticalAlignment="Bottom" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="126,45,0,0" Name="txtId" VerticalAlignment="Top" Width="274" />
             </Grid>
         </Border>
         <Frame  HorizontalAlignment="Stretch" Margin="0,80,0,0" Name="frame1" VerticalAlignment="Stretch" />

@@ -1,0 +1,42 @@
+﻿<Page x:Class="IscraperBuilder.Controls.PostProcess.SubString"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+       d:DesignHeight="379" d:DesignWidth="593"
+	Title="SubString">
+
+    <Grid>
+        <TabControl  HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" >
+            <TabItem Header="rule" Name="tabItem1">
+                <Grid>
+                    <Label Content="Id" Height="28" HorizontalAlignment="Left" Margin="10,11,0,0" Name="label1" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" IsEnabled="False" Margin="148,10,0,0" Name="txtId" VerticalAlignment="Top" Width="142" />
+                    <Label Content="Type" Height="28" HorizontalAlignment="Left" Margin="10,45,0,0" Name="label2" VerticalAlignment="Top" />
+                    <Label Content="Substring simple" Height="28" HorizontalAlignment="Left" Margin="12,79,0,0" Name="label3" VerticalAlignment="Top" />
+                    <Label Content="Substring from" Height="28" HorizontalAlignment="Left" Margin="12,125,0,0" Name="label4" VerticalAlignment="Top" />
+                    <Label Content="Substring to" Height="28" HorizontalAlignment="Left" Margin="12,159,0,0" Name="label5" VerticalAlignment="Top" />
+                    <Label Content="Substring search text" Height="28" HorizontalAlignment="Left" Margin="12,207,0,0" Name="label6" VerticalAlignment="Top" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="148,79,0,0" Name="txtSSimple" VerticalAlignment="Top" Width="61" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="148,125,0,0" Name="txtSfrom" VerticalAlignment="Top" Width="61" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="148,164,0,0" Name="txtSTo" VerticalAlignment="Top" Width="61" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="148,207,0,0" Name="txtSsearch" VerticalAlignment="Top" Width="153" />
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="148,45,0,0" Name="cmbType" VerticalAlignment="Top" Width="142" SelectionChanged="cmbType_SelectionChanged" />
+                    <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="148,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+                    <CheckBox Content="Search last occurence?" ToolTip="If not set search first occurence" Height="16" HorizontalAlignment="Left" Margin="148,246,0,0" Name="chkCheclLast" VerticalAlignment="Top" />
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Test">
+                <Grid>
+                    <RichTextBox Height="128"  Name="richTextBox1" Width="428" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,27,0,0" />
+                    <Label Content="Input Text" Height="28" HorizontalAlignment="Left" Name="label7" VerticalAlignment="Top" />
+                    <RichTextBox Height="134" HorizontalAlignment="Left" Margin="0,186,0,0" Name="richTextBox2" VerticalAlignment="Top" Width="428" />
+                    <Button Content="Test" Height="23" HorizontalAlignment="Left" Margin="465,152,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+                    <Label Content="Substring" Height="28" HorizontalAlignment="Left" Margin="0,161,0,0" Name="label8" VerticalAlignment="Top" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

@@ -24,18 +24,42 @@ namespace IscraperBuilder.Controls.Common
         IntelliScraper.Db.xpathSingleAttributes attr { get; set; }
         bool isFromXpathCollection { get; set; }
         IntelliScraper.Db.xpathCollection coll { get; set; }
+        string ruleId { get; set; }
         public xpathAttribute(string attrId,IntelliScraper.Db.xpathSingle rule,bool isFromXpathCollection,IntelliScraper.Db.xpathCollection coll)
         {
             this.isFromXpathCollection = isFromXpathCollection;
             this.coll = coll;
             this.rule = rule;
+            this.ruleId = rule.id;
             this.attrId = attrId;
             InitializeComponent();
             load();
         }
 
+        public void reloadRule(string id)
+        {
+            try
+            {
+                this.rule=(from x in this.coll.xpathSingle where x.id == this.ruleId select x).FirstOrDefault();
+                
+                //this.rule = (from x in Factory.Instance.i.rules.xpathSingle where x.id == this.ruleId select x).FirstOrDefault();
+            }
+            catch 
+            { 
+            }
+        }
+
         public void load()
         {
+            if(!string.IsNullOrEmpty(this.ruleId))
+                        reloadRule(this.ruleId);
+
+            if (attr == null)
+            {
+                attr = new IntelliScraper.Db.xpathSingleAttributes();
+                attr.id = this.attrId;
+            }
+
             cmbGrIds.Items.Clear();
             cmbGetType.Items.Clear();
             listBox2.Items.Clear();
@@ -74,8 +98,8 @@ namespace IscraperBuilder.Controls.Common
                             foreach (var pp in attr.postProcessTrigger)
                             {
                                 listBox1.Items.Add(pp.id + " (" + pp.type.ToString() + ")");
-                                string val = pp.id + " (" + pp.type.ToString() + ")";
-                                ppId.Remove(val);
+                                //string val = pp.id + " (" + pp.type.ToString() + ")";
+                                //ppId.Remove(val);
                             }
                         }
 
@@ -166,6 +190,7 @@ namespace IscraperBuilder.Controls.Common
         /// </summary>
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+
             this.attr.getType = (IntelliScraper.Db.xpathSingleAttributesGetType)Enum.Parse(typeof(IntelliScraper.Db.xpathSingleAttributesGetType), (string)cmbGetType.SelectedValue);
             this.attr.xpath = txtXpath.Text;
             this.attr.attributeName = txtAttrName.Text;

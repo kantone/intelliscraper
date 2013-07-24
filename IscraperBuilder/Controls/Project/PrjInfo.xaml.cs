@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace IscraperBuilder.Controls.Project
 {
@@ -19,6 +20,7 @@ namespace IscraperBuilder.Controls.Project
     /// </summary>
     public partial class PrjInfo : Page
     {
+        Utils.PopUp p = new Utils.PopUp();
         public PrjInfo()
         {
             MainWindow.main.Status = "";
@@ -41,15 +43,41 @@ namespace IscraperBuilder.Controls.Project
             Factory.Instance.i.Project.ProjectInfo.logIscraperInfo = (bool)this.verboseLog.IsChecked;
         }
 
+       
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            setConfig();
-            System.IO.File.Delete(Factory.Instance.openedFileProject);
-            System.IO.FileStream s = System.IO.File.Create(Factory.Instance.openedFileProject);
-            s.Close();
-            IntelliScraper.Xml.Serialization.DeSerialize(Factory.Instance.i, Factory.Instance.openedFileProject);
-            loadSetting();
-            MainWindow.main.Status = "Saved!";
+            p.hide();
+            if (validate())
+            {
+                setConfig();
+                System.IO.File.Delete(Factory.Instance.openedFileProject);
+                System.IO.FileStream s = System.IO.File.Create(Factory.Instance.openedFileProject);
+                s.Close();
+                IntelliScraper.Xml.Serialization.DeSerialize(Factory.Instance.i, Factory.Instance.openedFileProject);
+                loadSetting();
+                MainWindow.main.Status = "Saved!";
+            }
+            else p.show("Cannot save (errors)", button1);
+        }
+
+        private bool validate()
+        {
+            if (string.IsNullOrEmpty(txtPrjName.Text))
+            {
+                Utils.PopUp.showPopUpError("Mandatory!", txtPrjName);      
+                return false;
+            }
+
+            if ((bool)showInitialMessage.IsChecked)
+            {
+                if (string.IsNullOrEmpty(txtInitialMessage.Text))
+                {
+                    Utils.PopUp.showPopUpError("Show intial message is mandatory", txtInitialMessage);                  
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

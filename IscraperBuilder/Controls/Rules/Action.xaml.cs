@@ -127,12 +127,18 @@ namespace IscraperBuilder.Controls.Rules
                 setFormByType(false,IntelliScraper.Db.intelliScraperActionType.none);
             else setFormByType(true, this.action.type);
 
-            //set value for current action
-            if (!this.isNew && this.action != null)
-            {
-                if (!string.IsNullOrEmpty(this.action.id))
-                    txtId.Text = this.action.id;
+          
 
+            //set value for current action
+            if (this.action != null)
+            {
+
+                if (!this.isNew)
+                {
+                    if (!string.IsNullOrEmpty(this.action.id))
+                        txtId.Text = this.action.id;
+                }
+            
                 if (!string.IsNullOrEmpty(this.action.ruleId))
                     cmbRuleId.SelectedValue = this.action.ruleId;
 
@@ -265,139 +271,164 @@ namespace IscraperBuilder.Controls.Rules
         /// </summary>
         private void btnAddRule_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(txtId.Text))
+            {
+                Utils.PopUp.showPopUpError("mandatory", txtId);
+                return;
+            }
+
+            if (cmbInputType.SelectedIndex < 0)
+            {
+                Utils.PopUp.showPopUpError("mandatory", cmbInputType);
+                return;
+            }
+
+
             //Create new Rule
-            object g = null;
-            Type t = Type.GetType("IntelliScraper.Db." + (string)cmbType.SelectedValue + ", IntelliScraper");
-           
-
-            if (t == typeof(IntelliScraper.Db.httpGet))
-            {                
-                g = new IntelliScraper.Db.httpGet();
-                if (Factory.Instance.i.rules.httpGet == null)
-                    Factory.Instance.i.rules.httpGet = new IntelliScraper.Db.httpGetCollection();
-                Factory.Instance.i.rules.httpGet.Add(g as IntelliScraper.Db.httpGet);
-            }
-
-            if (t == typeof(IntelliScraper.Db.httpPost))
+            if (cmbType.SelectedValue != null)
             {
-                g = new IntelliScraper.Db.httpPost();
-                if (Factory.Instance.i.rules.httpPost == null)
-                    Factory.Instance.i.rules.httpPost = new IntelliScraper.Db.httpPostCollection();
-                Factory.Instance.i.rules.httpPost.Add(g as IntelliScraper.Db.httpPost);
-           
+                object g = null;
+                string v = (string)cmbType.SelectedValue;
+                if (v == "zip")
+                    v = "actionZip";
+                Type t = Type.GetType("IntelliScraper.Db." + v + ", IntelliScraper");
+
+
+                if (t == typeof(IntelliScraper.Db.httpGet))
+                {
+                    g = new IntelliScraper.Db.httpGet();
+                    if (Factory.Instance.i.rules.httpGet == null)
+                        Factory.Instance.i.rules.httpGet = new IntelliScraper.Db.httpGetCollection();
+                    Factory.Instance.i.rules.httpGet.Add(g as IntelliScraper.Db.httpGet);
+                }
+
+                if (t == typeof(IntelliScraper.Db.httpPost))
+                {
+                    g = new IntelliScraper.Db.httpPost();
+                    if (Factory.Instance.i.rules.httpPost == null)
+                        Factory.Instance.i.rules.httpPost = new IntelliScraper.Db.httpPostCollection();
+                    Factory.Instance.i.rules.httpPost.Add(g as IntelliScraper.Db.httpPost);
+
+                }
+
+                if (t == typeof(IntelliScraper.Db.xpathSingle))
+                {
+                    g = new IntelliScraper.Db.xpathSingle();
+                    if (Factory.Instance.i.rules.xpathSingle == null)
+                        Factory.Instance.i.rules.xpathSingle = new IntelliScraper.Db.xpathSingleCollection();
+                    Factory.Instance.i.rules.xpathSingle.Add(g as IntelliScraper.Db.xpathSingle);
+                }
+
+                if (t == typeof(IntelliScraper.Db.xpathCollection))
+                {
+                    g = new IntelliScraper.Db.xpathCollection();
+                    if (Factory.Instance.i.rules.xpathCollection == null)
+                        Factory.Instance.i.rules.xpathCollection = new IntelliScraper.Db.xpathCollectionCollection();
+                    Factory.Instance.i.rules.xpathCollection.Add(g as IntelliScraper.Db.xpathCollection);
+                }
+
+                if (t == typeof(IntelliScraper.Db.loop_link))
+                {
+                    g = new IntelliScraper.Db.loop_link();
+                    if (Factory.Instance.i.rules.loop_link == null)
+                        Factory.Instance.i.rules.loop_link = new IntelliScraper.Db.loop_linkCollection();
+                    Factory.Instance.i.rules.loop_link.Add(g as IntelliScraper.Db.loop_link);
+                }
+
+                if (t == typeof(IntelliScraper.Db.download))
+                {
+                    g = new IntelliScraper.Db.download();
+                    if (Factory.Instance.i.rules.download == null)
+                        Factory.Instance.i.rules.download = new IntelliScraper.Db.downloadCollection();
+                    Factory.Instance.i.rules.download.Add(g as IntelliScraper.Db.download);
+                }
+
+                if (t == typeof(IntelliScraper.Db.upload))
+                {
+                    g = new IntelliScraper.Db.upload();
+                    if (Factory.Instance.i.rules.upload == null)
+                        Factory.Instance.i.rules.upload = new IntelliScraper.Db.uploadCollection();
+                    Factory.Instance.i.rules.upload.Add(g as IntelliScraper.Db.upload);
+                }
+
+                if (t == typeof(IntelliScraper.Db.ftpPut))
+                {
+                    g = new IntelliScraper.Db.ftpPut();
+                    if (Factory.Instance.i.rules.ftpPut == null)
+                        Factory.Instance.i.rules.ftpPut = new IntelliScraper.Db.ftpPutCollection();
+                    Factory.Instance.i.rules.ftpPut.Add(g as IntelliScraper.Db.ftpPut);
+                }
+
+                if (t == typeof(IntelliScraper.Db.actionZip))
+                {
+                    g = new IntelliScraper.Db.actionZip();
+                    if (Factory.Instance.i.rules.actionZip == null)
+                        Factory.Instance.i.rules.actionZip = new IntelliScraper.Db.actionZipCollection();
+                    Factory.Instance.i.rules.actionZip.Add(g as IntelliScraper.Db.actionZip);
+                }
+
+                if (t == typeof(IntelliScraper.Db.save))
+                {
+                    g = new IntelliScraper.Db.save();
+                    if (Factory.Instance.i.rules.save == null)
+                        Factory.Instance.i.rules.save = new IntelliScraper.Db.saveCollection();
+                    Factory.Instance.i.rules.save.Add(g as IntelliScraper.Db.save);
+                }
+
+                if (t == typeof(IntelliScraper.Db.screenShot))
+                {
+                    g = new IntelliScraper.Db.screenShot();
+                    if (Factory.Instance.i.rules.screenShot == null)
+                        Factory.Instance.i.rules.screenShot = new IntelliScraper.Db.screenShotCollection();
+                    Factory.Instance.i.rules.screenShot.Add(g as IntelliScraper.Db.screenShot);
+                }
+
+                if (t == typeof(IntelliScraper.Db.plugin))
+                {
+                    g = new IntelliScraper.Db.plugin();
+                    if (Factory.Instance.i.rules.plugin == null)
+                        Factory.Instance.i.rules.plugin = new IntelliScraper.Db.pluginCollection();
+                    Factory.Instance.i.rules.plugin.Add(g as IntelliScraper.Db.plugin);
+                }
+
+
+
+                if (g != null)
+                {
+                    string id = g.GetType().Name + "-" + Utils.RandomUtil.RandomString(4);
+                    g.GetType().GetProperty("id").SetValue(g, id, null);
+
+
+
+
+                    cmbRuleId.Items.Add(id);
+                    cmbRuleId.SelectedValue = id;
+
+                    if (this.parent != null)
+                    {
+                        Factory.Instance.LoadRuleFrame(id, this.parent.frame2, false, null);
+                        this.parent.tabItem2.Visibility = System.Windows.Visibility.Visible;
+                        this.parent.tabControl1.SelectedIndex = 1;
+                        this.parent.tabItem2.Header = id;
+                        this.parent.tabControl1.SelectedIndex = 1;
+                        button1_Click_1(sender, e);
+
+                    }
+                    if (this.parentT != null)
+                    {
+                        Factory.Instance.LoadRuleFrame(id, this.parentT.frame2, false, null);
+                        this.parentT.tabItem2.Visibility = System.Windows.Visibility.Visible;
+                        this.parentT.tabItem2.Header = id;
+                        this.parentT.tabControl1.SelectedIndex = 1;
+                        button1_Click_1(sender, e);
+                    }
+                }
+
+                Factory.Instance.Save();
+                MainWindow.main.loadActionTree();
+                MainWindow.main.loadRules();
+                MainWindow.main.loadPostProcessData();
             }
-
-            if (t == typeof(IntelliScraper.Db.xpathSingle))
-            {
-                g = new IntelliScraper.Db.xpathSingle();
-                if (Factory.Instance.i.rules.xpathSingle == null)
-                    Factory.Instance.i.rules.xpathSingle = new IntelliScraper.Db.xpathSingleCollection();              
-                Factory.Instance.i.rules.xpathSingle.Add(g as IntelliScraper.Db.xpathSingle);
-            }
-
-            if (t == typeof(IntelliScraper.Db.xpathCollection))
-            {
-                g = new IntelliScraper.Db.xpathCollection();
-                if (Factory.Instance.i.rules.xpathCollection == null)
-                    Factory.Instance.i.rules.xpathCollection = new IntelliScraper.Db.xpathCollectionCollection();
-                Factory.Instance.i.rules.xpathCollection.Add(g as IntelliScraper.Db.xpathCollection);
-            }
-
-            if (t == typeof(IntelliScraper.Db.loop_link))
-            {
-                g = new IntelliScraper.Db.loop_link();
-                if (Factory.Instance.i.rules.loop_link == null)
-                    Factory.Instance.i.rules.loop_link = new IntelliScraper.Db.loop_linkCollection();
-                Factory.Instance.i.rules.loop_link.Add(g as IntelliScraper.Db.loop_link);
-            }
-
-            if (t == typeof(IntelliScraper.Db.download))
-            {
-                g = new IntelliScraper.Db.download();
-                if (Factory.Instance.i.rules.download == null)
-                    Factory.Instance.i.rules.download = new IntelliScraper.Db.downloadCollection();
-                Factory.Instance.i.rules.download.Add(g as IntelliScraper.Db.download);
-            }
-
-            if (t == typeof(IntelliScraper.Db.upload))
-            {
-                g = new IntelliScraper.Db.upload();
-                if (Factory.Instance.i.rules.upload == null)
-                    Factory.Instance.i.rules.upload = new IntelliScraper.Db.uploadCollection();
-                Factory.Instance.i.rules.upload.Add(g as IntelliScraper.Db.upload);
-            }
-
-            if (t == typeof(IntelliScraper.Db.ftpPut))
-            {
-                g = new IntelliScraper.Db.ftpPut();
-                if (Factory.Instance.i.rules.ftpPut == null)
-                    Factory.Instance.i.rules.ftpPut = new IntelliScraper.Db.ftpPutCollection();
-                Factory.Instance.i.rules.ftpPut.Add(g as IntelliScraper.Db.ftpPut);
-            }
-
-            if (t == typeof(IntelliScraper.Db.actionZip))
-            {
-                g = new IntelliScraper.Db.actionZip();
-                if (Factory.Instance.i.rules.actionZip == null)
-                    Factory.Instance.i.rules.actionZip = new IntelliScraper.Db.actionZipCollection();
-                Factory.Instance.i.rules.actionZip.Add(g as IntelliScraper.Db.actionZip);
-            }
-
-            if (t == typeof(IntelliScraper.Db.save))
-            {
-                g = new IntelliScraper.Db.save();
-                if (Factory.Instance.i.rules.save == null)
-                    Factory.Instance.i.rules.save = new IntelliScraper.Db.saveCollection();
-                Factory.Instance.i.rules.save.Add(g as IntelliScraper.Db.save);
-            }
-
-            if (t == typeof(IntelliScraper.Db.screenShot))
-            {
-                g = new IntelliScraper.Db.screenShot();
-                if (Factory.Instance.i.rules.screenShot == null)
-                    Factory.Instance.i.rules.screenShot = new IntelliScraper.Db.screenShotCollection();
-                Factory.Instance.i.rules.screenShot.Add(g as IntelliScraper.Db.screenShot);
-            }
-
-            if (t == typeof(IntelliScraper.Db.plugin))
-            {
-                g = new IntelliScraper.Db.plugin();
-                if (Factory.Instance.i.rules.plugin == null)
-                    Factory.Instance.i.rules.plugin = new IntelliScraper.Db.pluginCollection();
-                Factory.Instance.i.rules.plugin.Add(g as IntelliScraper.Db.plugin);
-            }
-
-            string id = g.GetType().Name + "-" + Utils.RandomUtil.RandomString(4);
-            g.GetType().GetProperty("id").SetValue(g, id, null);
-
-            
-
-            Factory.Instance.Save();
-            cmbRuleId.Items.Add(id);
-            cmbRuleId.SelectedValue = id;
-
-            if (this.parent != null)
-            {
-                Factory.Instance.LoadRuleFrame(id, this.parent.frame2, false, null);
-                this.parent.tabItem2.Visibility = System.Windows.Visibility.Visible;
-                this.parent.tabControl1.SelectedIndex = 1;
-                this.parent.tabItem2.Header = id;
-                this.parent.tabControl1.SelectedIndex = 1;
-                button1_Click_1(sender, e);
-
-            }
-            if (this.parentT != null)
-            {
-                Factory.Instance.LoadRuleFrame(id, this.parentT.frame2, false, null);
-                this.parentT.tabItem2.Visibility = System.Windows.Visibility.Visible;
-                this.parentT.tabItem2.Header = id;
-                this.parentT.tabControl1.SelectedIndex = 1;
-                button1_Click_1(sender, e);
-            }
-
-            MainWindow.main.loadActionTree();
-            MainWindow.main.loadRules();
-            MainWindow.main.loadPostProcessData();
 
         }
 

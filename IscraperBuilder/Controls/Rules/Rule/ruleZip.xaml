@@ -19,6 +19,6 @@
         <Label Content="Input attribute key" Height="28" HorizontalAlignment="Left" Margin="12,156,0,0" Name="label3" VerticalAlignment="Top" />
         <Label Content="Input type" Height="28" HorizontalAlignment="Left" Margin="12,199,0,0" Name="label4" VerticalAlignment="Top" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="127,199,0,0" Name="cmbInputType" VerticalAlignment="Top" Width="264" SelectionChanged="cmbInputType_SelectionChanged" />
-        <Button Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,8,169,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="406,8,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
     </Grid>
 </Page>

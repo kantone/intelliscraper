@@ -112,6 +112,9 @@ namespace IscraperBuilder.Controls.Common
 
                         IntelliScraper.Db.postProcess pp = new IntelliScraper.Db.postProcess();
                         pp.id = id;
+
+                        if (_type.ToLower() == "regularexpression")
+                            _type = "regex";
                         pp.type = (IntelliScraper.Db.postProcessType)Enum.Parse(typeof(IntelliScraper.Db.postProcessType), _type);
 
                         gr.postProcessTrigger.Add(pp);

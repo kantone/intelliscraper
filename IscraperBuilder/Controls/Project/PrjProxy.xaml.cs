@@ -85,11 +85,45 @@ namespace IscraperBuilder.Controls.Project
         /// <summary>
         /// Save
         /// </summary>
+        Utils.PopUp p = new Utils.PopUp();
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            setConfig();
-            Factory.Instance.Save();
-            MainWindow.main.Status = "Saved!";
+            p.hide();
+            if (validate())
+            {
+                setConfig();
+                Factory.Instance.Save();
+                MainWindow.main.Status = "Saved!";
+            }
+            else p.show("Error : cannot save", btnSave);
         }
+
+        private bool validate()
+        {
+            if ((bool)useProxy.IsChecked)
+            {
+                if (proxyType.SelectedIndex < 0)
+                {
+                    Utils.PopUp.showPopUpError("mandatory!", proxyType);
+                    return false;
+                }
+                else
+                {
+                    ComboBoxItem val = (ComboBoxItem)proxyType.SelectedValue;
+                    if ((string)val.Content== "file")
+                    {
+                        if (string.IsNullOrEmpty(proxyFilePath.Text))
+                        {
+                            Utils.PopUp.showPopUpError("mandatory!", proxyFilePath);
+                            return false;
+                        }
+                    }
+
+                }
+            }
+
+            return true;
+        }
+
     }
 }

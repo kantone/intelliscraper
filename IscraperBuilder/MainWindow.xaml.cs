@@ -46,8 +46,13 @@ namespace IscraperBuilder
             this.evt =  EventManager.RegisterRoutedEvent("keyEnterEvt", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TextBox));
             this.evtArg = new RoutedEventArgs(this.evt);
 
-            
+            string log = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) +"\\log";
+            if (!System.IO.Directory.Exists(log))
+                System.IO.Directory.CreateDirectory(log);
+
         }
+
+      
 
         #region loaders
 
@@ -108,6 +113,7 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "append";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pAppend.Items.Add(i);
                         }
                     }
@@ -124,6 +130,7 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "htmlEncodeDecode";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pHtmlEncodeDecode.Items.Add(i);
                         }
                     }
@@ -140,6 +147,7 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "regularExpression";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pRegex.Items.Add(i);
                         }
                     }
@@ -156,6 +164,7 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "replace";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pReplace.Items.Add(i);
                         }
                     }
@@ -172,6 +181,7 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "startEndWith";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pStartEndWith.Items.Add(i);
                         }
                     }
@@ -188,11 +198,12 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "substring";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pSubstring.Items.Add(i);
                         }
                     }
 
-                    //startEndWith
+                    //trim
                     if (Factory.Instance.i.postProcess.trim != null)
                     {
                         tTrim.Text = string.Format("Trim ({0})", Factory.Instance.i.postProcess.trim.Count);
@@ -204,6 +215,7 @@ namespace IscraperBuilder
                             i.Header = r.id;
                             i.Tag = "trim";
                             i.MouseUp += new System.Windows.Input.MouseButtonEventHandler(postProcessClick);
+                            i.ContextMenu = Resources["PpContextMenu"] as ContextMenu;
                             pTrim.Items.Add(i);
                         }
                     }
@@ -273,9 +285,93 @@ namespace IscraperBuilder
             }
         }
 
+        /// <summary>
+        /// On click post process rule
+        /// </summary>
         public void postProcessClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            TreeViewItem h =  e.Source as TreeViewItem;
+            string ruleId = (string)h.Header;
+            TreeViewItem parent = ItemsControl.ItemsControlFromItemContainer(h) as TreeViewItem;
+            string typeId = ((TextBlock)((StackPanel)parent.Header).Children[1]).Text;
+            int index = typeId.LastIndexOf("(");
+            if (index > 0)
+                typeId = typeId.Substring(0, index).Trim();
 
+            foreach (object o in Factory.Instance.getAllPostProcessObj())
+            {
+                Type t = o.GetType();
+                string _id = (string)t.GetProperty("id").GetValue(o, null);
+
+                if(_id == ruleId){
+                //find id
+                    if (t.Name.Replace(" ", "").ToLower() == typeId.Replace(" ", "").Replace("/","").ToLower())
+                    {
+                        //Replace
+                        if (t == typeof(IntelliScraper.Db.replace))
+                        {
+                            IntelliScraper.Db.replace r = (IntelliScraper.Db.replace)o;
+                            frame1.Navigate(new Controls.PostProcess.Replace(r));
+                            setTitle("Post process data : Replace", "img/004.png"); 
+                            break;
+                        }
+
+                        //append
+                        if (t == typeof(IntelliScraper.Db.append))
+                        {
+                            IntelliScraper.Db.append r = (IntelliScraper.Db.append)o;
+                            frame1.Navigate(new Controls.PostProcess.Append(r));
+                            setTitle("Post process data : Append", "img/016.png"); 
+                            break;
+                        }
+
+                        //htmlEncodeDecode
+                        if (t == typeof(IntelliScraper.Db.htmlEncodeDecode))
+                        {
+                            IntelliScraper.Db.htmlEncodeDecode r = (IntelliScraper.Db.htmlEncodeDecode)o;
+                            frame1.Navigate(new Controls.PostProcess.HtmlEncodeDecode(r));
+                            setTitle("Post process data : Html encode/decode", "img/027.png");
+                            break;
+                        }
+
+                        //regularExpression
+                        if (t == typeof(IntelliScraper.Db.regularExpression))
+                        {
+                            IntelliScraper.Db.regularExpression r = (IntelliScraper.Db.regularExpression)o;
+                             frame1.Navigate(new Controls.PostProcess.Regex(r));
+                             setTitle("Post process data : Regex", "img/007.png"); 
+                            break;
+                        }
+
+                        //startEndWith
+                        if (t == typeof(IntelliScraper.Db.startEndWith))
+                        {
+                            IntelliScraper.Db.startEndWith r = (IntelliScraper.Db.startEndWith)o;
+                             frame1.Navigate(new Controls.PostProcess.StartEndWith(r));
+                             setTitle("Post process data : Start/End with", "img/017.png"); 
+                            break;
+                        }
+
+                        //substring
+                        if (t == typeof(IntelliScraper.Db.substring))
+                        {
+                            IntelliScraper.Db.substring r = (IntelliScraper.Db.substring)o;
+                            frame1.Navigate(new Controls.PostProcess.SubString(r));
+                            setTitle("Post process data : Substring", "img/009.png"); 
+                            break;
+                        }
+
+                        //trim
+                        if (t == typeof(IntelliScraper.Db.trim))
+                        {
+                            IntelliScraper.Db.trim r = (IntelliScraper.Db.trim)o;
+                            frame1.Navigate(new Controls.PostProcess.Trim(r));
+                            setTitle("Post process data : Trim", "img/012a.png"); 
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
        
@@ -298,6 +394,8 @@ namespace IscraperBuilder
             mi.Background = new SolidColorBrush(Colors.LightGreen);
             string id = mi.Text;
             Factory.Instance.LoadRuleFrame(id, this.frame1, false, null);
+
+            setTitle("Rule : " + id, "img/051.png");
         }
 
 
@@ -342,14 +440,18 @@ namespace IscraperBuilder
                         // Get the selected file name and display in a TextBox 
                         if (result == true)
                         {
-                            // Open document 
-                            Factory.Instance.i = IntelliScraper.Xml.Serialization.Serialize(dlg.FileName);
-                            Factory.Instance.openedFileProject = dlg.FileName;
-                            this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
-                            this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
-                            loadActionTree();
-                            loadRules();
-                            loadPostProcessData();
+                            try
+                            {
+                                // Open document 
+                                Factory.Instance.i = IntelliScraper.Xml.Serialization.Serialize(dlg.FileName);
+                                Factory.Instance.openedFileProject = dlg.FileName;
+                                this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
+                                this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
+                                loadActionTree();
+                                loadRules();
+                                loadPostProcessData();
+                            }
+                            catch { MessageBox.Show("Project invalid");}
                         }
                         
                         break;
@@ -436,15 +538,22 @@ namespace IscraperBuilder
                 string prjName = path + (string)i.SelectedValue;
                 if (System.IO.File.Exists(prjName))
                 {
-                    // Open document 
-                    Factory.Instance.i = IntelliScraper.Xml.Serialization.Serialize(prjName);
-                    Factory.Instance.openedFileProject = prjName;
-                    this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
-                    this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
-                    loadActionTree();
-                    prjSetting.IsSelected = true;
-                    loadRules();
-                    loadPostProcessData();
+                    try
+                    {
+                        // Open document 
+                        Factory.Instance.i = IntelliScraper.Xml.Serialization.Serialize(prjName);
+                        Factory.Instance.openedFileProject = prjName;
+                        this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
+                        this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
+                        loadActionTree();
+                        prjSetting.IsSelected = true;
+                        loadRules();
+                        loadPostProcessData();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Project invalid");
+                    }
                 }
             }
         }
@@ -459,7 +568,7 @@ namespace IscraperBuilder
         /// </summary>
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            setTitle(string.Empty, null);
            
             if (Factory.Instance.i != null)
             {
@@ -474,49 +583,56 @@ namespace IscraperBuilder
                     case "sPrjSetting":
                     case "Project Settings":
                         {
+                            setTitle("Project info", "img/024.png");
                             this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
                             break;
                         }
                     case "Info":
                     case "sPrjInfo":
                         {
+                            setTitle("Project info", "img/024.png");
                             this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
                             break;
                         }
                     case "Proxies":
                     case "sPrjProxy":
                         {
+                            setTitle("Proxy", "img/030.png");
                             this.frame1.Source = new Uri("Controls\\Project\\PrjProxy.xaml", UriKind.Relative);
                             break;
                         }
                     case "Custom Proxies":
                         case "sCustomPrjProxy":
                         {
+                            setTitle("Custom Proxy", "img/002.png");
                             this.frame1.Source = new Uri("Controls\\Project\\PrjCustomProxy.xaml", UriKind.Relative);
                             break;
                         }
                         case "sPrjBrowser":
                         case "Browser Client":
                         {
+                            setTitle("Browser client setting", "img/026.png");
                             this.frame1.Source = new Uri("Controls\\Project\\PrjBrowser2.xaml", UriKind.Relative);
                             break;
                         }
                     case "sPrjStore":
                     case "Save/Read from/to...":
                         {
+                            setTitle("Input & output storage", "img/048.png");
                             this.frame1.Source = new Uri("Controls\\Project\\AddStorage.xaml", UriKind.Relative);
                             break;
                         }
                     case "sPrjFtp":
                     case "Ftp":
                         {
+                            setTitle("Ftp", "img/037.png");                          
                             this.frame1.Source = new Uri("Controls\\Project\\PrjFtp.xaml", UriKind.Relative);
                             break;
                         }
                     case "Action":
                     case "Actions/Rules":
                         {
-
+                            setTitle("Add Action/rule", "img/075.png"); 
                             this.frame1.NavigationUIVisibility = NavigationUIVisibility.Hidden;
                             this.frame1.Source = new Uri("Controls\\Rules\\ActionRules.xaml", UriKind.Relative);                      
                             break;
@@ -524,23 +640,51 @@ namespace IscraperBuilder
                     case "Rules":
                     case "sRules":
                         {
+                            setTitle("Rules", "img/051.png"); 
                             this.frame1.Source = new Uri("Controls\\Rules\\RulesWrapper.xaml", UriKind.Relative);
-                            break;
+                            return;
                         }
                     case "sRun":
                     case "Run":
                         {
+                            setTitle("Run project", "img/035a.png"); 
                             this.frame1.Source = new Uri("Controls\\Execute\\Run.xaml", UriKind.Relative);
                             break;
                         }
+                    case "xPathTest":
+                        {
+                            setTitle("Test xpath", "img/017a.png");
+                            this.frame1.Source = new Uri("Controls\\Tools\\Page1.xaml", UriKind.Relative);
+                            break;
+                        }
+                  
                    
                 }
 
                 if (name.Contains("Actions/Rules"))
                 {
+                    setTitle("Add Action/rule", "img/075.png");
                     this.frame1.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-                    this.frame1.Source = new Uri("Controls\\Rules\\ActionRules.xaml", UriKind.Relative);
-                 
+                    //this.frame1.Source = new Uri("Controls\\Rules\\ActionRules.xaml", UriKind.Relative);
+                    ActRuleTabFrame tbf = new ActRuleTabFrame();
+                    Controls.Rules.Action a = new Controls.Rules.Action(true, IntelliScraper.Db.intelliScraperActionType.none, tbf, null);
+                    tbf.setFrame1(a);
+                    this.frame1.Navigate(tbf);
+                    return;
+                }
+
+                if (name.Contains("Post Process Data"))
+                {
+                    setTitle("Post Process Data", "img/028.png"); 
+                    this.frame1.Source = new Uri("Controls\\PostProcess\\PostProcessData.xaml", UriKind.Relative);
+
+                }
+
+                if (name.Contains("Rules ("))
+                {
+                    setTitle("Rules", "img/051.png");
+                    this.frame1.Source = new Uri("Controls\\Rules\\RulesWrapper.xaml", UriKind.Relative);
+                    
                 }
             }
             else MessageBox.Show("No project opened/created!!!");
@@ -563,27 +707,31 @@ namespace IscraperBuilder
         /// </summary>
         public void loadActionTree()
         {
-            if (Factory.Instance.i.actions != null)
+            if (Factory.Instance.i != null)
             {
-                List<object> rules = Factory.Instance.getAllObj();
-
-              
-                List<TreeviewH> actions = new List<TreeviewH>();
-
-                var tmp = from x in Factory.Instance.i.actions where  
-                              (x.input != null && string.IsNullOrEmpty(x.input.actionId)) 
-                          
-                          select x;
-               // int c = tmp.Count();
-                TreeViewAction.Items.Clear();
-                foreach (var a in tmp)
+                if (Factory.Instance.i.actions != null)
                 {
-                    TreeViewActionResult r = getActiontreeView(a);                   
-                    TreeViewAction.Items.Add(r.treeView);
-                }
+                    List<object> rules = Factory.Instance.getAllObj();
 
-                tTreeViewAction.Text = string.Format("Actions/Rules ({0})", Factory.Instance.i.actions.Count);
-  
+
+                    List<TreeviewH> actions = new List<TreeviewH>();
+
+                    var tmp = from x in Factory.Instance.i.actions
+                              where
+                                  (x.input != null && string.IsNullOrEmpty(x.input.actionId))
+
+                              select x;
+                    // int c = tmp.Count();
+                    TreeViewAction.Items.Clear();
+                    foreach (var a in tmp)
+                    {
+                        TreeViewActionResult r = getActiontreeView(a);
+                        TreeViewAction.Items.Add(r.treeView);
+                    }
+
+                    tTreeViewAction.Text = string.Format("Actions/Rules ({0})", Factory.Instance.i.actions.Count);
+
+                }
             }
            
         }
@@ -630,6 +778,7 @@ namespace IscraperBuilder
         {
             string _actionId = string.Empty;
             string header = string.Empty;
+          
             if (e.Source.GetType() == typeof(TreeviewH))
             {
                 TreeViewItem i = e.Source as TreeViewItem;
@@ -655,6 +804,8 @@ namespace IscraperBuilder
                 _actionId = (string)p.Tag;
                 
             }
+
+            
 
             if(!string.IsNullOrEmpty(_actionId))
             {
@@ -682,6 +833,8 @@ namespace IscraperBuilder
                     tbf.tabItem2.Visibility = Visibility.Hidden;
 
                 MainWindow.main.frame1.Navigate(tbf);
+                MainWindow.main.setTitle(string.Format("Action : {0} - Rule : {1}", _actionId,ruleId), "img/075.png");
+               
             }
 
         }
@@ -727,6 +880,10 @@ namespace IscraperBuilder
                     int index = actionId.LastIndexOf('-');
                     if(index > 0)
                         actionId = actionId.Substring(0,index).Trim();
+                    index = actionId.LastIndexOf('(');
+                    if (index > 0)
+                        actionId = actionId.Substring(0, index).Trim();
+
 
                     //Check if this action have child
                     bool haveChild = (from x in Factory.Instance.i.actions where x.input != null && x.input.actionId == actionId select x).Any();
@@ -1005,7 +1162,178 @@ namespace IscraperBuilder
 
         #endregion
 
-                       
+
+        /// <summary>
+        /// Post Process item Remove
+        /// </summary>
+        private void MenuItem_Click_7(object sender, RoutedEventArgs e)
+        {
+            MenuItem mi = e.Source as MenuItem;
+            ContextMenu cm = mi.CommandParameter as ContextMenu;
+            TreeViewItem tr = cm.PlacementTarget as TreeViewItem;
+            string ruleId = (string)tr.Header;
+            TreeViewItem parent = ItemsControl.ItemsControlFromItemContainer(tr) as TreeViewItem;
+            string typeId = ((TextBlock)((StackPanel)parent.Header).Children[1]).Text;
+            int index = typeId.LastIndexOf("(");
+            if (index > 0)
+                typeId = typeId.Substring(0, index).Trim();
+            
+
+            foreach (object o in Factory.Instance.getAllPostProcessObj())
+            {
+                Type t = o.GetType();
+                string _id = (string)t.GetProperty("id").GetValue(o, null);
+
+                //find id
+                if (t.Name.Replace(" ", "").ToLower() == typeId.Replace(" ", "").Replace("/", "").ToLower())
+                {
+                    //Replace
+                    if (t == typeof(IntelliScraper.Db.replace))
+                    {
+                        IntelliScraper.Db.replace r = (IntelliScraper.Db.replace)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.replace.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+
+                    //append
+                    if (t == typeof(IntelliScraper.Db.append))
+                    {
+                        IntelliScraper.Db.append r = (IntelliScraper.Db.append)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.append.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+
+                    //htmlEncodeDecode
+                    if (t == typeof(IntelliScraper.Db.htmlEncodeDecode))
+                    {
+                        IntelliScraper.Db.htmlEncodeDecode r = (IntelliScraper.Db.htmlEncodeDecode)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.htmlEncodeDecode.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+
+                    //regularExpression
+                    if (t == typeof(IntelliScraper.Db.regularExpression))
+                    {
+                        IntelliScraper.Db.regularExpression r = (IntelliScraper.Db.regularExpression)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.regularExpression.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+
+                    //startEndWith
+                    if (t == typeof(IntelliScraper.Db.startEndWith))
+                    {
+                        IntelliScraper.Db.startEndWith r = (IntelliScraper.Db.startEndWith)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.startEndWith.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+
+                    //substring
+                    if (t == typeof(IntelliScraper.Db.substring))
+                    {
+                        IntelliScraper.Db.substring r = (IntelliScraper.Db.substring)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.substring.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+
+                    //trim
+                    if (t == typeof(IntelliScraper.Db.trim))
+                    {
+                        IntelliScraper.Db.trim r = (IntelliScraper.Db.trim)o;
+                        if (_id == ruleId)
+                        {
+                            Factory.Instance.i.postProcess.trim.Remove(r);
+                            Factory.Instance.Save();
+                            loadActionTree();
+                            loadRules();
+                            loadPostProcessData();
+                            break;
+                        }
+                    }
+                }
+
+
+              
+            }
+
+        }
+
+        /// <summary>
+        /// Post Process item Add
+        /// </summary>
+        private void MenuItem_Click_8(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void setTitle(string title, string img)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(img))
+                {
+                    imgTitle.Visibility = System.Windows.Visibility.Visible;
+                    imgTitle.Source = new BitmapImage(new Uri("pack://application:,,,/" + img));
+                }
+                else imgTitle.Visibility = System.Windows.Visibility.Hidden;
+            }
+            catch { }
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                txtTitle.Visibility = System.Windows.Visibility.Visible;
+                txtTitle.Text = title;
+                borderTitle.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                txtTitle.Visibility = System.Windows.Visibility.Hidden;
+                borderTitle.Visibility = System.Windows.Visibility.Hidden;
+            }
+           
+        }
     }
     
 }

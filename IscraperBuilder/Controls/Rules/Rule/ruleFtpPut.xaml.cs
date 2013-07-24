@@ -78,8 +78,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 txtInputAttrKey.Text = rule.inputAttributeKey;
 
                 listViewxFiles.Items.Clear();
-                foreach (string f in rule.file)
-                    listViewxFiles.Items.Add(f);
+                if (rule.file != null)
+                {
+                    foreach (string f in rule.file)
+                        listViewxFiles.Items.Add(f);
+                }
             }
         }
 

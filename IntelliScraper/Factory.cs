@@ -34,6 +34,7 @@ namespace IntelliScraper
         private System.IO.StreamWriter csvWriter { get; set; }
         public Plugin.PluginManager pluginManager { get; set; }
         public CookieAwareWebClient lastClient { get; set; }
+        public bool isRunning = false;
 
         
 
@@ -122,7 +123,9 @@ namespace IntelliScraper
             string uncrypt = IntelliScraper.Crypto.DecryptStringAES(System.IO.File.ReadAllText(xmlInput), xmlDecriptPass);
             this.i = Xml.Serialization.SerializeFromString(uncrypt);
             this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
+            this.isRunning = true;
             this.Run();
+            this.isRunning = false;
         }
 
         /// <summary>
@@ -132,7 +135,21 @@ namespace IntelliScraper
         {
             this.i = Xml.Serialization.Serialize(xmlInput);
             this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
+            this.isRunning = true;
             this.Run();
+            this.isRunning = false;
+        }
+
+        /// <summary>
+        /// Load some data and Run scraping
+        /// </summary>
+        public void Run(Db.intelliScraper i)
+        {
+            this.i = i;
+            this.iInfo("Load scraping rules intelliscraper object");
+            this.isRunning = true;
+            this.Run();
+            this.isRunning = false;
         }
    
         /// <summary>
@@ -174,14 +191,20 @@ namespace IntelliScraper
                 }
                 
                 //Load user agent
+                if (this.userAgentManager == null)
+                    this.userAgentManager = new Scrape.UserAgentManager(new List<string>());
+
                 this.userAgentManager.UserAgents.Add(i.Project.ScrapingSetting.defaultAgent);
                 if (i.Project.ScrapingSetting.rotateUserAgents)
                 {
                     //Load custom agents
                     if (i.Project.ScrapingSetting.GlobalUserAgentsInfo != null)
                     {
-                        foreach (string agent in i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue)
-                            this.userAgentManager.UserAgents.Add(agent);
+                        if (i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue != null)
+                        {
+                            foreach (string agent in i.Project.ScrapingSetting.GlobalUserAgentsInfo.agentValue)
+                                this.userAgentManager.UserAgents.Add(agent);
+                        }
                     }
 
                     //Load user agents from file              
@@ -212,8 +235,11 @@ namespace IntelliScraper
         /// </summary>
         public CookieAwareWebClient getWebClientNext(string customUserAgent,Db.HttpHeadersInfoCollection httpHeaders)
         {
-            CookieAwareWebClient client = new CookieAwareWebClient();
-
+            if (lastClient == null)
+                lastClient = new CookieAwareWebClient();
+            CookieAwareWebClient client = lastClient;
+            
+            System.Net.ServicePointManager.Expect100Continue = false;
             //User Agent
             if (!string.IsNullOrEmpty(customUserAgent))
             {
@@ -222,18 +248,27 @@ namespace IntelliScraper
             else
             {
                 if(this.userAgentManager != null)
-                    client.Headers.Add("user-agent", this.userAgentManager.getNext());
+                    client.Headers.Add("user-agent", this.userAgentManager.getNext());               
             }
 
             //Global httpHeader
-            foreach (Db.HttpHeadersInfo h in i.Project.ScrapingSetting.GlobalHttpHeadersInfo)
-                client = addHttpHeaderToClient(client, h);
+            if (i.Project.ScrapingSetting != null)
+            {
+                foreach (Db.HttpHeadersInfo h in i.Project.ScrapingSetting.GlobalHttpHeadersInfo)
+                    client = addHttpHeaderToClient(client, h);
+            }
 
             //Custom httpHeader
             if (httpHeaders != null)
             {
                 foreach (Db.HttpHeadersInfo h in httpHeaders)
-                    client = addHttpHeaderToClient(client, h);
+                {
+                    if (h.value.ToLower() == "keepalive" || h.value.ToLower() == "keep-alive")
+                        client.setKeepAliveOn();
+                    else if (h.value.ToLower() == "close")
+                        client.setKeepAliveOff();
+                    else client = addHttpHeaderToClient(client, h);
+                }
             }
             
 

@@ -24,6 +24,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
         IntelliScraper.Db.download rule { get; set; }
         public ruleDownload(string id)
         {
+            inizialize(id);  
+        }
+
+        private void inizialize(string id)
+        {
             if (string.IsNullOrEmpty(id))
                 isNew = true;
             else
@@ -60,6 +65,8 @@ namespace IscraperBuilder.Controls.Rules.Rule
 
             if (this.rule != null)
             {
+
+
                 chkAutoRename.IsChecked = (bool)rule.autoRename;
                 txtAttributeKey.Text = rule.inputAttributeKey;
                 chkSetFileExt.IsChecked = (bool)rule.setFileExtension;
@@ -89,10 +96,13 @@ namespace IscraperBuilder.Controls.Rules.Rule
                     txtMTMaxThread.Text = rule.MultiThreadOption.ThreadNumbers.ToString();
                 }
 
-                if (rule.ImgConvertAction != null)
-                {
+                if (rule.ImgConvertAction == null)
+                {                  
+                    rule.ImgConvertAction = new IntelliScraper.Db.imageConvert();
+                    rule.ImgConvertAction.id = Utils.RandomUtil.RandomString(4);
                     imageConvert1.load(rule.ImgConvertAction);
                 }
+                imageConvert1.load(rule.ImgConvertAction);
             }
         }
 
@@ -131,40 +141,88 @@ namespace IscraperBuilder.Controls.Rules.Rule
         /// <summary>
         /// Save
         /// </summary>
+        Utils.PopUp p = new Utils.PopUp();
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            rule.autoRename = (bool)chkAutoRename.IsChecked;
-            rule.inputAttributeKey = txtAttributeKey.Text;
-            rule.setFileExtension = (bool)chkSetFileExt.IsChecked;
-            rule.fileExtension = txtFileExt.Text;
-            rule.customUserAgent = txtCustomUserAgent.Text;
-            rule.customHttpHeadersInfo = httpHeaderInfo1.getHeaders();
+            p.hide();
+            if (validate())
+            {
+                rule.autoRename = (bool)chkAutoRename.IsChecked;
+                rule.inputAttributeKey = txtAttributeKey.Text;
+                rule.setFileExtension = (bool)chkSetFileExt.IsChecked;
+                rule.fileExtension = txtFileExt.Text;
+                rule.customUserAgent = txtCustomUserAgent.Text;
+                rule.customHttpHeadersInfo = httpHeaderInfo1.getHeaders();
 
-            if (rule.DirSaveToFileInfo == null)
-                rule.DirSaveToFileInfo = new IntelliScraper.Db.downloadDirSaveToFileInfo();
+                if (rule.DirSaveToFileInfo == null)
+                    rule.DirSaveToFileInfo = new IntelliScraper.Db.downloadDirSaveToFileInfo();
 
-            rule.DirSaveToFileInfo.startFolder = txtStartFolder.Text;
-            rule.DirSaveToFileInfo.generateSubFolder = (bool)chkGenerateDir.IsChecked;
-            rule.DirSaveToFileInfo.SubFolderCustomName = txtSubFolderCustomName.Text;
-
-
-
-            rule.DirSaveToFileInfo.subfolderNameType = (IntelliScraper.Db.downloadDirSaveToFileInfoSubfolderNameType)Enum.Parse(typeof(IntelliScraper.Db.downloadDirSaveToFileInfoSubfolderNameType), (string)cmbFolderGenType.SelectedValue);
-
+                rule.DirSaveToFileInfo.startFolder = txtStartFolder.Text;
+                rule.DirSaveToFileInfo.generateSubFolder = (bool)chkGenerateDir.IsChecked;
+                rule.DirSaveToFileInfo.SubFolderCustomName = txtSubFolderCustomName.Text;
 
 
+                if (cmbFolderGenType.SelectedValue != null)
+                    rule.DirSaveToFileInfo.subfolderNameType = (IntelliScraper.Db.downloadDirSaveToFileInfoSubfolderNameType)Enum.Parse(typeof(IntelliScraper.Db.downloadDirSaveToFileInfoSubfolderNameType), (string)cmbFolderGenType.SelectedValue);
 
-            if (rule.MultiThreadOption == null)
-                rule.MultiThreadOption = new IntelliScraper.Db.downloadMultiThreadOption();
 
-            rule.MultiThreadOption.enableMultithread = (bool)chkMTEnable.IsChecked;
-            rule.MultiThreadOption.setThreadMaxNumbers = (bool)chkMTSetMaxThread.IsChecked;
-            rule.MultiThreadOption.ThreadNumbers = Int32.Parse(txtMTMaxThread.Text);
 
-            this.imageConvert1.save();
 
-            Factory.Instance.Save();
-            load();
+                if (rule.MultiThreadOption == null)
+                    rule.MultiThreadOption = new IntelliScraper.Db.downloadMultiThreadOption();
+
+                rule.MultiThreadOption.enableMultithread = (bool)chkMTEnable.IsChecked;
+                rule.MultiThreadOption.setThreadMaxNumbers = (bool)chkMTSetMaxThread.IsChecked;
+
+                if (!string.IsNullOrEmpty(txtMTMaxThread.Text))
+                    rule.MultiThreadOption.ThreadNumbers = Int32.Parse(txtMTMaxThread.Text);
+
+                if (this.imageConvert1 != null)
+                {
+
+                    this.imageConvert1.save();
+                    this.imageConvert1.load(rule.ImgConvertAction);
+                }
+
+                Factory.Instance.Save();
+                inizialize(this.id);
+                //load();
+            }
+            else p.showCannotSave(button2);
+        }
+
+        private bool validate()
+        {
+          
+
+            if ((bool)chkSetFileExt.IsChecked)
+            {
+                if (string.IsNullOrEmpty(txtFileExt.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtFileExt);
+                    return false;
+                }
+            }
+
+            if ((bool)chkGenerateDir.IsChecked)
+            {
+                if (string.IsNullOrEmpty(txtSubFolderCustomName.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtSubFolderCustomName);
+                    return false;
+                }
+            }
+            if ((bool)chkMTEnable.IsChecked && (bool)chkMTSetMaxThread.IsChecked)
+            {
+                if (string.IsNullOrEmpty(txtMTMaxThread.Text))
+                {
+                    Utils.PopUp.showPopUpError("mandatory", txtMTMaxThread);
+                    return false;
+                }
+            }
+            
+
+            return true;
         }
 
         /// <summary>

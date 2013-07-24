@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IscraperBuilder.Utils;
 
 namespace IscraperBuilder.Controls.Common
 {
@@ -43,8 +44,14 @@ namespace IscraperBuilder.Controls.Common
             base.OnPreviewTextInput(e);
         }
 
+        public void refresh(IntelliScraper.Db.imageConvert rule)
+        {
+            this.rule = rule;
+        }
+
         public void load(IntelliScraper.Db.imageConvert rule)
         {
+
             this.rule = rule;
 
              cmbConvertType.Items.Clear();
@@ -61,10 +68,15 @@ namespace IscraperBuilder.Controls.Common
                 txtHeight.Text = this.rule.toSizeH.ToString();
                 chkCreateThumbs.IsChecked = this.rule.createThumbs;
                 chkCreateThumbFolder.IsChecked = this.rule.createThumbFolder;
-                if(rule.Thumbs != null)
+                if (rule.Thumbs != null)
                     listViewThumbs.ItemsSource = rule.Thumbs;
 
                 cmbConvertType.SelectedValue = rule.convertType.ToString();
+            }
+            else
+            {
+                this.rule = new IntelliScraper.Db.imageConvert();
+                
             }
                  
         }
@@ -108,18 +120,21 @@ namespace IscraperBuilder.Controls.Common
 
         public void save()
         {
-            
-            if(cmbConvertType.SelectedValue != null)
-                rule.convertType = (IntelliScraper.Db.imageConvertConvertType)Enum.Parse(typeof(IntelliScraper.Db.imageConvertConvertType), (string)cmbConvertType.SelectedValue);
 
-           this.rule.convertToFormat = (bool)chkConvertFormat.IsChecked;
-           this.rule.changeSize= (bool)chkResize.IsChecked;
-           this.rule.toSizew= Int32.Parse( txtWidht.Text);
-           this.rule.toSizeH=  Int32.Parse(txtHeight.Text);
-           this.rule.createThumbs = (bool)chkCreateThumbs.IsChecked;
-           this.rule.createThumbFolder = (bool)chkCreateThumbFolder.IsChecked;
-           
-            cmbConvertType.SelectedValue = rule.convertType.ToString();
+            if (this.rule != null)
+            {
+                if (cmbConvertType.SelectedValue != null)
+                    rule.convertType = (IntelliScraper.Db.imageConvertConvertType)Enum.Parse(typeof(IntelliScraper.Db.imageConvertConvertType), (string)cmbConvertType.SelectedValue);
+
+                this.rule.convertToFormat = (bool)chkConvertFormat.IsChecked;
+                this.rule.changeSize = (bool)chkResize.IsChecked;
+                this.rule.toSizew = Int32.Parse(txtWidht.Text);
+                this.rule.toSizeH = Int32.Parse(txtHeight.Text);
+                this.rule.createThumbs = (bool)chkCreateThumbs.IsChecked;
+                this.rule.createThumbFolder = (bool)chkCreateThumbFolder.IsChecked;
+
+                cmbConvertType.SelectedValue = rule.convertType.ToString();
+            }
 
         }
     }

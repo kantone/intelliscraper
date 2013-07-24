@@ -40,7 +40,7 @@
 
             <Button Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Width="100" VerticalAlignment="Center" Content="Validate proxy file" Click="Button_Click_1" />
 
-            <Button Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="100" VerticalAlignment="Center" Content="Save" Click="Button_Click_2" />
+            <Button Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Width="100" VerticalAlignment="Center" Name="btnSave" Content="Save" Click="Button_Click_2" />
 
     </Grid>
 

@@ -53,24 +53,28 @@ namespace IscraperBuilder.Controls.Common
 
             if (this.rule != null)
             {
+                
                 this.ruleName.Text = rule.id;
                 TreeViewItem attributesT = new TreeViewItem();
                 attributesT.Header = "Attributes";
                 attributesT.IsExpanded = true;
 
-               
-                foreach (IntelliScraper.Db.xpathSingleAttributes attr in rule.attributes)
-                {
-                    TreeViewItem i = new TreeViewItem();
-                    i.Header = attr.id;
-                    attributesT.Items.Add(i);
-                    i.MouseUp += new MouseButtonEventHandler(i_MouseUp);
-                    i.ContextMenu = Resources["cMenu"] as ContextMenu;
 
+                if (rule.attributes != null)
+                {
+                    foreach (IntelliScraper.Db.xpathSingleAttributes attr in rule.attributes)
+                    {
+                        TreeViewItem i = new TreeViewItem();
+                        i.Header = attr.id;
+                        attributesT.Items.Add(i);
+                        i.MouseUp += new MouseButtonEventHandler(i_MouseUp);
+                        i.ContextMenu = Resources["cMenu"] as ContextMenu;
+
+                    }                    
                 }
                 treeView1.Items.Add(attributesT);
 
-
+                
                 if (rule.postProcessTriggerGroup != null)
                 {
                     TreeViewItem ppGr = new TreeViewItem();

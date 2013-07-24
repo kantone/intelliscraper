@@ -25,23 +25,8 @@ namespace IscraperBuilder.Controls.Rules.Rule
         public RuleLoopLink(string id)
         {
             InitializeComponent();
-
-            if (string.IsNullOrEmpty(id))
-                isNew = true;
-            else
-            {
-                isNew = false;
-                this.id = id;
-                rule = (from x in Factory.Instance.i.rules.loop_link where x.id == id select x).FirstOrDefault();
-            }
-            InitializeComponent();
-
-            load();
-            txtThreadNum.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
-            txtSECustomStart.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
-            txtSECustomEnd.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
-            txtSEEndAddInt.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
-            txtSEStartAddInt.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
+            inzialize(id);
+           
 
         }
 
@@ -59,6 +44,26 @@ namespace IscraperBuilder.Controls.Rules.Rule
             base.OnPreviewTextInput(e);
         }
 
+        private void inzialize(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                isNew = true;
+            else
+            {
+                isNew = false;
+                this.id = id;
+                rule = (from x in Factory.Instance.i.rules.loop_link where x.id == id select x).FirstOrDefault();
+            }
+            InitializeComponent();
+
+            load();
+            txtThreadNum.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
+            txtSECustomStart.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
+            txtSECustomEnd.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
+            txtSEEndAddInt.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
+            txtSEStartAddInt.PreviewTextInput += new TextCompositionEventHandler(txtThreadNum_PreviewTextInput);
+        }
+
         private void load()
         {
             tabControl2.Visibility = System.Windows.Visibility.Hidden;
@@ -66,11 +71,13 @@ namespace IscraperBuilder.Controls.Rules.Rule
             foreach (string v in Enum.GetNames(typeof(IntelliScraper.Db.loop_linkType)))
                 cmbInputType.Items.Add(v);
 
-            
+            if (rule.StartEndData == null)
+                rule.StartEndData = new IntelliScraper.Db.loop_linkStartEndData();
 
             if (rule != null)
             {
                 txtId.Text = rule.id;
+                txtInputAttributeKey.Text = rule.inputAttributeKey;                
                 cmbInputType.SelectedValue = rule.type.ToString();
                 cmbInputType_SelectionChanged(this, null);
 
@@ -85,7 +92,6 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 //Start end Data
                 if (rule.StartEndData != null)
                 {
-                    txtCustomUrl.Text = rule.StartEndData.url;
                     chkSEGetEndPage.IsChecked = rule.StartEndData.getEndPageNumberFromRule;
                     chkSEGetStartPage.IsChecked = rule.StartEndData.getStartPageNumberFromRule;
                     txtSECustomUrl.Text = rule.StartEndData.url;
@@ -139,7 +145,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 tbCsv.Visibility = System.Windows.Visibility.Hidden;
                 tbDb.Visibility = System.Windows.Visibility.Hidden;
                 tbXls.Visibility = System.Windows.Visibility.Hidden;
-                txtCustomUrl.IsEnabled = false;
+              
                 txtInputAttributeKey.IsEnabled = false;
                 tabControl2.Visibility = System.Windows.Visibility.Visible;
 
@@ -151,7 +157,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
 
                 if (t == IntelliScraper.Db.loop_linkType.customUrl)
                 {
-                    txtCustomUrl.IsEnabled = true;
+                  
                     tabControl2.Visibility = System.Windows.Visibility.Hidden;
                 }
 
@@ -344,18 +350,31 @@ namespace IscraperBuilder.Controls.Rules.Rule
 
             rule.multiThreadOption.enableMultithread = (bool)chkThreadEnabled.IsChecked;
             rule.multiThreadOption.setThreadMaxNumbers = (bool)chkThreadSetNumbers.IsChecked;
-            rule.multiThreadOption.ThreadNumbers = Int32.Parse(txtThreadNum.Text);
+
+            if (!string.IsNullOrEmpty(txtThreadNum.Text))
+             rule.multiThreadOption.ThreadNumbers = Int32.Parse(txtThreadNum.Text);
 
             rule.StartEndData.actionAttributeId_getEndPage = txtSEEndAttributeId.Text;
             rule.StartEndData.actionAttributeId_getStartPage = txtSEStartAttributeId.Text;
             rule.StartEndData.appendAfterPageNumber = txtSEAppendAfterPageNum.Text;
             rule.StartEndData.appendBeforePageNumber = txtSEAppendBeforePageNum.Text;
-            rule.StartEndData.appendEndVal = Int32.Parse(txtSEEndAddInt.Text);
-            rule.StartEndData.appendStartVal = Int32.Parse(txtSEStartAddInt.Text);
-            rule.StartEndData.end = Int32.Parse(txtSECustomEnd.Text);
+          
+            if (!string.IsNullOrEmpty(txtSEEndAddInt.Text))
+                rule.StartEndData.appendEndVal = Int32.Parse(txtSEEndAddInt.Text);
+
+            if (!string.IsNullOrEmpty(txtSEStartAddInt.Text))
+                rule.StartEndData.appendStartVal = Int32.Parse(txtSEStartAddInt.Text);
+
+            if (!string.IsNullOrEmpty(txtSECustomEnd.Text))
+                rule.StartEndData.end = Int32.Parse(txtSECustomEnd.Text);
+
             rule.StartEndData.getEndPageNumberFromRule = (bool) chkSEGetEndPage.IsChecked;
             rule.StartEndData.getStartPageNumberFromRule =(bool) chkSEGetStartPage.IsChecked;
-            rule.StartEndData.start = Int32.Parse(txtSECustomStart.Text);
+
+            if(!string.IsNullOrEmpty(txtSECustomStart.Text))
+                rule.StartEndData.start = Int32.Parse(txtSECustomStart.Text);
+
+            
             rule.StartEndData.url = txtSECustomUrl.Text;
 
             if(cmbXpathType.SelectedValue != null)
@@ -457,7 +476,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 s.postProcessTriggerGroup = new IntelliScraper.Db.xpathSinglePostProcessTriggerGroupCollection();
                 rule.xpathSingle.Add(s);
                 Factory.Instance.Save();
-
+                inzialize(this.id);
                 load();
 
                 cmbXpathRules.SelectedValue = s.id;
