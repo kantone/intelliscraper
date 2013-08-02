@@ -20,7 +20,7 @@ using System.Security.Permissions;
 namespace IntelliScraper.Scrape.Action
 {
 
-    public class ScreenShot : IScrapeAction
+    public class ScreenShot 
     {
       
         Db.screenShot d { get; set; }
@@ -30,18 +30,12 @@ namespace IntelliScraper.Scrape.Action
             this.d = d;
         }
 
-        public string getName()
-        {
-            return "ScreenShot";
-        }
 
-        public object Run(object input)
+        public string Run(string url)
         {         
-            string url = string.Empty;
+            
             if(d.inputType == Db.screenShotInputType.custom)
                 url = d.customUrl;
-            if(d.inputType == Db.screenShotInputType.fromInput)
-                url = InputUtils.getValueFromInputByType(input, d.inputAttributeKey);
 
             if (!string.IsNullOrEmpty(url))
             {
@@ -83,15 +77,6 @@ namespace IntelliScraper.Scrape.Action
             Bitmap bitmap = new Bitmap(wb.Width, wb.Height); wb.DrawToBitmap(bitmap, new Rectangle(0, 0, wb.Width, wb.Height)); wb.Dispose();  
             return bitmap; 
         }
-
     
-
-     
-
-      
     }
-
-
-
- 
 }

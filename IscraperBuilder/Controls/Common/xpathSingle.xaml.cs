@@ -20,7 +20,7 @@ namespace IscraperBuilder.Controls.Common
     /// </summary>
     public partial class xpathSingle : UserControl
     {
-        IntelliScraper.Db.xpathSingle rule { get; set; }
+        public IntelliScraper.Db.xpathSingle rule { get; set; }
        // bool isNew = false;
         string id { get; set; }
         bool isFromCollection { get; set; }
@@ -29,6 +29,9 @@ namespace IscraperBuilder.Controls.Common
         {
             InitializeComponent();
         }
+
+       
+        
 
         public void load(string id,bool isFromCollection,IntelliScraper.Db.xpathCollection coll)
         {
@@ -46,8 +49,8 @@ namespace IscraperBuilder.Controls.Common
                 }
                 else
                 {
-                    if(coll != null && coll.xpathSingle != null)
-                         this.rule  =  (from x in coll.xpathSingle where x.id == id select x).FirstOrDefault();
+                    if(coll.xpathSingle != null)
+                        this.rule = coll.xpathSingle;// (from x in coll.xpathSingle where x.id == id select x).FirstOrDefault();
                 }
             }
 
@@ -91,6 +94,8 @@ namespace IscraperBuilder.Controls.Common
                     }
                     treeView1.Items.Add(ppGr);
                 }
+
+                
                
             }
 
@@ -124,6 +129,7 @@ namespace IscraperBuilder.Controls.Common
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            
             if (!string.IsNullOrEmpty(textBox1.Text))
             {
                 if (this.rule.attributes == null)
@@ -132,6 +138,9 @@ namespace IscraperBuilder.Controls.Common
                 IntelliScraper.Db.xpathSingleAttributes attr = new IntelliScraper.Db.xpathSingleAttributes();
                 attr.id = textBox1.Text;
                 this.rule.attributes.Add(attr);
+
+                
+
                 Factory.Instance.Save();
                 load(this.id, isFromCollection, coll);
             }
@@ -166,6 +175,7 @@ namespace IscraperBuilder.Controls.Common
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
+           
             if (!string.IsNullOrEmpty(textBox2.Text))
             {
                 if (this.rule.postProcessTriggerGroup == null)
@@ -223,5 +233,6 @@ namespace IscraperBuilder.Controls.Common
                 }
             }
         }
+
     }
 }

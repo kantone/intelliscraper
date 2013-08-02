@@ -17,12 +17,12 @@
        
         
         <ContextMenu x:Key="ActionContextMenu">
-            <MenuItem Header="Add Child Action/Rule" Click="MenuItem_Click_3" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+            <MenuItem Header="Add Child Action/Rule"  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
                 <MenuItem.Icon>
                     <Image Source="img/021.png" Width="15" Height="15" Opacity="0.5" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Remove" Click="MenuItem_Click_4" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+            <MenuItem Header="Remove"  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
                 <MenuItem.Icon>
                     <Image Source="img/022.png" Width="15" Height="15" Opacity="0.5" />
                 </MenuItem.Icon>
@@ -407,21 +407,14 @@
                                 </TreeViewItem>
                             </TreeViewItem>
                             
-                            <TreeViewItem  IsExpanded="True" Name="TreeViewAction" >
-                                <TreeViewItem.Header>
-                                    <StackPanel Name="Action" Orientation="Horizontal"  MouseLeftButtonDown="sRules_MouseLeftButtonDown">
-                                        <Image Source="/img/075.png" Width="16" Height="16"  Opacity="0.7" />
-                                            <TextBlock Name="tTreeViewAction" Text="Actions/Rules" />
-                                       
-                                    </StackPanel>
-                                </TreeViewItem.Header>
+                            
+
                                 
-                            </TreeViewItem>
-                            
-                            
 
 
-                            <TreeViewItem Name="rules"  >
+
+
+                                <TreeViewItem Name="rules" IsExpanded="True" >
                                 <TreeViewItem.Header>
                                     <StackPanel Name="sRules" Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown">
                                         <Image Source="/img/051.png" Width="16" Height="16"  Opacity="0.7" />
@@ -507,7 +500,19 @@
                                     </TreeViewItem>
 
                                 </TreeViewItem>
-                               
+
+                                <TreeViewItem>
+
+
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" >
+                                            <Image Source="/img/014.png" Width="16" Height="16"  Opacity="0.7" />
+                                            <TextBlock Text="Preset Actions/Rules" />
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
+
+                                </TreeViewItem>
+
                                 <TreeViewItem>
                                     <TreeViewItem.Header>
                                         <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" >
@@ -517,6 +522,8 @@
                                     </TreeViewItem.Header>
 
                                     <TreeViewItem>
+                                        
+                                        
                                         <TreeViewItem.Header>
                                             <StackPanel Orientation="Horizontal" MouseLeftButtonDown="sRules_MouseLeftButtonDown" >
                                                 <Image Source="/img/017a.png" Width="16" Height="16"  Opacity="0.7" />
@@ -525,6 +532,8 @@
                                         </TreeViewItem.Header>
 
                                     </TreeViewItem>
+
+                                    
 
                                 </TreeViewItem>
                                 <TreeViewItem>

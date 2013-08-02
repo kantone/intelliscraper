@@ -5,9 +5,8 @@ using System.Text;
 
 namespace IntelliScraper.Plugin
 {
-    public class ExamplePlugin : Scrape.IScrapeAction
-    {    
-
+    public class ExamplePlugin 
+    {
         public object Run(object input)
         {
             try
@@ -20,11 +19,6 @@ namespace IntelliScraper.Plugin
             }
             return null;
         }
-
         
-        public string getName()
-        {
-            return "example";
-        }
     }
 }

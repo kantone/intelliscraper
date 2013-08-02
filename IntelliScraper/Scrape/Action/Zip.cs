@@ -10,7 +10,7 @@ using System.IO.Packaging;
 
 namespace IntelliScraper.Scrape.Action
 {
-    public class Zip : IScrapeAction
+    public class Zip 
     {
       
         Db.actionZip d { get; set; }
@@ -19,23 +19,16 @@ namespace IntelliScraper.Scrape.Action
             this.d = d;
         }
 
-
-        public string getName()
+        public string Run(List<string> files)
         {
-            return "Zip";
-        }
+            if (files == null)
+                files = new List<string>();
 
-        public object Run(object input)
-        {
             if (d != null)
-            {
-                List<string> files = new List<string>();
+            {                
                 if (d.inputType ==  Db.actionZipInputType.custom)
                     files.AddRange(d.file);
-                if (d.inputType == Db.actionZipInputType.fromInput)
-                     files = InputUtils.getListFromInputByType(input, d.inputAttributeKey);
-
-                
+                               
                
                 string folder = d.folderToSave;
                 if (folder.EndsWith("\\"))
@@ -52,9 +45,9 @@ namespace IntelliScraper.Scrape.Action
                 }
                 z.Save(fullZipName);
 
-                return files;
+                return fullZipName;
             }
-            return new List<string>();
+            return string.Empty;
         }
 
 

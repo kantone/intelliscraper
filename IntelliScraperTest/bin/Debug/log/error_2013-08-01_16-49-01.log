@@ -1,0 +1,3 @@
+2013-08-01 16:49:07,144 ERROR IntelliScraper - System.NullReferenceException: Riferimento a un oggetto non impostato su un'istanza di oggetto.
+   in IntelliScraper.Factory.getWebClientNext(String customUserAgent, HttpHeadersInfoCollection httpHeaders) in F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\Factory.cs:riga 300
+   in IntelliScraper.Scrape.HttpUtils.getHtml(String url, String customUserAgent, HttpHeadersInfoCollection httpHeaders) in F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\Scrape\Utils\HttpUtils.cs:riga 87

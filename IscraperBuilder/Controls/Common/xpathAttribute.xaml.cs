@@ -36,23 +36,11 @@ namespace IscraperBuilder.Controls.Common
             load();
         }
 
-        public void reloadRule(string id)
-        {
-            try
-            {
-                this.rule=(from x in this.coll.xpathSingle where x.id == this.ruleId select x).FirstOrDefault();
-                
-                //this.rule = (from x in Factory.Instance.i.rules.xpathSingle where x.id == this.ruleId select x).FirstOrDefault();
-            }
-            catch 
-            { 
-            }
-        }
+       
 
         public void load()
         {
-            if(!string.IsNullOrEmpty(this.ruleId))
-                        reloadRule(this.ruleId);
+    
 
             if (attr == null)
             {
@@ -193,6 +181,7 @@ namespace IscraperBuilder.Controls.Common
 
             this.attr.getType = (IntelliScraper.Db.xpathSingleAttributesGetType)Enum.Parse(typeof(IntelliScraper.Db.xpathSingleAttributesGetType), (string)cmbGetType.SelectedValue);
             this.attr.xpath = txtXpath.Text;
+            this.attr.id = txtId.Text;
             this.attr.attributeName = txtAttrName.Text;
 
 
@@ -206,7 +195,8 @@ namespace IscraperBuilder.Controls.Common
                     {
                         string _type = i.Substring(index).Replace("(", "").Replace(")", "").Trim();
                         string id = i.Substring(0, index).Replace("(", "").Replace(")", "").Trim();
-
+                        if (_type.Contains("regular"))
+                            _type = "regex";
                         IntelliScraper.Db.postProcess pp = new IntelliScraper.Db.postProcess();
                         pp.id = id;
                         pp.type = (IntelliScraper.Db.postProcessType)Enum.Parse(typeof(IntelliScraper.Db.postProcessType),_type);
@@ -232,13 +222,9 @@ namespace IscraperBuilder.Controls.Common
                 }
             }
 
-            if (isFromXpathCollection)
-            {
-                var val = (from x in coll.xpathSingle where x.id == rule.id select x).SingleOrDefault();
-                if (val != null)
-                    coll.xpathSingle.Remove(val);
-                coll.xpathSingle.Add(this.rule);
-            }
+        
+
+            
 
             Factory.Instance.Save();
             load();

@@ -26,9 +26,9 @@ namespace IscraperBuilder.Controls.Rules
             this.currentHeader = header;
             this.Header = header;
             this.Tag = id;
-            //this.IsExpanded = true;
+            this.IsExpanded = true;
             this.FontWeight = FontWeights.Normal;
-            this.MouseUp += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
+           // this.MouseUp += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
             this.ContextMenu = MainWindow.main.Resources["ActionContextMenu"] as ContextMenu;
         }
 
@@ -36,10 +36,10 @@ namespace IscraperBuilder.Controls.Rules
         {
             this.currentHeader = header;
             this.Header = header;
-            //this.IsExpanded = true;
+            this.IsExpanded = true;
             this.Tag = type;
             this.FontWeight = FontWeights.Normal;
-            this.MouseUp += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
+            //this.MouseUp += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
             this.ContextMenu = MainWindow.main.Resources["ActionContextMenu"] as ContextMenu;
         }
 
@@ -62,7 +62,7 @@ namespace IscraperBuilder.Controls.Rules
             panel.Margin = new System.Windows.Thickness(0, 0, 0, 0);
             panel.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             panel.VerticalAlignment = VerticalAlignment.Top;
-            panel.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
+           // panel.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(MainWindow.actionClick);
             panel.Tag = id;
 
             TextBlock t = new TextBlock();

@@ -89,8 +89,8 @@ namespace IscraperBuilder.Controls.Rules
                /* if (t == IntelliScraper.Db.intelliScraperActionType.loadHtmlFromFile)
                     frame1.Navigate(new Controls.Rules.(txtId.Text));*/
 
-                if (t == IntelliScraper.Db.intelliScraperActionType.loop_link)
-                    frame1.Navigate(new Controls.Rules.Rule.RuleLoopLink(txtId.Text));
+                if (t == IntelliScraper.Db.intelliScraperActionType.linksPageGenerator)
+                    frame1.Navigate(new Controls.Rules.Rule.RuleLinksPageGenerator(txtId.Text));
 
                 if (t == IntelliScraper.Db.intelliScraperActionType.plugin)
                     frame1.Navigate(new Controls.Rules.Rule.rulePlugin(txtId.Text));

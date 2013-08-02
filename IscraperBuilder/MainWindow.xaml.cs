@@ -49,7 +49,7 @@ namespace IscraperBuilder
             string log = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) +"\\log";
             if (!System.IO.Directory.Exists(log))
                 System.IO.Directory.CreateDirectory(log);
-
+             
         }
 
       
@@ -225,7 +225,7 @@ namespace IscraperBuilder
 
             }
         }
-
+   
         #endregion
 
         #region Window 	behavior
@@ -414,8 +414,7 @@ namespace IscraperBuilder
         /// refresh
         /// </summary>
         private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            loadActionTree();
+        {          
             loadRules();
             loadPostProcessData();
         }
@@ -447,8 +446,7 @@ namespace IscraperBuilder
                                 Factory.Instance.openedFileProject = dlg.FileName;
                                 this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
                                 this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
-                                loadActionTree();
-                                loadRules();
+                                                              loadRules();
                                 loadPostProcessData();
                             }
                             catch { MessageBox.Show("Project invalid");}
@@ -481,8 +479,7 @@ namespace IscraperBuilder
                 if (!System.IO.Directory.Exists(path))
                     System.IO.Directory.CreateDirectory(path);
 
-                IntelliScraper.Db.intelliScraper i = new IntelliScraper.Db.intelliScraper();
-                i.actions = new IntelliScraper.Db.intelliScraperActionCollection();
+                IntelliScraper.Db.intelliScraper i = new IntelliScraper.Db.intelliScraper();                
                 i.postProcess = new IntelliScraper.Db.intelliScraperPostProcess();
                 i.Project = new IntelliScraper.Db.intelliScraperProject();
                 i.Project.ProjectInfo = new IntelliScraper.Db.intelliScraperProjectProjectInfo();
@@ -500,7 +497,6 @@ namespace IscraperBuilder
                 this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
                 this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
 
-                loadActionTree();
 
                 cmbPrjts.Items.Clear();
                 foreach (string f in System.IO.Directory.GetFiles(path))
@@ -545,8 +541,7 @@ namespace IscraperBuilder
                         Factory.Instance.openedFileProject = prjName;
                         this.frame1.Source = new Uri("Controls\\Project\\PrjInfo.xaml", UriKind.Relative);
                         this.prjId.Text = Factory.Instance.i.Project.ProjectInfo.projectName;
-                        loadActionTree();
-                        prjSetting.IsSelected = true;
+                                                prjSetting.IsSelected = true;
                         loadRules();
                         loadPostProcessData();
                     }
@@ -657,22 +652,17 @@ namespace IscraperBuilder
                             this.frame1.Source = new Uri("Controls\\Tools\\Page1.xaml", UriKind.Relative);
                             break;
                         }
+                    case "Preset Actions/Rules":
+                        {
+                            setTitle("Preset Actions/Rules", "img/014.png");
+                            this.frame1.Source = new Uri("Controls\\Rules\\PresetManager.xaml", UriKind.Relative);
+                            return;
+                        }
                   
                    
                 }
 
-                if (name.Contains("Actions/Rules"))
-                {
-                    setTitle("Add Action/rule", "img/075.png");
-                    this.frame1.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-                    //this.frame1.Source = new Uri("Controls\\Rules\\ActionRules.xaml", UriKind.Relative);
-                    ActRuleTabFrame tbf = new ActRuleTabFrame();
-                    Controls.Rules.Action a = new Controls.Rules.Action(true, IntelliScraper.Db.intelliScraperActionType.none, tbf, null);
-                    tbf.setFrame1(a);
-                    this.frame1.Navigate(tbf);
-                    return;
-                }
-
+               
                 if (name.Contains("Post Process Data"))
                 {
                     setTitle("Post Process Data", "img/028.png"); 
@@ -702,214 +692,10 @@ namespace IscraperBuilder
         #endregion
         
         #region TreeView
-        /// <summary>
-        /// Load action TreeView
-        /// </summary>
-        public void loadActionTree()
-        {
-            if (Factory.Instance.i != null)
-            {
-                if (Factory.Instance.i.actions != null)
-                {
-                    List<object> rules = Factory.Instance.getAllObj();
+      
 
-
-                    List<TreeviewH> actions = new List<TreeviewH>();
-
-                    var tmp = from x in Factory.Instance.i.actions
-                              where
-                                  (x.input != null && string.IsNullOrEmpty(x.input.actionId))
-
-                              select x;
-                    // int c = tmp.Count();
-                    TreeViewAction.Items.Clear();
-                    foreach (var a in tmp)
-                    {
-                        TreeViewActionResult r = getActiontreeView(a);
-                        TreeViewAction.Items.Add(r.treeView);
-                    }
-
-                    tTreeViewAction.Text = string.Format("Actions/Rules ({0})", Factory.Instance.i.actions.Count);
-
-                }
-            }
-           
-        }
-
-        /// <summary>
-        /// Get single parent node with Childs (recursive)
-        /// </summary>
-        private TreeViewActionResult getActiontreeView(IntelliScraper.Db.intelliScraperAction a)
-        {
-            TreeviewH singleAction = new TreeviewH(a.id,string.Format("{0} ({1})",a.id,a.ruleId));
-           
-            singleAction.FontWeight = FontWeights.Bold;
-            if (string.IsNullOrEmpty(a.ruleId))
-                a.ruleId = "none";
-
-         
-            //Recursive get childs
-            var tmp2 = from x in Factory.Instance.i.actions where (x.input != null && !string.IsNullOrEmpty(x.input.actionId) && x.input.actionId == a.id) select x;
-            if (tmp2 != null)
-            {
-                foreach (var t in tmp2)
-                {
-                    IntelliScraper.Db.intelliScraperAction childAction = (from x in Factory.Instance.i.actions where x.id == t.id select x).SingleOrDefault();
-
-                    if (childAction != null)
-                    {
-                        TreeViewActionResult child = getActiontreeView(childAction);
-                        singleAction.Items.Add(child.treeView);
-                    }
-                }
-            }
-
-            TreeViewActionResult res = new TreeViewActionResult();
-            res.treeView = singleAction;
-            res.action = a;
-
-            return res;
-        }
-              
-        /// <summary>
-        /// On treeview Item Click
-        /// </summary>       
-        public static void actionClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            string _actionId = string.Empty;
-            string header = string.Empty;
           
-            if (e.Source.GetType() == typeof(TreeviewH))
-            {
-                TreeViewItem i = e.Source as TreeViewItem;
-                _actionId = (string)i.Tag;
-                header = (string)i.Header;
-            }
-            if (e.Source.GetType() == typeof(TextBlock))
-            {
-                TextBlock p = e.Source as TextBlock;
-                _actionId = (string)p.Tag;
-                header = p.Text;
-            }
-
-            if (e.Source.GetType() == typeof(Image))
-            {
-                Image p = e.Source as Image;
-                _actionId = (string)p.Tag;
-            }
-           
-            if (e.Source.GetType() == typeof(StackPanel))
-            {
-                StackPanel p = e.Source as StackPanel;
-                _actionId = (string)p.Tag;
-                
-            }
-
-            
-
-            if(!string.IsNullOrEmpty(_actionId))
-            {
-                var act = (from x in Factory.Instance.i.actions where x.id == _actionId select x).SingleOrDefault();
-
-
-                ActRuleTabFrame tbf = new ActRuleTabFrame();
-                Controls.Rules.Action a = new Controls.Rules.Action(false, act.type, tbf,act);
-
-
-                
-                tbf.setFrame1(a);
-
-                string ruleId = string.Empty;
-                int index = header.IndexOf("(");
-                if (index > 0)
-                {
-                    ruleId = header.Substring(index).Replace("(", "").Replace(")","").Trim();
-                    tbf.tabItem2.Header = ruleId;
-                }
-
-                tbf.tabItem2.Visibility = Visibility.Visible;
-                IscraperBuilder.Controls.Rules.Rule.IRule rule = Factory.Instance.LoadRuleFrame(ruleId, tbf.frame2, false, null);
-                if (rule == null)
-                    tbf.tabItem2.Visibility = Visibility.Hidden;
-
-                MainWindow.main.frame1.Navigate(tbf);
-                MainWindow.main.setTitle(string.Format("Action : {0} - Rule : {1}", _actionId,ruleId), "img/075.png");
-               
-            }
-
-        }
-
-        /// <summary>
-        /// Context menu click (on action)
-        /// </summary>
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
-        {
-            MenuItem mi = e.Source as MenuItem;
-            if (mi != null)
-            {
-                ContextMenu cm = mi.CommandParameter as ContextMenu;
-                if (cm != null)
-                {
-                    TreeviewH h = cm.PlacementTarget as TreeviewH;
-                    if (h != null)
-                    {
-                        string id = (string)h.Tag;
-                        ActionRules ar = new ActionRules();
-                        ar.setParentId(id);
-                        frame1.Navigate(ar);
-                        h.IsSelected = true;
-                    }
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// Context menu click Remove Action
-        /// </summary>
-        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
-        {
-            MenuItem mi = e.Source as MenuItem;
-            if (mi != null)
-            {
-                ContextMenu cm = mi.CommandParameter as ContextMenu;
-                if (cm != null)
-                {
-                    TreeviewH h = cm.PlacementTarget as TreeviewH;
-                    string actionId = (string)h.Header;
-                    int index = actionId.LastIndexOf('-');
-                    if(index > 0)
-                        actionId = actionId.Substring(0,index).Trim();
-                    index = actionId.LastIndexOf('(');
-                    if (index > 0)
-                        actionId = actionId.Substring(0, index).Trim();
-
-
-                    //Check if this action have child
-                    bool haveChild = (from x in Factory.Instance.i.actions where x.input != null && x.input.actionId == actionId select x).Any();
-                    if (haveChild)
-                        MessageBox.Show(string.Format("Cannot remove action {0}!\nRemove childs first!",actionId), "Delete Action - Error");
-
-                    else if (MessageBox.Show(string.Format("Delete action '{0}'", actionId), "Delete action", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        int i =0;
-                        foreach (IntelliScraper.Db.intelliScraperAction a in Factory.Instance.i.actions)
-                        {
-                            if (a.id == actionId)
-                                break;
-                            i++;
-                        }
-                        Factory.Instance.i.actions.RemoveAt(i);
-                        Factory.Instance.Save();
-                        loadActionTree();
-                        loadRules();
-                        loadPostProcessData();
-                        
-                    }
-
-                }
-            }
-        }
+        
 
         /// <summary>
         /// Remove Rule Context Menu
@@ -924,64 +710,55 @@ namespace IscraperBuilder
                 {
                     TextBox h = cm.PlacementTarget as TextBox;
                     string ruleId = (string)h.Text;
-                    
-                    //check if some action use this rule
-                    bool ruleIsUsed = (from x in Factory.Instance.i.actions where x.ruleId == ruleId select x).Any();
 
-                    if (ruleIsUsed)
-                        MessageBox.Show(string.Format("Cannot remove!\nThe rule {0} id used by an Action", ruleId), "Error");
-                    else if (MessageBox.Show(string.Format("Remove rule {0}?", ruleId), "Remove rule", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+
+
+                    foreach (object r in Factory.Instance.getAllObj())
                     {
-                       
-
-                        foreach (object r in Factory.Instance.getAllObj())
+                        string id = (string)r.GetType().GetProperty("id").GetValue(r, null);
+                        if (id == ruleId)
                         {
-                            string id = (string)r.GetType().GetProperty("id").GetValue(r, null);
-                            if (id == ruleId)
-                            {
-                                if (r.GetType() == typeof(IntelliScraper.Db.httpGet))
-                                    Factory.Instance.i.rules.httpGet.Remove((IntelliScraper.Db.httpGet)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.httpGet))
+                                Factory.Instance.i.rules.httpGet.Remove((IntelliScraper.Db.httpGet)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.httpPost))
-                                    Factory.Instance.i.rules.httpPost.Remove((IntelliScraper.Db.httpPost)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.httpPost))
+                                Factory.Instance.i.rules.httpPost.Remove((IntelliScraper.Db.httpPost)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.xpathSingle))
-                                    Factory.Instance.i.rules.xpathSingle.Remove((IntelliScraper.Db.xpathSingle)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.xpathSingle))
+                                Factory.Instance.i.rules.xpathSingle.Remove((IntelliScraper.Db.xpathSingle)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.xpathCollection))
-                                    Factory.Instance.i.rules.xpathCollection.Remove((IntelliScraper.Db.xpathCollection)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.xpathCollection))
+                                Factory.Instance.i.rules.xpathCollection.Remove((IntelliScraper.Db.xpathCollection)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.loop_link))
-                                    Factory.Instance.i.rules.loop_link.Remove((IntelliScraper.Db.loop_link)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.linksPageGeneratorType))
+                                Factory.Instance.i.rules.linksPageGenerator.Remove((IntelliScraper.Db.linksPageGenerator)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.download))
-                                    Factory.Instance.i.rules.download.Remove((IntelliScraper.Db.download)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.download))
+                                Factory.Instance.i.rules.download.Remove((IntelliScraper.Db.download)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.upload))
-                                    Factory.Instance.i.rules.upload.Remove((IntelliScraper.Db.upload)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.upload))
+                                Factory.Instance.i.rules.upload.Remove((IntelliScraper.Db.upload)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.ftpPut))
-                                    Factory.Instance.i.rules.ftpPut.Remove((IntelliScraper.Db.ftpPut)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.ftpPut))
+                                Factory.Instance.i.rules.ftpPut.Remove((IntelliScraper.Db.ftpPut)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.actionZip))
-                                    Factory.Instance.i.rules.actionZip.Remove((IntelliScraper.Db.actionZip)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.actionZip))
+                                Factory.Instance.i.rules.actionZip.Remove((IntelliScraper.Db.actionZip)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.save))
-                                    Factory.Instance.i.rules.save.Remove((IntelliScraper.Db.save)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.save))
+                                Factory.Instance.i.rules.save.Remove((IntelliScraper.Db.save)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.screenShot))
-                                    Factory.Instance.i.rules.screenShot.Remove((IntelliScraper.Db.screenShot)r);
+                            if (r.GetType() == typeof(IntelliScraper.Db.screenShot))
+                                Factory.Instance.i.rules.screenShot.Remove((IntelliScraper.Db.screenShot)r);
 
-                                if (r.GetType() == typeof(IntelliScraper.Db.plugin))
-                                    Factory.Instance.i.rules.plugin.Remove((IntelliScraper.Db.plugin)r);
-                            }
+                            if (r.GetType() == typeof(IntelliScraper.Db.plugin))
+                                Factory.Instance.i.rules.plugin.Remove((IntelliScraper.Db.plugin)r);
                         }
-                        Factory.Instance.Save();
-                        loadActionTree();
-                        loadRules();
-                        loadPostProcessData();
-                       
                     }
+                    Factory.Instance.Save();
+                    loadRules();
+                    loadPostProcessData();
+
                 }
             }
         }
@@ -1052,9 +829,9 @@ namespace IscraperBuilder
                             break;
                         }
 
-                        if (r.GetType() == typeof(IntelliScraper.Db.loop_link))
+                        if (r.GetType() == typeof(IntelliScraper.Db.linksPageGenerator))
                         {
-                            var rule = (from x in Factory.Instance.i.rules.loop_link where x.id == (string)h.Tag select x).FirstOrDefault();
+                            var rule = (from x in Factory.Instance.i.rules.linksPageGenerator where x.id == (string)h.Tag select x).FirstOrDefault();
                             rule.id = h.Text;
                             changed = true;
                             break;
@@ -1121,15 +898,9 @@ namespace IscraperBuilder
                 }
 
                 if (changed)
-                {
-                    var actions = from x in Factory.Instance.i.actions where x.ruleId == (string)h.Tag select x;
-                    foreach (var a in actions)
-                    {
-                        a.ruleId = h.Text;
-                    }
+                {                   
 
-                    Factory.Instance.Save();
-                    loadActionTree();
+                    Factory.Instance.Save();                    
                     loadRules();
                     loadPostProcessData();
                 }
@@ -1195,7 +966,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.replace.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;
@@ -1210,7 +981,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.append.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;
@@ -1225,7 +996,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.htmlEncodeDecode.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;
@@ -1240,7 +1011,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.regularExpression.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;
@@ -1255,7 +1026,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.startEndWith.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;
@@ -1270,7 +1041,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.substring.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;
@@ -1285,7 +1056,7 @@ namespace IscraperBuilder
                         {
                             Factory.Instance.i.postProcess.trim.Remove(r);
                             Factory.Instance.Save();
-                            loadActionTree();
+                            
                             loadRules();
                             loadPostProcessData();
                             break;

@@ -28,6 +28,7 @@ namespace IntelliScraper.Scrape
     {
         public int currentProxyRow { get; set; }
         public List<ProxyModel> ProxyList { get; set; }
+        public ProxyModel current { get; set; }
         public ProxyManager(List<ProxyModel> ProxyList)
         {
             currentProxyRow = 0;
@@ -44,6 +45,7 @@ namespace IntelliScraper.Scrape
                     if (currentProxyRow < this.ProxyList.Count)
                     {
                         ProxyModel res = ProxyList[currentProxyRow];
+                        current = res;
                         currentProxyRow++;
                         return res;
                     }

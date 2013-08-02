@@ -1,0 +1,30 @@
+﻿<#@ template language="C#" hostSpecific="true" debug="true"  #>
+<#@ assembly name="$(SolutionDir)\IntelliScraperTest\bin\debug\IntelliScraper.dll"  #>
+<#@ assembly name="$(ProjectDir)bin\Debug\IntelliScraperTest.exe" #>
+<#@ import namespace="IntelliScraper" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using IntelliScraper;
+
+namespace IntelliScraperTest
+{
+	public class Rules
+	{
+		<# 
+		 string prj = @"F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\projects\VacationHomes.xml";
+         IntelliScraper.Factory.Instance.Load(prj, false, "");						
+
+		foreach (string r in IntelliScraperTest.CodeGen.getRuleIds())
+        {
+		string name = "RULE_" + r;
+		name = name.Replace(" ","");#>
+	public const string <#=name #> = "<#=r #>";
+     <#}
+
+		 #>
+}
+}
+
+ 

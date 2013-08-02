@@ -44,11 +44,8 @@ namespace IscraperBuilder.Controls.Rules.Rule
 
         private void load()
         {
-            cmbInputType.Items.Clear();
-
-            foreach (string s in Enum.GetNames(typeof(IntelliScraper.Db.ftpPutInputType)))
-                cmbInputType.Items.Add(s);
-
+         
+         
            
             cmbFtpRuleId.Items.Clear();
             if (Factory.Instance.i.Project.FtpSetting != null)
@@ -70,9 +67,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
                         cmbFtpRuleId.SelectedValue = ftp.id;
                     }
                 }
-                cmbInputType.SelectedValue = rule.inputType.ToString();
-                cmbInputType_SelectionChanged(this, null);
-
+               
 
                 txtId.Text = rule.id;
                 txtInputAttrKey.Text = rule.inputAttributeKey;
@@ -146,9 +141,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
 
             rule.inputAttributeKey = txtInputAttrKey.Text;
 
-            if (cmbInputType.SelectedValue != null)
-                rule.inputType = (IntelliScraper.Db.ftpPutInputType)Enum.Parse(typeof(IntelliScraper.Db.ftpPutInputType), (string)cmbInputType.SelectedValue);
-           
+      
             rule.file = new string[listViewxFiles.Items.Count];
             for (int i = 0; i < listViewxFiles.Items.Count; i++)
                 rule.file[i] = (string)listViewxFiles.Items[i];
@@ -158,21 +151,6 @@ namespace IscraperBuilder.Controls.Rules.Rule
             load();
         }
 
-        private void cmbInputType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbInputType.SelectedValue != null)
-            {
-                IntelliScraper.Db.ftpPutInputType t = (IntelliScraper.Db.ftpPutInputType)Enum.Parse(typeof(IntelliScraper.Db.ftpPutInputType), (string)cmbInputType.SelectedValue);
-                if (t == IntelliScraper.Db.ftpPutInputType.customFiles)
-                {
-                    txtInputAttrKey.IsEnabled = false;
-                }
-                if (t == IntelliScraper.Db.ftpPutInputType.fromInput)
-                {
-                    txtInputAttrKey.IsEnabled = true;
-                }
-
-            }
-        }
+       
     }
 }

@@ -8,30 +8,18 @@
 	Title="xpathCollection" xmlns:my="clr-namespace:IscraperBuilder.Controls.Common">
 
     <Grid >
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="66,21,0,0" Name="comboBox1" VerticalAlignment="Top" Width="180" SelectionChanged="comboBox1_SelectionChanged" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="16,0,0,0" Opacity="0.7" FontWeight="Bold" Name="txtId" Text="ID" VerticalAlignment="Top" />
-        <Label Content="Edit" Height="28" HorizontalAlignment="Left" Margin="12,16,0,0" Name="label1" VerticalAlignment="Top" Width="48" />
-        <Button Content="Add" Height="23" HorizontalAlignment="Left" Margin="540,21,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
-        <Label Content="Or add new rule" Height="28" HorizontalAlignment="Left" Margin="252,16,0,0" Name="label2" VerticalAlignment="Top" Width="96" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="354,21,0,0" Name="txtAddId" VerticalAlignment="Top" Width="180" />
+        <Label Content="Xpath" Height="28" HorizontalAlignment="Left" Name="lbId" Margin="12,6,0,0" Opacity="0.5"  VerticalAlignment="Top" Width="48" />
+
+        <Label Content="Xpath" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0"  VerticalAlignment="Top" Width="48" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="66,36,0,0" Name="txtXpath" VerticalAlignment="Top" Width="380" />
+        <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="452,36,0,0" Name="btnSave" VerticalAlignment="Top" Width="75" Click="btnSave_Click" />
+
 
         <StackPanel> 
            
-            <Expander IsExpanded="False" Header="Xpath" Margin="15,47,-16,296" HorizontalAlignment="Left" >
-                <Grid Height="114" Width="653">
-
-                    <Label Content="Edit" Height="28" HorizontalAlignment="Left" Margin="12,0,0,0" Name="label3a" VerticalAlignment="Top" Width="48" />
-                    <Label Content="Add" Height="28" HorizontalAlignment="Left" Margin="12,59,0,0" Name="label3" VerticalAlignment="Top" Width="48" />
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="66,35,0,0" Name="txtXpath" VerticalAlignment="Top" Width="468" />
-                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="66,6,0,0" Name="cmbXpath" VerticalAlignment="Top" Width="468" SelectionChanged="cmbXpath_SelectionChanged" />
-                    <Button Content="Save" Height="23" HorizontalAlignment="Left" Margin="540,34,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="66,64,0,0" Name="txtXpathNew" VerticalAlignment="Top" Width="468" />
-                    <Button Content="Add new Xpath" Height="23" HorizontalAlignment="Left" Margin="540,64,0,0" Name="button3" VerticalAlignment="Top" Width="94" Click="button3_Click" />
-                    <Button Content="Delete selected" Height="23" HorizontalAlignment="Right" Margin="0,6,19,0" Name="button4" VerticalAlignment="Top" Width="94" Click="button4_Click" />
-                </Grid>
-            </Expander>
+              
            
-            <Expander Name="exp2" IsExpanded="False" Header="Xpath Rule setting" Margin="15,-290,-16,296" Height="auto" HorizontalAlignment="Left">
+            <Expander Name="exp2" IsExpanded="False" Header="Xpath Rule setting" Margin="0,80,0,296" Height="475" >
                 <Grid>
                     <my:xpathSingle HorizontalAlignment="Left" Margin="1,0,0,0" x:Name="xpathSingle1" VerticalAlignment="Top" Height="455" Width="734" />
                 </Grid>

@@ -1,0 +1,14 @@
+﻿<Window x:Class="IscraperBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="550" Width="825">
+    <Grid>
+        <WebBrowser Margin="0,80,0,80" HorizontalAlignment="Stretch"  Name="webBrowser1" VerticalAlignment="Stretch" MouseUp="webBrowser1_MouseUp" Navigating="webBrowser1_Navigating" LoadCompleted="webBrowser1_LoadCompleted" Loaded="webBrowser1_Loaded" PreviewMouseUp="webBrowser1_PreviewMouseUp" MouseEnter="webBrowser1_MouseEnter" />
+        <StackPanel  HorizontalAlignment="Stretch" Margin="0,428,0,0" Name="stackPanel1" VerticalAlignment="Stretch" >
+            <ScrollViewer>
+                <RichTextBox  Name="richTextBox1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="84" />
+
+            </ScrollViewer>
+         </StackPanel>
+    </Grid>
+</Window>

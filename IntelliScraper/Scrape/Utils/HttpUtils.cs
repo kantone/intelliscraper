@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Threading;
 
 namespace IntelliScraper.Scrape
 {
@@ -13,6 +14,7 @@ namespace IntelliScraper.Scrape
     {
         public string currentHtml { get; set; }
         bool asyncEnd { get; set; }
+        object _locker { get; set; }
 
         /// <summary>
         /// Get html Wrapper
@@ -41,10 +43,11 @@ namespace IntelliScraper.Scrape
 
                 //Stream s = 
                 asyncEnd = false;
-                client.OpenReadCompleted += new OpenReadCompletedEventHandler(client_OpenReadCompleted);
+                client.OpenReadCompleted += new OpenReadCompletedEventHandler(client_OpenReadCompleted);               
                 client.OpenReadAsync(new Uri(url));
                 while (asyncEnd == false)
                     System.Threading.Thread.Sleep(10);
+              
                 return this.currentHtml;
 
             }
@@ -62,12 +65,14 @@ namespace IntelliScraper.Scrape
         /// </summary>
         void client_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
+
             Stream s = (Stream)e.Result;
             //Stream s = Factory.Instance.client.OpenRead(url); ;
             StreamReader sr = new StreamReader(s);
             this.currentHtml = sr.ReadToEnd();
             s.Close();
             asyncEnd = true;
+
         }
 
         /// <summary>

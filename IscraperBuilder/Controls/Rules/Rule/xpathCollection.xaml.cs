@@ -32,30 +32,14 @@ namespace IscraperBuilder.Controls.Rules.Rule
         public void load()
         {
 
-            txtId.Text = id;
+            lbId.Content = id;
             if (Factory.Instance.i.rules.xpathCollection != null)
                 this.rule = (from x in Factory.Instance.i.rules.xpathCollection where x.id == id select x).FirstOrDefault();
 
             if (this.rule != null)
             {
-                if (this.rule.xpath == null)
-                    this.rule.xpath = new string[0];
-
-                cmbXpath.Items.Clear();
-                foreach (string xpath in this.rule.xpath)                
-                    cmbXpath.Items.Add(xpath);
-
-                if (cmbXpath.Items.Count >= 0)
-                    cmbXpath.SelectedIndex = 0;
-
-                comboBox1.Items.Clear();
-                if (rule.xpathSingle == null)
-                    rule.xpathSingle = new IntelliScraper.Db.xpathSingleCollection();
-                foreach (var single in rule.xpathSingle)                
-                    comboBox1.Items.Add(single.id);
-
-                if (comboBox1.Items.Count >= 0)
-                    comboBox1.SelectedIndex = 0;
+                txtXpath.Text = rule.xpath;
+                xpathSingle1.load(rule.id, true, new IntelliScraper.Db.xpathCollection());
                 
             }
         }
@@ -65,93 +49,20 @@ namespace IscraperBuilder.Controls.Rules.Rule
             throw new NotImplementedException();
         }
 
-        private void cmbXpath_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(cmbXpath.SelectedValue != null)
-                txtXpath.Text = (string) cmbXpath.SelectedValue;
-        }
 
-        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (comboBox1.SelectedValue != null)
-            {
-                Controls.Common.xpathSingle s = new Common.xpathSingle();
-
-                this.xpathSingle1.load((string)comboBox1.SelectedValue,true,rule);
-                exp2.IsExpanded = true;
-            }
-        }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            if (txtAddId.Text != string.Empty)
-            {
-                IntelliScraper.Db.xpathSingle s = new IntelliScraper.Db.xpathSingle();
-                s.id = txtAddId.Text;
-                rule.xpathSingle.Add(s);
-                Factory.Instance.Save();
-                load();
-                comboBox1.SelectedValue = txtAddId.Text;
-            }
-            else MessageBox.Show("Please insert id!", "Error");
-        }
+       
 
         /// <summary>
-        /// Add new Xpath
+        /// Save
         /// </summary>
-        private void button3_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (txtXpathNew.Text != string.Empty)
-            {
-                List<string> l = this.rule.xpath.ToList();
-                l.Add(txtXpathNew.Text);
-                this.rule.xpath = l.ToArray();
-                Factory.Instance.Save();
-                load();
-                cmbXpath.SelectedValue = txtXpathNew.Text;
-                txtXpath.Text = txtXpathNew.Text;                     
-            }
-            else MessageBox.Show("Please insert xpath value!", "Error");
+            rule.xpath = txtXpath.Text;
+            rule.xpathSingle = xpathSingle1.rule;
+            Factory.Instance.Save();
         }
+                
 
-
-        /// <summary>
-        /// Save xpath
-        /// </summary>
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            if (txtXpath.Text != string.Empty)
-            {
-                List<string> xp = new List<string>();
-                string oldXpathVal = (string) cmbXpath.SelectedValue;
-                foreach (string s in rule.xpath)
-                {
-                    if(s == oldXpathVal)
-                        xp.Add(txtXpath.Text);
-                    else xp.Add(s);
-                }
-
-                rule.xpath = xp.ToArray();
-                Factory.Instance.Save();
-                load();
-                cmbXpath.SelectedValue = txtXpath.Text;
-                txtXpath.Text = txtXpath.Text;
-            }
-        }
-
-        /// <summary>
-        /// Delete selected
-        /// </summary>
-        private void button4_Click(object sender, RoutedEventArgs e)
-        {
-            if (cmbXpath.SelectedIndex >= 0 && this.rule.xpath != null)
-            {
-                List<string> dt = new List<string>(this.rule.xpath);
-                dt.RemoveAt(cmbXpath.SelectedIndex);
-                this.rule.xpath = dt.ToArray();
-                Factory.Instance.Save();
-                load();
-            }
-        }
+       
     }
 }

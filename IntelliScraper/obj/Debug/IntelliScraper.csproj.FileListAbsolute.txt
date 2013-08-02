@@ -5,12 +5,9 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\Int
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\IntelliScraper\bin\Debug\BlueToque.Serializable.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\IntelliScraper\bin\Debug\BlueToque.Serializable.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\IntelliScraper\obj\Debug\IntelliScraper.exe
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.exe.config
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.exe
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\HtmlAgilityPack.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\log4net.dll
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.exe
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Ionic.Zip.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\EPPlus.dll
@@ -21,3 +18,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Newtonsoft.Json.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\Newtonsoft.Json.xml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.csprojResolveAssemblyReference.cache
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.dll.config
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\bin\Debug\IntelliScraper.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\obj\Debug\IntelliScraper.dll

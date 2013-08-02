@@ -118,50 +118,17 @@ namespace IntelliScraper
         /// <summary>
         /// Load some data and Run scraping
         /// </summary>
-        public void Run(string xmlInput,string xmlDecriptPass)
-        {
-            string uncrypt = IntelliScraper.Crypto.DecryptStringAES(System.IO.File.ReadAllText(xmlInput), xmlDecriptPass);
-            this.i = Xml.Serialization.SerializeFromString(uncrypt);
-            this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
-            this.isRunning = true;
-            this.Run();
-            this.isRunning = false;
-        }
-
-        /// <summary>
-        /// Load some data and Run scraping
-        /// </summary>
-        public void Run(string xmlInput)
-        {
-            this.i = Xml.Serialization.Serialize(xmlInput);
-            this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
-            this.isRunning = true;
-            this.Run();
-            this.isRunning = false;
-        }
-
-        /// <summary>
-        /// Load some data and Run scraping
-        /// </summary>
-        public void Run(Db.intelliScraper i)
-        {
-            this.i = i;
-            this.iInfo("Load scraping rules intelliscraper object");
-            this.isRunning = true;
-            this.Run();
-            this.isRunning = false;
-        }
-   
-        /// <summary>
-        /// Load some data and Run scraping
-        /// </summary>
-        private void Run()
+        public void Load(string xmlInput, bool crypted, string xmlDecriptPass)
         {
             try
             {
-                //this.i = Xml.Serialization.Serialize(xmlInput);
-                //this.iInfo(string.Format("Load scraping rules from {0}", xmlInput));
-                
+                if (crypted)
+                {
+                    string uncrypt = IntelliScraper.Crypto.DecryptStringAES(System.IO.File.ReadAllText(xmlInput), xmlDecriptPass);
+                    this.i = Xml.Serialization.SerializeFromString(uncrypt);
+                }
+                else  this.i = Xml.Serialization.Serialize(xmlInput);
+
 
                 if (i.Project.ProjectInfo.showInitialMessage)
                 {
@@ -180,16 +147,16 @@ namespace IntelliScraper
                     }
                     else
                     {
-                         this.log.Info(string.Format("Proxy support enabled, load {0} custom proxies", i.Project.ProxyInfo.proxies.Count.ToString()));
+                        this.log.Info(string.Format("Proxy support enabled, load {0} custom proxies", i.Project.ProxyInfo.proxies.Count.ToString()));
                         List<Scrape.ProxyModel> proxies = new List<Scrape.ProxyModel>();
-                        foreach(Db.intelliScraperProjectProxyInfoProxies proxy in i.Project.ProxyInfo.proxies)
+                        foreach (Db.intelliScraperProjectProxyInfoProxies proxy in i.Project.ProxyInfo.proxies)
                         {
-                           proxies.Add(new Scrape.ProxyModel(proxy.ip,proxy.port.ToString(),proxy.userName,proxy.password,proxy.domain));
+                            proxies.Add(new Scrape.ProxyModel(proxy.ip, proxy.port.ToString(), proxy.userName, proxy.password, proxy.domain));
                         }
                         this.proxyManager = new IntelliScraper.Scrape.ProxyManager(proxies);
                     }
                 }
-                
+
                 //Load user agent
                 if (this.userAgentManager == null)
                     this.userAgentManager = new Scrape.UserAgentManager(new List<string>());
@@ -220,16 +187,15 @@ namespace IntelliScraper
                     }
                 }
 
-                Scrape.Scraper s = new  Scrape.Scraper();
-                s.Run(i);
-
             }
             catch (Exception ex)
             {
                 this.log.Error(ex);
             }
+            
+            
         }
-        
+
         /// <summary>
         /// Set next proxy
         /// </summary>
@@ -237,7 +203,8 @@ namespace IntelliScraper
         {
             if (lastClient == null)
                 lastClient = new CookieAwareWebClient();
-            CookieAwareWebClient client = lastClient;
+            CookieAwareWebClient client = new CookieAwareWebClient();
+            lastClient.CopyValues(client); ;
             
             System.Net.ServicePointManager.Expect100Continue = false;
             //User Agent
@@ -263,11 +230,14 @@ namespace IntelliScraper
             {
                 foreach (Db.HttpHeadersInfo h in httpHeaders)
                 {
-                    if (h.value.ToLower() == "keepalive" || h.value.ToLower() == "keep-alive")
-                        client.setKeepAliveOn();
-                    else if (h.value.ToLower() == "close")
-                        client.setKeepAliveOff();
-                    else client = addHttpHeaderToClient(client, h);
+                    if (h != null && !string.IsNullOrEmpty(h.value))
+                    {
+                        if (h.value.ToLower() == "keepalive" || h.value.ToLower() == "keep-alive")
+                            client.setKeepAliveOn();
+                        else if (h.value.ToLower() == "close")
+                            client.setKeepAliveOff();
+                        else client = addHttpHeaderToClient(client, h);
+                    }
                 }
             }
             

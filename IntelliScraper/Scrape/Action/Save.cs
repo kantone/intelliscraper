@@ -7,77 +7,64 @@ using System.IO;
 
 namespace IntelliScraper.Scrape.Action
 {
-    public class Save : IScrapeAction
+    public class Save
     {
         Db.save save { get; set; }
-        List<Model.ActionResult> results { get; set; }
+        Db.intelliScraperProjectStoreInfo storeInfo { get; set; }
         int csvExistRowPosition { get; set; }
         string csvCurrentRowValue { get; set; }
         bool cleared = false;
         //bool isLast = false;
         int lastRow = 1;
         int existRowIndex = 0;
-        public Save(Db.save save,List<Model.ActionResult> results)
+        public Save(Db.save save)
         {
             this.csvExistRowPosition = -1;
             this.save = save;
-            this.results = results;
-        }
-
-        public string getName()
-        {
-            return "Save";
+            this.storeInfo = (from x in Factory.Instance.i.Project.StoreInfo where x.Id == save.storeId select x).FirstOrDefault();
         }
 
         /// <summary>
-        /// Save don't use any input value, but fetch data from List<Model.ActionResult> results
+        /// Run save from input data
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public object Run(object input)
+        public List<KeyValuePair<string, object>> Run(List<List<KeyValuePair<string, object>>> data)
         {
             List<KeyValuePair<string, object>> cols = new List<KeyValuePair<string, object>>();
-            Db.intelliScraperProjectStoreInfo storeInfo = (from x in Factory.Instance.i.Project.StoreInfo where x.Id == save.storeId select x).FirstOrDefault();
-
-            //Insert multiple values from input
-            if (save.saveAllFromInput)
-            {
-               
-                List<List<KeyValuePair<string, object>>> data = (List<List<KeyValuePair<string, object>>>)input;
-                int i = 0;
-                foreach (List<KeyValuePair<string, object>> mvals in data)
-                {
-                    cols = new List<KeyValuePair<string, object>>();
-                   List<KeyValuePair<string, object>> valsx = (List<KeyValuePair<string, object>>)mvals;
-                    foreach (Db.saveMap map in save.map)
-                    {
-                        KeyValuePair<string, object> kval = (from x in valsx where x.Key == map.attributeId select x).FirstOrDefault();
-                        cols.Add(new KeyValuePair<string, object>(map.mapColName, (string)kval.Value));
-                    }
-
-                   /* if (i == data.Count-1)
-                        isLast = true;*/
-
-                    singleSaveWrapper(cols, storeInfo);
-                   
-                    i++;
-                }
-            }
-            //Insert single value from actionResult (by search result)
-            else
+            int i = 0;
+            foreach (List<KeyValuePair<string, object>> mvals in data)
             {
                 cols = new List<KeyValuePair<string, object>>();
+                List<KeyValuePair<string, object>> valsx = (List<KeyValuePair<string, object>>)mvals;
                 foreach (Db.saveMap map in save.map)
                 {
-                    string val = getMapValue(map);
-                    cols.Add(new KeyValuePair<string, object>(map.mapColName, val));
+                    KeyValuePair<string, object> kval = (from x in valsx where x.Key == map.attributeId select x).FirstOrDefault();
+                    cols.Add(new KeyValuePair<string, object>(map.mapColName, (string)kval.Value));
                 }
                 singleSaveWrapper(cols, storeInfo);
+
+                i++;
             }
-            
             return cols;
         }
 
+        /// <summary>
+        /// Run save from input data
+        /// </summary>
+        public List<KeyValuePair<string, object>> Run(List<KeyValuePair<string, object>> input)
+        {
+           
+            List<KeyValuePair<string, object>> cols = new List<KeyValuePair<string, object>>();
+            List<KeyValuePair<string, object>> valsx = (List<KeyValuePair<string, object>>)input;
+            foreach (Db.saveMap map in save.map)
+            {
+                KeyValuePair<string, object> kval = (from x in valsx where x.Key == map.attributeId select x).FirstOrDefault();
+                cols.Add(new KeyValuePair<string, object>(map.mapColName, (string)kval.Value));
+            }
+            singleSaveWrapper(cols, storeInfo);
+            return cols;
+        }
+                   
+        
 
         /// <summary>
         /// Run save by store Configuration
@@ -405,33 +392,30 @@ namespace IntelliScraper.Scrape.Action
             return exist;
         }
         
-        /// <summary>
-        /// Find value by mapping
-        /// </summary>
-        private string getMapValue(Db.saveMap map)
+       /*
+        private string getMapValue(Db.saveMap map,object m)
         {
-            Model.ActionResult m = (from x in results where x.action.id == map.actionId select x).FirstOrDefault();
             string value = string.Empty;
             if (m != null)
             {               
                 if (!map.inputIsXpathCollection)
                 {
                     //Direct                           
-                    if (m.resulType == typeof(string))
-                        value = (string)m.result;
+                    if (m.GetType() == typeof(string))
+                        value = (string)m;
 
                     //by attribute
-                    if (m.resulType == typeof(List<KeyValuePair<string, object>>))
+                    if (m.GetType() == typeof(List<KeyValuePair<string, object>>))
                     {
-                        List<KeyValuePair<string, object>> vals = (List<KeyValuePair<string, object>>)m.result;
+                        List<KeyValuePair<string, object>> vals = (List<KeyValuePair<string, object>>)m;
                         KeyValuePair<string, object> kval = (from x in vals where x.Key == map.attributeId select x).FirstOrDefault();
                         value = (string)kval.Value;
                     }
 
                     //by attribute first
-                    if (m.resulType == typeof(List<List<KeyValuePair<string, object>>>))
+                    if (m.GetType() == typeof(List<List<KeyValuePair<string, object>>>))
                     {
-                        List<List<KeyValuePair<string, object>>> vals = (List<List<KeyValuePair<string, object>>>)m.result;
+                        List<List<KeyValuePair<string, object>>> vals = (List<List<KeyValuePair<string, object>>>)m;
                         foreach (List<KeyValuePair<string, object>> k in vals)
                         {
                             KeyValuePair<string, object> kval = (from x in k where x.Key == map.attributeId select x).FirstOrDefault();
@@ -442,18 +426,15 @@ namespace IntelliScraper.Scrape.Action
                 }
                 else
                 {
-                    //Find action
-                    Db.intelliScraperAction action = (from x in Factory.Instance.i.actions where x.id == map.actionId select x).FirstOrDefault();
                     //find by result position                                
-                    List<List<KeyValuePair<string, object>>> mvals = (List<List<KeyValuePair<string, object>>>)m.result;
+                    List<List<KeyValuePair<string, object>>> mvals = (List<List<KeyValuePair<string, object>>>)m;
                     List<KeyValuePair<string, object>> valsx = (List<KeyValuePair<string, object>>)mvals[map.xpathCollectionPosition];
                     KeyValuePair<string, object> kval = (from x in valsx where x.Key == map.attributeId select x).FirstOrDefault();
                     value = (string)kval.Value;
                 }
-
             }
             return value;
         }
-
+        */
     }
 }

@@ -8,22 +8,22 @@ using System.Text.RegularExpressions;
 
 namespace IntelliScraper.Scrape.Action
 {
-    public class Download : IScrapeAction
-    {
-       
-        public string getName()
-        {
-            return "Download";
-        }
+    public class Download 
+    {       
+        
         Db.download d { get; set; }
         public Download(Db.download d)
         {
             this.d = d;
         }
 
-        public object Run(object input)
+        /// <summary>
+        /// Execute Download Action
+        /// </summary>
+        /// <param name="files">files to download</param>
+        /// <returns>lis of files downloaded</returns>
+        public List<string> Run(List<string> files)
         {
-            List<string> files = getDownloadFiles(input);
             List<string> downloadedFiles = new List<string>();
             bool runNonMultitrhead = true;
             if (d.MultiThreadOption != null)
@@ -259,49 +259,7 @@ namespace IntelliScraper.Scrape.Action
              return fileNameFullPath;
 
         }
-
-     
-
-        /// <summary>
-        /// Get file to downlaod
-        /// </summary>
-        public List<string> getDownloadFiles(object input)
-        {
-            List<string> files = new List<string>();
-          
-            //single
-            if (input.GetType() == typeof(string))
-                files.Add((string)input);
-
-            if (input.GetType() == typeof(Model.LoopLinkResult))
-            {
-                Model.LoopLinkResult m = (Model.LoopLinkResult)input;
-                files.AddRange(getFiles(m.xpathResultSingle));
-                files.AddRange(getFiles(m.xpathResultCollection));
-            }
-
-            if (input.GetType() == typeof(List<Model.LoopLinkResult>))
-            {
-                List<Model.LoopLinkResult> mm = (List<Model.LoopLinkResult>)input;
-                foreach (Model.LoopLinkResult m in mm)
-                {
-                    files.AddRange(getFiles(m.xpathResultSingle));
-                    files.AddRange(getFiles(m.xpathResultCollection));
-                }
-            }
-
-
-            //single by          
-            if (input.GetType() == typeof(List<KeyValuePair<string, object>>))                         
-                files.AddRange(getFiles((List<KeyValuePair<string, object>>)input));               
-            
-
-            //multiple by key
-            if (input.GetType() == typeof(List<List<KeyValuePair<string, object>>>))            
-                files.AddRange(getFiles(((List<List<KeyValuePair<string, object>>>)input)));   
-            
-            return files;
-        }
+             
 
         /// <summary>
         /// Get files from (List<KeyValuePair<string, object>> 

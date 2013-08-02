@@ -16,9 +16,6 @@
                     <ComboBox Height="23" HorizontalAlignment="Left" Margin="92,15,0,0" Name="cmbStoreId" VerticalAlignment="Top" Width="219" SelectionChanged="cmbStoreId_SelectionChanged" />
                     <Label Content="Table name" Height="28" HorizontalAlignment="Left" Margin="15,49,0,0" Name="label2" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="92,49,0,0" Name="txtTableName" VerticalAlignment="Top" Width="219" />
-                    <CheckBox Content="Save all from input?"  Height="16" HorizontalAlignment="Left" Margin="92,87,0,0" Name="chkSaveAllFromInput" VerticalAlignment="Top" />
-                    <TextBlock Height="24" HorizontalAlignment="Left" Opacity="0.7" Margin="111,109,0,0" Name="textBlock1" TextWrapping="Wrap" Text="Save all from input 'checked' : insert/update record from all input data by mapping definition" VerticalAlignment="Top" />
-                    <TextBlock Height="24" HorizontalAlignment="Left" Margin="111,131,0,0" Name="textBlock2" Opacity="0.7" Text="Save all from input 'unchecked' : insert/update record searching values by mapping definition" TextWrapping="Wrap" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
             <TabItem Header="Mapping" Name="tabItem2">
@@ -36,19 +33,19 @@
                             <DataGridTextColumn Header="xpath collection position"  Binding="{Binding Path=xpathCollectionPosition}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Label Content="Action id" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label6" VerticalAlignment="Top" Grid.ColumnSpan="2" />
-                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="163,6,0,0" Name="cmbMapActionId" VerticalAlignment="Top" Width="162" Grid.Column="1" SelectionChanged="cmbMapActionId_SelectionChanged" />
-                    <Label Content="Map column name by store id" Height="28" HorizontalAlignment="Left" Margin="6,31,0,0" Name="label7" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="176" />
-                    <ComboBox Height="23" ToolTip="Selection avaiable only for excel or csv" HorizontalAlignment="Right" Margin="0,31,290,0" Name="cmbMapColName" VerticalAlignment="Top" Width="162" Grid.Column="1" SelectionChanged="cmbMapColName_SelectionChanged" />
-                    <Label Content="Map attribute id" Grid.ColumnSpan="2" Height="28" HorizontalAlignment="Left" Margin="6,56,0,0" Name="label8" VerticalAlignment="Top" Width="125" />
-                    <CheckBox Content="Input is collection?" ToolTip="if input is collection of object ( loop_link,or xpathCollection,etc...)" Height="16" HorizontalAlignment="Left" Margin="163,85,0,0" Name="chkInputIsCollection" VerticalAlignment="Top" Grid.Column="1" />
+                    <Label Content="Map column name by store id" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label7" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="176" />
+                    <ComboBox Height="23" ToolTip="Selection avaiable only for excel or csv" HorizontalAlignment="Left" Margin="163,6,0,0" Name="cmbMapColName" VerticalAlignment="Top" Width="162" Grid.Column="1" SelectionChanged="cmbMapColName_SelectionChanged" />
+                    <Label Content="Map attribute id" Grid.ColumnSpan="2" Height="28" HorizontalAlignment="Left" Margin="6,60,0,0" Name="label8" VerticalAlignment="Top" Width="125" />
+                    <CheckBox Content="Input is collection?" ToolTip="if input is collection of object ( loop_link,or xpathCollection,etc...)" Height="16" HorizontalAlignment="Left" Margin="163,89,0,0" Name="chkInputIsCollection" VerticalAlignment="Top" Grid.Column="1" />
                     <Label Content="Collection value position" Grid.ColumnSpan="2" Height="28" HorizontalAlignment="Left" Margin="5,105,0,0" Name="label9" VerticalAlignment="Top" Width="149" />
                     <TextBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Text="0" ToolTip="If is collection find value by position" Margin="163,106,0,0" Name="txtXpathCollPosition" VerticalAlignment="Top" Width="73" />
                     <Button Content="Add" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="329,105,0,0" Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" />
                     <Button Content="Remove Selected" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="410,106,0,0" Name="button2a" VerticalAlignment="Top" Width="106" Click="button2a_Click" />
-                    <TextBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="346,33,0,0" Name="txtMapColName" VerticalAlignment="Top" Width="162" />
-                    <TextBox Height="23" HorizontalAlignment="Left" Margin="346,58,0,0" Name="txtAttributeId" VerticalAlignment="Top" Width="162" Grid.Column="1" />
-                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="163,56,0,0" Name="cmbAttributes" ToolTip="Some xpath attributes" VerticalAlignment="Top" Width="162" Grid.Column="1" SelectionChanged="cmbAttributes_SelectionChanged" />
+                    <TextBox Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="0,8,107,0" Name="txtMapColName" VerticalAlignment="Top" Width="162" />
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="346,62,0,0" Name="txtAttributeId" VerticalAlignment="Top" Width="162" Grid.Column="1" />
+                    <Label Content="Action id" Height="28" HorizontalAlignment="Right" Margin="0,35,577,0" Name="label6" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+                    <ComboBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="163,35,0,0" Name="cmbMapActionId" VerticalAlignment="Top" Width="162" SelectionChanged="cmbMapActionId_SelectionChanged_1" />
+                    <ComboBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="163,62,0,0" Name="cmbAttributes" VerticalAlignment="Top" Width="162" SelectionChanged="cmbAttributes_SelectionChanged_1" />
                 </Grid>
             </TabItem>
             <TabItem Header="On exist Actions" Name="tabItem3">

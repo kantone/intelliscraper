@@ -66,8 +66,8 @@ namespace IscraperBuilder
                 if (Factory.Instance.i.rules.httpPost != null)
                     ids.AddRange(getAllRulesId(Factory.Instance.i.rules.httpPost.ToList<object>()));
 
-                if (Factory.Instance.i.rules.loop_link != null)
-                    ids.AddRange(getAllRulesId(Factory.Instance.i.rules.loop_link.ToList<object>()));
+                if (Factory.Instance.i.rules.linksPageGenerator != null)
+                    ids.AddRange(getAllRulesId(Factory.Instance.i.rules.linksPageGenerator.ToList<object>()));
 
                 if (Factory.Instance.i.rules.plugin != null)
                     ids.AddRange(getAllRulesId(Factory.Instance.i.rules.plugin.ToList<object>()));
@@ -111,8 +111,8 @@ namespace IscraperBuilder
             if (Factory.Instance.i.rules.httpPost != null)
                 ids.AddRange(Factory.Instance.i.rules.httpPost.ToList<object>());
 
-            if (Factory.Instance.i.rules.loop_link != null)
-                ids.AddRange(Factory.Instance.i.rules.loop_link.ToList<object>());
+            if (Factory.Instance.i.rules.linksPageGenerator != null)
+                ids.AddRange(Factory.Instance.i.rules.linksPageGenerator.ToList<object>());
 
             if (Factory.Instance.i.rules.plugin != null)
                 ids.AddRange(Factory.Instance.i.rules.plugin.ToList<object>());
@@ -265,8 +265,8 @@ namespace IscraperBuilder
                 if (type == typeof(IntelliScraper.Db.xpathCollection))
                     h = new IscraperBuilder.Controls.Rules.Rule.xpathCollection(ruleId);
 
-                if (type == typeof(IntelliScraper.Db.loop_link))
-                    h = new IscraperBuilder.Controls.Rules.Rule.RuleLoopLink(ruleId);
+                if (type == typeof(IntelliScraper.Db.linksPageGenerator))
+                    h = new IscraperBuilder.Controls.Rules.Rule.RuleLinksPageGenerator(ruleId);
 
                 if (type == typeof(IntelliScraper.Db.download))
                     h = new IscraperBuilder.Controls.Rules.Rule.ruleDownload(ruleId);
@@ -330,8 +330,8 @@ namespace IscraperBuilder
             if (name == "xpathCollection")
                 return typeof(IntelliScraper.Scrape.Action.XPathCollection);
 
-            if (name == "loop_link")
-                return typeof(IntelliScraper.Scrape.Action.LoopLink);
+            if (name == "linksPageGenerator")
+                return typeof(IntelliScraper.Scrape.Action.linksPageGenerator);
 
             if (name == "download")
                 return typeof(IntelliScraper.Scrape.Action.Download);
@@ -401,10 +401,10 @@ namespace IscraperBuilder
                     }
 
 
-                    if (o.GetType() == typeof(IntelliScraper.Db.loop_link))
+                    if (o.GetType() == typeof(IntelliScraper.Db.linksPageGenerator))
                     {
-                        if (Factory.instance.i.rules.loop_link != null)
-                            Factory.instance.i.rules.loop_link.Remove((IntelliScraper.Db.loop_link)o);
+                        if (Factory.instance.i.rules.linksPageGenerator != null)
+                            Factory.instance.i.rules.linksPageGenerator.Remove((IntelliScraper.Db.linksPageGenerator)o);
                     }
 
                     if (o.GetType() == typeof(IntelliScraper.Db.download))

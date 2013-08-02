@@ -14,13 +14,14 @@ using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Security.Permissions;
+using IntelliScraper.Plugin;
 
 
 
 namespace IntelliScraper.Scrape.Action
 {
 
-    public class Plugin : IScrapeAction
+    public class Plugin : IPlugin
     {
         public string Name = "Plugin";
         Db.plugin d { get; set; }
@@ -37,7 +38,7 @@ namespace IntelliScraper.Scrape.Action
 
         public object Run(object input)
         {
-            IScrapeAction a =  Factory.Instance.pluginManager.getPluginByName(d.pluginName);
+            IPlugin a =  Factory.Instance.pluginManager.getPluginByName(d.pluginName);
             if(a!=null)
                 return a.Run(input);
             return null;

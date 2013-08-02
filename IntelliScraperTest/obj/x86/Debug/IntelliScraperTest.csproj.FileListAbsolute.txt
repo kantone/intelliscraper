@@ -1,0 +1,15 @@
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\IntelliScraperTest.exe.config
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\IntelliScraperTest.exe
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\IntelliScraperTest.pdb
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\log4net.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\EPPlus.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\HtmlAgilityPack.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\Ionic.Zip.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\IntelliScraper.pdb
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\EPPlus.xml
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\HtmlAgilityPack.pdb
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\HtmlAgilityPack.xml
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\obj\x86\Debug\IntelliScraperTest.csprojResolveAssemblyReference.cache
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\obj\x86\Debug\IntelliScraperTest.exe
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\obj\x86\Debug\IntelliScraperTest.pdb
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraperTest\bin\Debug\IntelliScraper.dll

@@ -73,9 +73,6 @@
     <Compile Include="Controls\Common\ImageConvert.xaml.cs">
       <DependentUpon>ImageConvert.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Common\Loader.xaml.cs">
-      <DependentUpon>Loader.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Common\xpathAttribute.xaml.cs">
       <DependentUpon>xpathAttribute.xaml</DependentUpon>
     </Compile>
@@ -84,9 +81,6 @@
     </Compile>
     <Compile Include="Controls\Common\xpathSingle.xaml.cs">
       <DependentUpon>xpathSingle.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Errors.xaml.cs">
-      <DependentUpon>Errors.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Execute\Run.xaml.cs">
       <DependentUpon>Run.xaml</DependentUpon>
@@ -124,8 +118,8 @@
     <Compile Include="Controls\Rules\Rule\RuleHttpPost.xaml.cs">
       <DependentUpon>RuleHttpPost.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Rules\Rule\RuleLoopLink.xaml.cs">
-      <DependentUpon>RuleLoopLink.xaml</DependentUpon>
+    <Compile Include="Controls\Rules\Rule\RuleLinksPageGenerator.xaml.cs">
+      <DependentUpon>RuleLinksPageGenerator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Rules\Rule\rulePlugin.xaml.cs">
       <DependentUpon>rulePlugin.xaml</DependentUpon>
@@ -148,7 +142,6 @@
     <Compile Include="Controls\Tools\Page1.xaml.cs">
       <DependentUpon>Page1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TreeViewActionResult.cs" />
     <Compile Include="Utils\CloneUtil.cs" />
     <Compile Include="Utils\PopUp.cs" />
     <Compile Include="Utils\RandomUtil.cs" />
@@ -157,10 +150,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Common\ImageConvert.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Common\Loader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,10 +162,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Common\xpathSingle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Errors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,18 +229,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Rules\Action.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Rules\ActionRules.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Rules\ActRuleTabFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\Rules\Rule\ruleDownload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -276,7 +249,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Rules\Rule\RuleLoopLink.xaml">
+    <Page Include="Controls\Rules\Rule\RuleLinksPageGenerator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -343,15 +316,6 @@
     </Compile>
     <Compile Include="Controls\Project\PrjProxy.xaml.cs">
       <DependentUpon>PrjProxy.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Rules\Action.xaml.cs">
-      <DependentUpon>Action.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Rules\ActionRules.xaml.cs">
-      <DependentUpon>ActionRules.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Rules\ActRuleTabFrame.xaml.cs">
-      <DependentUpon>ActRuleTabFrame.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Rules\Rule\IRule.cs" />
     <Compile Include="Controls\Rules\Rule\RuleHttpGet.xaml.cs">
@@ -510,6 +474,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\017a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\074.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\014.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Preset\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

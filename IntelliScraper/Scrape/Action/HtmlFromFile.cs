@@ -5,17 +5,18 @@ using System.Text;
 
 namespace IntelliScraper.Scrape.Action
 {
-    /// <summary>
-    /// Perform httpGet
-    /// </summary>
-    public class HtmlFromFile : IScrapeAction
+   
+    public class HtmlFromFile 
     {
-        
-        public object Run(object input)
+        /// <summary>
+        /// Load html from file
+        /// </summary>
+        /// <param name="fname"></param>
+        /// <returns>Html file content</returns>
+        public string Run(string fname)
         {
-            if (input != null)
+            if (!string.IsNullOrEmpty(fname))
             {
-                string fname = (string)input;
                 if (System.IO.File.Exists(fname))
                 {
                     return System.IO.File.ReadAllText(fname);
@@ -23,14 +24,5 @@ namespace IntelliScraper.Scrape.Action
             }
             return null;
         }
-
-       
-
-        public string getName()
-        {
-            return "HtmlFromFile";
-        }
-
-        
     }
 }

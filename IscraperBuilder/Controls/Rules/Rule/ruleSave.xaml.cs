@@ -53,14 +53,11 @@ namespace IscraperBuilder.Controls.Rules.Rule
             foreach (string s in Enum.GetNames(typeof(IntelliScraper.Db.saveIfExist)))
                 cmbExistAction.Items.Add(s);
 
-            cmbMapActionId.Items.Clear();
-            foreach (var s in Factory.Instance.i.actions)
-                cmbMapActionId.Items.Add(s.id);
+          
 
             if (rule != null)
             {
                 txtTableName.Text = rule.tableName;
-                chkSaveAllFromInput.IsChecked = rule.saveAllFromInput;
 
                 chkCheckExist.IsChecked = rule.checkExistBeforeSave;
                 txtCheckExistAttrs.Text = rule.checkExistAttributes;
@@ -102,9 +99,9 @@ namespace IscraperBuilder.Controls.Rules.Rule
                 {
                     foreach (var c in Factory.Instance.i.rules.xpathCollection)
                     {
-                        foreach (var o in c.xpathSingle)
+                        if(c.xpathSingle != null)
                         {
-                            foreach (var attr in o.attributes)
+                            foreach (var attr in c.xpathSingle.attributes)
                                 attrs.Add(attr.id);
                         }
                     }
@@ -144,13 +141,8 @@ namespace IscraperBuilder.Controls.Rules.Rule
             }
         }
 
-        /// <summary>
-        /// Map action id select load map column Name
-        /// </summary>
-        private void cmbMapActionId_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
-        }
+      
+   
 
         private void cmbMapColName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -198,8 +190,7 @@ namespace IscraperBuilder.Controls.Rules.Rule
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             rule.tableName=txtTableName.Text;
-             rule.saveAllFromInput=(bool)chkSaveAllFromInput.IsChecked;
-
+           
              rule.checkExistBeforeSave = (bool)chkCheckExist.IsChecked;
             rule.checkExistAttributes= txtCheckExistAttrs.Text;
             rule.checkExistAttributesSeparator=txtCheckExistSeparator.Text;
@@ -217,6 +208,60 @@ namespace IscraperBuilder.Controls.Rules.Rule
             }*/
             Factory.Instance.Save();
             inizialize(id); 
+        }
+
+        /// <summary>
+        /// Map action id select load map column Name
+        /// </summary>
+        private void cmbMapActionId_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            /*if (cmbMapActionId.SelectedValue != null)
+            {
+                var act = (from x in Factory.Instance.i.actions where x.id == (string)cmbMapActionId.SelectedValue select x).FirstOrDefault();
+                var rule = (from x in Factory.Instance.i.rules.xpathSingle where x.id == act.ruleId select x).FirstOrDefault();
+
+                cmbAttributes.Items.Clear();
+                if (rule != null)
+                {
+                    foreach (var attr in rule.attributes)
+                        cmbAttributes.Items.Add(attr.id);
+
+                }
+                else if (rule == null)
+                {
+                    var c = (from x in Factory.Instance.i.rules.xpathCollection where x.id == act.ruleId select x).FirstOrDefault();
+                    if (c != null)
+                    {
+                        foreach (var o in c.xpathSingle)
+                        {
+                            foreach (var attr in o.attributes)
+                                cmbAttributes.Items.Add(attr.id);
+                        }
+                    }
+                }               
+                //load all
+                else
+                {
+                    List<string> attrs = new List<string>();
+                    if (Factory.Instance.i.rules.xpathSingle != null)
+                    {
+                        foreach (var o in Factory.Instance.i.rules.xpathSingle)
+                        {
+                            foreach (var attr in o.attributes)
+                                attrs.Add(attr.id);
+                        }
+                    }
+                }
+            }*/
+        }
+
+        private void cmbAttributes_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbAttributes.SelectedIndex >= 0)
+            {
+                txtXpathCollPosition.Text = cmbAttributes.SelectedIndex.ToString();
+                txtAttributeId.Text = (string)cmbAttributes.SelectedValue;
+            }
         }
     }
 }

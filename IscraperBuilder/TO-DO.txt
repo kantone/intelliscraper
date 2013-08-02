@@ -1,42 +1,11 @@
-﻿Global
+﻿ADD
+	Global Multithread options
+	Rule  Links Page Generation
 
+Ripulire codice & funzioni inutili
 
-		[Easier]
-		Come far diventare tutto più facile?
+Check funzionalità dopo cambio logica
 
+Mettere il tool di test xpath sotto anche xpathSingle
 
-		[Problemi strutturali]
-		Quando eseguo un loop_link ad esempio apro n pagine
-			se per quella pagina voglio dei dati multipli eseguo xpath Collection
-
-			che però prevede in input o l'html 0 un htmlNode sul quale poi fare xpath
-
-			Bisogna aggiungere una variabile per xPathCollection che indica se recurepare l'oggetto da un attributo di una azione precedente
-			esempio (questionDetail.html) 
-
-			Bisogna aggiungere il parsing per HtmlNodeCollection...
-
-
-		[Run Single]
-		Run single Action/Rule
-
-		[VALIDATE]
-		Check validation foreach rule items/action/project
-			On save run valitation function
-					
-					Prj						
-
-			
-
-	Check Project (validate)
-
-
-	[Separate Project]
-	Project Creatore/Exporter 
-		Console
-		Win Client
-
-		[options]
-		crypt
-		verbose
-		file xml to .db
+Migliorare interfaccia

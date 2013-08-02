@@ -21,7 +21,7 @@ using System.Collections.Specialized;
 namespace IntelliScraper.Scrape.Action
 {
 
-    public class Upload : IScrapeAction
+    public class Upload 
     {
       
         Db.upload d { get; set; }
@@ -29,20 +29,12 @@ namespace IntelliScraper.Scrape.Action
         {
             this.d = d;
         }
-
-        public string getName()
-        {
-            return "Upload";
-        }
-
-        public object Run(object input)
+        
+        public string Run(string file)
         {
             if (d != null)
-            {
-                string file = string.Empty;
-                if(d.inputType == Db.uploadInputType.fromInput)
-                    file = InputUtils.getValueFromInputByType(input, d.inputAttributeKey);
-                if (d.inputType == Db.uploadInputType.custom)
+            {           
+               if (d.inputType == Db.uploadInputType.custom)
                     file = d.customFileToUpload;
 
                 string method = "POST";

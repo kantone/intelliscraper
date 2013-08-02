@@ -8,10 +8,10 @@ namespace IntelliScraper.Scrape.Action
     /// <summary>
     /// Perform httpGet
     /// </summary>
-    public class HttpPost : IScrapeAction
+    public class HttpPost 
     {
         public string Name = "HttpPost";
-        Db.httpPost rule { get; set; }
+       Db.httpPost rule { get; set; }
         public bool async { get; set; }
         public HttpPost(Db.httpPost rule, bool async)
         {
@@ -19,52 +19,28 @@ namespace IntelliScraper.Scrape.Action
             this.async = async;            
         }
 
-        public string getName()
-        {
-            return "HttpPost";
-        }
-
-
-        public object Run(object input)
-        {
-            List<KeyValuePair<string, object>> vals = new List<KeyValuePair<string, object>>();
-
-            if (input != null)
-            {
-                if (input.GetType() != typeof(string))     
-                    vals = (List<KeyValuePair<string, object>>)input;
-            }
+        /// <summary>
+        /// Execute HttpPost
+        /// </summary>
+        /// <param name="vals">List of post Data (name,value)</param>
+        /// <returns></returns>
+        public string Run(string _url,List<KeyValuePair<string, object>> vals)
+        {          
+            
             //build post data
             string _prms = buildPostData(vals);
 
-            string url = string.Empty;
+            string url = _url;
             if (rule.urlType == Db.httpPostUrlType.custom)
             {
                 if (!string.IsNullOrEmpty(rule.customUrl))
                     url = rule.customUrl;
             }
-
-            if (rule.urlType == Db.httpPostUrlType.fromInput)
-            {
-                KeyValuePair<string, object> t = (from x in vals where x.Key == rule.inputUrlAttributeKey select x).SingleOrDefault();
-                try
-                {
-                    url = (string)t.Value;
-                }
-                catch (Exception ex)
-                {
-                    Factory.Instance.log.Error(ex);
-                }
-            }
+                        
 
             if (!string.IsNullOrEmpty(url))
                 return HttpUtils.postHtml(url, rule.customUserAgent, rule.customHttpHeadersInfo, _prms);
-
-
-
-
-
-
+            
             return null;
 
         }

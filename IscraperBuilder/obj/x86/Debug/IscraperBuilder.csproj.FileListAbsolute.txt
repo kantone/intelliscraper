@@ -11,7 +11,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\IscraperBuilder.pdb
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\IscraperBuilder.csprojResolveAssemblyReference.cache
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\IscraperBuilder.exe.config
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\IntelliScraper.exe
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\log4net.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\EPPlus.dll
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\HtmlAgilityPack.dll
@@ -34,10 +33,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Project\PrjFtp.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Project\PrjNew.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Project\PrjNew.g.cs
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\ActionRules.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\ActionRules.g.cs
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Action.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Action.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\RulesWrapper.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\RulesWrapper.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleHttpGet.baml
@@ -48,8 +43,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\IscraperBuilder_MarkupCompile.lref
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RulexpathSingle.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RulexpathSingle.g.cs
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\ActRuleTabFrame.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\ActRuleTabFrame.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\xpathSingle.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\xpathSingle.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\xpathAttribute.baml
@@ -60,8 +53,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\xpathCollection.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleHttpPost.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleHttpPost.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleLoopLink.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleLoopLink.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\ImageConvert.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\ImageConvert.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\ruleDownload.g.cs
@@ -80,8 +71,6 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\ruleZip.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Execute\Run.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Execute\Run.g.cs
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\Loader.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Common\Loader.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\PostProcess\Replace.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\PostProcess\Replace.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\PostProcess\PostProcessData.baml
@@ -98,7 +87,8 @@ F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\ob
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\PostProcess\Append.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\PostProcess\HtmlEncodeDecode.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\PostProcess\HtmlEncodeDecode.g.cs
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Errors.baml
-F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Errors.g.cs
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Tools\Page1.baml
 F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Tools\Page1.g.cs
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\bin\Debug\IntelliScraper.dll
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleLinksPageGenerator.baml
+F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IscraperBuilder\obj\x86\Debug\Controls\Rules\Rule\RuleLinksPageGenerator.g.cs

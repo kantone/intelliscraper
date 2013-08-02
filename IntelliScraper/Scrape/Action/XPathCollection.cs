@@ -10,44 +10,63 @@ namespace IntelliScraper.Scrape.Action
     /// <summary>
     /// Perform httpGet
     /// </summary>
-    public class XPathCollection : IScrapeAction
-    {
-        public string Name = "XPathCollection";
+    public class XPathCollection
+    {       
         Db.xpathCollection rule { get; set; }
+        public List<List<KeyValuePair<string, object>>> res = new List<List<KeyValuePair<string, object>>>();
         public XPathCollection(Db.xpathCollection rule)
         {
             this.rule = rule;
         }
 
-       
-
-        public string getName()
+        public List<List<KeyValuePair<string, object>>> Run(string html)
         {
-            return "XPathCollection";
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            HtmlNode node = doc.DocumentNode;
+            return run(node);
         }
 
         /// <summary>
         /// Run xpath from html or node
         /// </summary>
-        public object Run(object input)
+        public List<List<KeyValuePair<string, object>>> run(HtmlNode node)
         {
-           /* string url = string.Empty;
-            if(input != null)
-                url = (string)input;*/
+            Factory.Instance.iInfo(string.Format("Running xpathCollection id : {0}", rule.id));
 
-            //Load node by input type
-            HtmlNode node = null;
-            if (input.GetType() == typeof(string))
+            HtmlNodeCollection nodes = new HtmlNodeCollection(node);
+            HtmlNodeCollection n2 = node.SelectNodes(rule.xpath);
+            if (n2 != null)
             {
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml((string)input);
-                node = doc.DocumentNode;
+                foreach (HtmlNode n in n2)
+                    nodes.Add(n);
             }
-            else if (input.GetType() == typeof(HtmlNode))
-                node = (HtmlNode)input;
 
-            //run multiple xpathSingle passing finded node
-            List<List<KeyValuePair<string, object>>> res = new List<List<KeyValuePair<string, object>>>();
+            //run
+            if (node != null)
+            {
+
+                foreach (HtmlNode n in nodes)
+                {
+                    List<KeyValuePair<string, object>> last_val = null;
+                    if (rule.xpathSingle != null)
+                    {
+                        XPathSingle xs = new XPathSingle(rule.xpathSingle, last_val);
+                        last_val = (List<KeyValuePair<string, object>>)xs.Run(n);
+                        res.Add(last_val);
+                    }
+                }
+            }
+            return res;
+        }
+
+        /// <summary>
+        /// Run xpath from html or node
+        /// </summary>
+        /*public List<List<KeyValuePair<string, object>>> run(HtmlNode node)
+        {
+            Factory.Instance.iInfo(string.Format("Running xpathCollection id : {0}", rule.id));
+                 
             
             //Load nodes
             HtmlNodeCollection nodes = new HtmlNodeCollection(node);
@@ -69,20 +88,23 @@ namespace IntelliScraper.Scrape.Action
             {
                 foreach (HtmlNode n in nodes)
                 {
-                    foreach (Db.xpathSingle x in rule.xpathSingle)
+                    List<KeyValuePair<string, object>> last_val = null;
+                    if (rule.xpathSingle != null)
                     {
-                        XPathSingle xs = new XPathSingle(x);
-                        List<KeyValuePair<string, object>> val = (List<KeyValuePair<string, object>>)xs.Run(n);
-                        res.Add(val);
+                        XPathSingle xs = new XPathSingle(rule.xpathSingle, last_val);
+                        last_val = (List<KeyValuePair<string, object>>)xs.Run(n);
+                        res.Add(last_val);
+                    }
+                    /*foreach (Db.xpathSingle x in rule.xpathSingle)
+                    {
+                        XPathSingle xs = new XPathSingle(x, last_val);
+                        last_val = (List<KeyValuePair<string, object>>)xs.Run(n);                        
+                        res.Add(last_val);
                     }
                 }
             }
-
-
             return res;
-        }
+        }*/
 
-
- 
     }
 }

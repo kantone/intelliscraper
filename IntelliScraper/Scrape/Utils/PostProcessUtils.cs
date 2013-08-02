@@ -172,9 +172,13 @@ namespace IntelliScraper.Scrape
         public static string replace(this string val, Db.replace a)
         {
             Factory.Instance.iInfo(string.Format("Replace text {0} with {1}", a.findText, a.replaceText));
-            if (!string.IsNullOrEmpty(a.findText) && !string.IsNullOrEmpty(a.replaceText))
+            if (!string.IsNullOrEmpty(a.findText) && a.replaceText != null)
             {
-                val = val.Replace(a.findText, a.replaceText);
+                val = val.Replace("\n", String.Empty);
+                val = val.Replace("\r", String.Empty);
+                val = val.Replace("\t", String.Empty);
+                val = val.Replace(Environment.NewLine, "");               
+                val = val.Replace(@a.findText, @a.replaceText);
             }
             return val;
         }

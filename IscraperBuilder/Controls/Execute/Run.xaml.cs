@@ -30,19 +30,14 @@ namespace IscraperBuilder.Controls.Execute
         System.Threading.Thread t { get; set; }
         ManualResetEvent _event = new ManualResetEvent(true); 
         StringWriter consoleOut { get; set; }
-        bool runnnig = false;
+       
         public Run()
         {
-            runnnig = false; 
+           
             InitializeComponent();
 
             cmbrunFrom.Items.Add("all");
-            if (Factory.Instance.i.actions != null)
-            {
-                foreach (var s in Factory.Instance.i.actions)
-                    cmbrunFrom.Items.Add(s.id);
-
-            }
+           
         }
 
 
@@ -57,7 +52,7 @@ namespace IscraperBuilder.Controls.Execute
             Console.SetOut(tt);
            
 
-            runnnig = true;
+            
             richTextBox1.Document.Blocks.Clear();
             t = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(run));
             t.Start(cmbrunFrom);
@@ -66,7 +61,7 @@ namespace IscraperBuilder.Controls.Execute
 
         private void run(object o){
 
-            ComboBox c = (ComboBox)o;
+           /* ComboBox c = (ComboBox)o;
             string val = string.Empty;
             c.Dispatcher.Invoke((System.Windows.Forms.MethodInvoker)delegate()
             {
@@ -84,8 +79,13 @@ namespace IscraperBuilder.Controls.Execute
                 {
                     IntelliScraper.Db.intelliScraperActionCollection actions = new IntelliScraper.Db.intelliScraperActionCollection();
                     foreach(var a in Factory.Instance.i.actions){
-                        if(a.id == val)
+                        if (a.id == val)
+                        {
                             actions.Add(a);
+                            var acts = (from x in Factory.Instance.i.actions where x.input != null && x.input.actionId == a.id select x);
+                            foreach (var ac in acts)
+                                actions.Add(ac);
+                        }
                     }
                     Factory.Instance.i.actions = actions;
                     IntelliScraper.Factory.Instance.Run(Factory.Instance.i);
@@ -103,7 +103,7 @@ namespace IscraperBuilder.Controls.Execute
                 else break;
             }
             btnRun.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnRun.IsEnabled = true; });
-            btnStop.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStop.IsEnabled = false; });
+            btnStop.Dispatcher.Invoke(DispatcherPriority.Normal, (ThreadStart)delegate { btnStop.IsEnabled = false; });*/
         }
 
         /// <summary>
@@ -134,8 +134,7 @@ namespace IscraperBuilder.Controls.Execute
         /// Strop
         /// </summary>
         private void btnStop_Click(object sender, RoutedEventArgs e)
-        {
-            runnnig = false;          
+        {                    
             btnRun.IsEnabled = true;
             btnStop.IsEnabled = false;
         }

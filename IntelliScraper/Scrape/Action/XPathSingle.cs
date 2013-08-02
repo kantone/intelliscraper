@@ -4,51 +4,69 @@ using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using IntelliScraper.Scrape;
+using System.Threading.Tasks;
 
 namespace IntelliScraper.Scrape.Action
 {
     /// <summary>
     /// Perform httpGet
     /// </summary>
-    public class XPathSingle : IScrapeAction
+    public class XPathSingle 
     {
         
         Db.xpathSingle rule { get; set; }
-        public XPathSingle(Db.xpathSingle rule)
+        List<KeyValuePair<string, object>> res = new List<KeyValuePair<string, object>>();
+        public XPathSingle(Db.xpathSingle rule, List<KeyValuePair<string, object>> resToAdd)
         {
+            if (resToAdd != null)
+                res.AddRange(resToAdd);
             this.rule = rule;
         }
 
-        public string getName()
+        public List<KeyValuePair<string, object>> Run(string html)
         {
-            return "XPathSingle";
+            HtmlNode node = null;
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            node = doc.DocumentNode;
+            return run(node);
+        }
+
+        public List<KeyValuePair<string, object>> Run(HtmlNode node)
+        {
+            return run(node);
+        }       
+
+        public List<KeyValuePair<string, object>> Run(HtmlDocument doc, string html)
+        {
+            doc.LoadHtml(html);
+            HtmlNode node = doc.DocumentNode;
+            return run(node);
         }
        
         /// <summary>
         /// Run xpath from html or node
         /// </summary>
-        public object Run(object input)
+        private List<KeyValuePair<string, object>> run(HtmlNode node)
         {
-           
-            //Load node by input type
-            HtmlNode node = null;
-            if (input.GetType() == typeof(string))
-            {
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml((string)input);
-                node = doc.DocumentNode;
-            }
-            else if (input.GetType() == typeof(HtmlNode))
-                node = (HtmlNode)input;
+            Factory.Instance.iInfo(string.Format("Running xpathSingle id : {0}", rule.id));
+
+            if (node == null)
+                return new List<KeyValuePair<string, object>>();
 
             //Get all attriibutes by type and save to List<KeyValuePair<string, object>>
-            List<KeyValuePair<string, object>> res = new List<KeyValuePair<string, object>>();
-            foreach (Db.xpathSingleAttributes attr in rule.attributes)
+             foreach (Db.xpathSingleAttributes attr in rule.attributes)
             {
                 object val = null;
 
                 if (attr.getType == Db.xpathSingleAttributesGetType.nodeCollection)
-                    val = node.SelectNodes(attr.xpath);               
+                    val = node.SelectNodes(attr.xpath);
+                else if (attr.getType == Db.xpathSingleAttributesGetType.count)
+                {
+                    HtmlNodeCollection c = node.SelectNodes(attr.xpath);
+                    if (c != null)
+                        val = c.Count.ToString();
+                }
                 else
                 {
                     string val2 = string.Empty;
@@ -71,17 +89,22 @@ namespace IntelliScraper.Scrape.Action
                                     val2 = n.Attributes[attr.attributeName].Value;
                             }
 
+
+
                             val = postProcessResult(val2, attr);
+                            if(attr.getType != Db.xpathSingleAttributesGetType.html && attr.getType != Db.xpathSingleAttributesGetType.nodeCollection && 
+                                attr.getType != Db.xpathSingleAttributesGetType.singleNode)
+                            Factory.Instance.iInfo(string.Format("{0} = {1}",attr.id,val));
                         }
-                    }                    
+                    }
                 }
                 res.Add(new KeyValuePair<string, object>(attr.id, val));
             }
-
+                       
             return res;
         }
 
-
+    
         /// <summary>
         /// Wrapper for post process result by rules
         /// </summary>
