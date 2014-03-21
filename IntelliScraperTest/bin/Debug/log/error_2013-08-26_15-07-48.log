@@ -1,0 +1,5 @@
+2013-08-26 15:07:49,821 ERROR IntelliScraper - System.ArgumentException: Nome di percorso vuoto non valido.
+   in System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   in System.IO.StreamReader..ctor(String path)
+   in IntelliScraper.Xml.Serialization.Serialize(String file) in F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\Xml\Serialization.cs:riga 20
+   in IntelliScraper.Factory.Load(String xmlInput, Boolean crypted, String xmlDecriptPass) in F:\sp2can\P\_me\prjects-publics\IntelliScraper\intelliscraper\IntelliScraper\Factory.cs:riga 130

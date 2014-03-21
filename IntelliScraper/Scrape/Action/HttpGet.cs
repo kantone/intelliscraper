@@ -19,9 +19,8 @@ namespace IntelliScraper.Scrape.Action
         /// <param name="customUrl">Custom url (ovverided from if rule have own custom url)</param>
         /// <param name="async"></param>
         /// <returns>Html</returns>
-        public string Run(string customUrl,bool async)
-        {
-            string url = customUrl;
+        public string Run(string url,bool async)
+        {            
             if (rule.urlType == Db.httpGetUrlType.custom && !string.IsNullOrEmpty(rule.customUrl))
                 url = rule.customUrl;
             return HttpUtils.getHtml(url, rule.customUserAgent, rule.customHttpHeadersInfo, async);

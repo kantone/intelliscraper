@@ -1,0 +1,158 @@
+2013-08-26 16:12:59,665 INFO IntelliScraper - Proxy support enabled, load proxy list from F:\sp2can\P\_me\prjects-publics\IntelliScraper\proxies.txt
+2013-08-26 16:13:04,426 I-INFO IntelliScraper - Running xpathCollection id : 2 xpathCollection
+2013-08-26 16:13:04,434 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,439 I-INFO IntelliScraper - StateName = Alabama
+2013-08-26 16:13:04,443 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/alabama
+2013-08-26 16:13:04,451 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,454 I-INFO IntelliScraper - StateName = Alaska
+2013-08-26 16:13:04,457 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/alaska
+2013-08-26 16:13:04,459 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,462 I-INFO IntelliScraper - StateName = Arizona
+2013-08-26 16:13:04,464 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/arizona
+2013-08-26 16:13:04,467 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,469 I-INFO IntelliScraper - StateName = Arkansas
+2013-08-26 16:13:04,472 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/arkansas
+2013-08-26 16:13:04,474 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,477 I-INFO IntelliScraper - StateName = California
+2013-08-26 16:13:04,480 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/california
+2013-08-26 16:13:04,482 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,486 I-INFO IntelliScraper - StateName = Colorado
+2013-08-26 16:13:04,489 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/colorado
+2013-08-26 16:13:04,492 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,495 I-INFO IntelliScraper - StateName = Connecticut
+2013-08-26 16:13:04,498 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/connecticut
+2013-08-26 16:13:04,501 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,504 I-INFO IntelliScraper - StateName = Delaware
+2013-08-26 16:13:04,507 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/delaware
+2013-08-26 16:13:04,509 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,512 I-INFO IntelliScraper - StateName = Florida
+2013-08-26 16:13:04,515 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/florida
+2013-08-26 16:13:04,518 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,521 I-INFO IntelliScraper - StateName = Georgia
+2013-08-26 16:13:04,523 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/georgia
+2013-08-26 16:13:04,526 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,529 I-INFO IntelliScraper - StateName = Hawaii-Kauai
+2013-08-26 16:13:04,532 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/hawaii~kauai
+2013-08-26 16:13:04,534 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,537 I-INFO IntelliScraper - StateName = Hawaii-Maui
+2013-08-26 16:13:04,540 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/hawaii~maui
+2013-08-26 16:13:04,543 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,546 I-INFO IntelliScraper - StateName = Hawaii-Oahu
+2013-08-26 16:13:04,549 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/hawaii~oahu
+2013-08-26 16:13:04,553 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,556 I-INFO IntelliScraper - StateName = Hawaii-The Big Island
+2013-08-26 16:13:04,563 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/hawaii~the-big-island
+2013-08-26 16:13:04,566 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,569 I-INFO IntelliScraper - StateName = Idaho
+2013-08-26 16:13:04,572 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/idaho
+2013-08-26 16:13:04,575 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,579 I-INFO IntelliScraper - StateName = Indiana
+2013-08-26 16:13:04,582 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/indiana
+2013-08-26 16:13:04,585 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,588 I-INFO IntelliScraper - StateName = Kentucky
+2013-08-26 16:13:04,591 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/kentucky
+2013-08-26 16:13:04,595 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,598 I-INFO IntelliScraper - StateName = Louisiana
+2013-08-26 16:13:04,601 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/louisiana
+2013-08-26 16:13:04,608 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,611 I-INFO IntelliScraper - StateName = Maine
+2013-08-26 16:13:04,615 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/maine
+2013-08-26 16:13:04,621 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,625 I-INFO IntelliScraper - StateName = Maryland
+2013-08-26 16:13:04,628 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/maryland
+2013-08-26 16:13:04,631 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,635 I-INFO IntelliScraper - StateName = Massachusetts
+2013-08-26 16:13:04,638 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/massachusetts
+2013-08-26 16:13:04,641 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,645 I-INFO IntelliScraper - StateName = Mexico
+2013-08-26 16:13:04,648 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/mexico
+2013-08-26 16:13:04,652 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,655 I-INFO IntelliScraper - StateName = Michigan
+2013-08-26 16:13:04,659 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/michigan
+2013-08-26 16:13:04,663 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,666 I-INFO IntelliScraper - StateName = Mississippi
+2013-08-26 16:13:04,670 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/mississippi
+2013-08-26 16:13:04,673 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,677 I-INFO IntelliScraper - StateName = Missouri
+2013-08-26 16:13:04,680 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/missouri
+2013-08-26 16:13:04,684 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,687 I-INFO IntelliScraper - StateName = Montana
+2013-08-26 16:13:04,692 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/montana
+2013-08-26 16:13:04,695 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,699 I-INFO IntelliScraper - StateName = Nevada
+2013-08-26 16:13:04,703 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/nevada
+2013-08-26 16:13:04,707 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,713 I-INFO IntelliScraper - StateName = New Hampshire
+2013-08-26 16:13:04,717 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/new-hampshire
+2013-08-26 16:13:04,721 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,725 I-INFO IntelliScraper - StateName = New Jersey
+2013-08-26 16:13:04,728 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/new-jersey
+2013-08-26 16:13:04,733 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,736 I-INFO IntelliScraper - StateName = New Mexico
+2013-08-26 16:13:04,740 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/new-mexico
+2013-08-26 16:13:04,747 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,751 I-INFO IntelliScraper - StateName = New York
+2013-08-26 16:13:04,755 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/new-york
+2013-08-26 16:13:04,760 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,764 I-INFO IntelliScraper - StateName = North Carolina
+2013-08-26 16:13:04,768 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/north-carolina
+2013-08-26 16:13:04,772 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,776 I-INFO IntelliScraper - StateName = Ohio
+2013-08-26 16:13:04,780 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/ohio
+2013-08-26 16:13:04,784 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,789 I-INFO IntelliScraper - StateName = Oklahoma
+2013-08-26 16:13:04,793 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/oklahoma
+2013-08-26 16:13:04,797 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,801 I-INFO IntelliScraper - StateName = Oregon
+2013-08-26 16:13:04,805 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/oregon
+2013-08-26 16:13:04,809 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,813 I-INFO IntelliScraper - StateName = Pennsylvania
+2013-08-26 16:13:04,817 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/pennsylvania
+2013-08-26 16:13:04,821 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,826 I-INFO IntelliScraper - StateName = Puerto Rico
+2013-08-26 16:13:04,830 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/puerto-rico
+2013-08-26 16:13:04,834 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,838 I-INFO IntelliScraper - StateName = Rhode Island
+2013-08-26 16:13:04,842 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/rhode-island
+2013-08-26 16:13:04,846 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,850 I-INFO IntelliScraper - StateName = South Carolina
+2013-08-26 16:13:04,854 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/south-carolina
+2013-08-26 16:13:04,858 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,866 I-INFO IntelliScraper - StateName = South Dakota
+2013-08-26 16:13:04,871 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/south-dakota
+2013-08-26 16:13:04,875 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,879 I-INFO IntelliScraper - StateName = Tennessee
+2013-08-26 16:13:04,884 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/tennessee
+2013-08-26 16:13:04,888 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,892 I-INFO IntelliScraper - StateName = Texas
+2013-08-26 16:13:04,896 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/texas
+2013-08-26 16:13:04,899 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,909 I-INFO IntelliScraper - StateName = Utah
+2013-08-26 16:13:04,914 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/utah
+2013-08-26 16:13:04,918 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,922 I-INFO IntelliScraper - StateName = Vermont
+2013-08-26 16:13:04,926 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/vermont
+2013-08-26 16:13:04,931 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,935 I-INFO IntelliScraper - StateName = Virginia
+2013-08-26 16:13:04,939 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/virginia
+2013-08-26 16:13:04,943 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,947 I-INFO IntelliScraper - StateName = Washington
+2013-08-26 16:13:04,952 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/washington
+2013-08-26 16:13:04,956 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,960 I-INFO IntelliScraper - StateName = West Virginia
+2013-08-26 16:13:04,964 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/west-virginia
+2013-08-26 16:13:04,969 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,973 I-INFO IntelliScraper - StateName = Wisconsin
+2013-08-26 16:13:04,978 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/wisconsin
+2013-08-26 16:13:04,983 I-INFO IntelliScraper - Running xpathSingle id : states
+2013-08-26 16:13:04,987 I-INFO IntelliScraper - StateName = Wyoming
+2013-08-26 16:13:04,991 I-INFO IntelliScraper - StateLink = http://www.vacationhomes.com/united-states/wyoming
+2013-08-26 16:13:16,077 I-INFO IntelliScraper - Running xpathSingle id : 3_getStateEndPage
+2013-08-26 16:13:26,482 I-INFO IntelliScraper - Replace text Next with 
+2013-08-26 16:13:26,494 INFO IntelliScraper - Make Substring of Go to page:                       1                                2                                3                                4                                5                    (Viewing results1-20 of 209)                    
+2013-08-26 16:13:26,509 I-INFO IntelliScraper - Substring from/to - by string search - (
+2013-08-26 16:13:26,515 INFO IntelliScraper - Make Substring of Viewing results1-20 of 209)                    
+2013-08-26 16:13:26,522 I-INFO IntelliScraper - Substring from/to - by string search - of
+2013-08-26 16:13:26,609 INFO IntelliScraper - Make Substring of  209)                    
+2013-08-26 16:13:26,624 I-INFO IntelliScraper - Make Trim of  209)                    
+2013-08-26 16:13:32,615 I-INFO IntelliScraper - end = 209
